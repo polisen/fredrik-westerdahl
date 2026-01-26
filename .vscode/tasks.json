@@ -1,0 +1,56 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Sanity: Deploy",
+      "type": "npm",
+      "script": "studio:deploy",
+      "problemMatcher": []
+    },
+    {
+      "label": "Sanity: Dev",
+      "type": "npm",
+      "script": "studio:dev",
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "UI: Dev",
+      "type": "npm",
+      "script": "ui:dev",
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "Dev: All",
+      "type": "shell",
+      "command": "echo Starting Sanity Studio and Next.js dev servers...",
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+      "dependsOn": [
+        "Sanity: Dev",
+        "UI: Dev"
+      ],
+      "dependsOrder": "parallel",
+      "problemMatcher": []
+    }
+  ]
+}

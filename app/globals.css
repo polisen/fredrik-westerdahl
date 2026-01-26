@@ -1,0 +1,271 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --font-size: 16px;
+  /* Warm, flat palette (inspired by the screenshot) */
+  --app-card: #c8c6b9;
+  --app-bg: #bdbbae;
+  --app-well: #d5d3c6;
+  --app-section: #8f8e89;
+  --app-pillar: #e2e0d2;
+  --app-ink: #0f0f0f;
+  --app-ink-muted: rgba(15, 15, 15, 0.55);
+
+  /* Map app palette onto the existing semantic tokens */
+  --background: var(--app-bg);
+  --foreground: var(--app-ink);
+  --card: var(--app-card);
+  --card-foreground: var(--app-ink);
+  --popover: var(--app-well);
+  --popover-foreground: var(--app-ink);
+  --primary: var(--app-ink);
+  --primary-foreground: var(--app-well);
+  --secondary: var(--app-well);
+  --secondary-foreground: var(--app-ink);
+  --muted: var(--app-well);
+  --muted-foreground: var(--app-ink-muted);
+  --accent: var(--app-section);
+  --accent-foreground: var(--app-ink);
+  --destructive: #c23b3b;
+  --destructive-foreground: var(--app-well);
+  --border: transparent;
+  --input: var(--app-well);
+  --input-background: var(--app-well);
+  --switch-background: var(--app-section);
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --ring: rgba(15, 15, 15, 0.25);
+  --chart-1: #5c6fd3;
+  --chart-2: #7a6bff;
+  --chart-3: #8f8cf5;
+  --chart-4: #6c7fff;
+  --chart-5: #7de6ff;
+  --radius: 1.25rem;
+  --sidebar: var(--app-card);
+  --sidebar-foreground: var(--app-ink);
+  --sidebar-primary: var(--app-well);
+  --sidebar-primary-foreground: var(--app-ink);
+  --sidebar-accent: var(--app-section);
+  --sidebar-accent-foreground: var(--app-ink);
+  --sidebar-border: transparent;
+  --sidebar-ring: rgba(15, 15, 15, 0.25);
+}
+
+.dark {
+  /* Keep dark mode aligned to the same flat palette for now */
+  --app-bg: #c0beaf;
+  --app-card: #b6b4a7;
+  --app-well: #d0cec1;
+  --app-section: #868580;
+  --app-pillar: #dedccf;
+  --app-ink: #0f0f0f;
+  --app-ink-muted: rgba(15, 15, 15, 0.55);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+/**
+ * Base typography. This is not applied to elements which have an ancestor with a Tailwind text class.
+ */
+@layer base {
+  :where(:not(:has([class*=' text-']), :not(:has([class^='text-'])))) {
+    h1 {
+      font-size: var(--text-2xl);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h2 {
+      font-size: var(--text-xl);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h3 {
+      font-size: var(--text-lg);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h4 {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    p {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+    }
+
+    label {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    button {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    input {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+    }
+  }
+}
+
+html {
+  font-size: var(--font-size);
+  background-color: white;
+  cursor: none;
+}
+
+body {
+  background-color: white;
+  color: black;
+  cursor: none;
+}
+
+/* Force all elements to never show pointer cursor - override everything */
+/* This ensures all elements inherit cursor: none from body */
+*,
+*::before,
+*::after {
+  cursor: inherit !important;
+}
+
+/* Override any cursor: pointer styles - must come after the general rule */
+[style*="cursor: pointer"],
+[style*="cursor:pointer"],
+[style*='cursor: pointer'],
+[style*='cursor:pointer'] {
+  cursor: inherit !important;
+}
+
+/* Override Tailwind cursor-pointer class and any other cursor pointer classes */
+.cursor-pointer,
+[class*="cursor-pointer"],
+[class*="cursor:pointer"],
+[class*='cursor-pointer'],
+[class*='cursor:pointer'] {
+  cursor: inherit !important;
+}
+
+/* Override cursor pointer on common interactive elements */
+button,
+a,
+[role="button"],
+[role="link"],
+[tabindex]:not([tabindex="-1"]),
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  cursor: inherit !important;
+}
+
+/* Override any CSS modules or inline styles that set cursor: pointer */
+button[style*="cursor"],
+a[style*="cursor"],
+[style*="cursor: pointer"],
+[style*="cursor:pointer"] {
+  cursor: inherit !important;
+}
+
+/* Restore default cursor on mobile devices */
+@media (max-width: 767px) {
+  html,
+  body {
+    cursor: auto;
+  }
+}
+
+/* Also restore cursor for touch devices regardless of screen size */
+@media (hover: none) and (pointer: coarse) {
+  html,
+  body {
+    cursor: auto;
+  }
+}
+
+/* Hide scrollbars while maintaining scroll functionality */
+.hide-scrollbar {
+  -ms-overflow-style: none !important; /* Internet Explorer 10+ */
+  scrollbar-width: none !important; /* Firefox */
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none !important; /* Safari and Chrome */
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Hide scrollbar but keep functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+
+/* Apply to all scroll containers by default */
+.overflow-auto,
+.overflow-y-auto,
+.overflow-x-auto,
+.overflow-scroll {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.overflow-auto::-webkit-scrollbar,
+.overflow-y-auto::-webkit-scrollbar,
+.overflow-x-auto::-webkit-scrollbar,
+.overflow-scroll::-webkit-scrollbar {
+  display: none;
+}
