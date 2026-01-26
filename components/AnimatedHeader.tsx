@@ -102,14 +102,35 @@ export function AnimatedHeader() {
 
   useEffect(() => {
     const updateSizes = () => {
+      // Use visualViewport for better Chrome mobile compatibility
+      // visualViewport accounts for address bar and safe areas
+      const viewportHeight = 
+        typeof window !== 'undefined' && window.visualViewport
+          ? window.visualViewport.height
+          : window.innerHeight;
+      
       setStartSize(window.innerWidth * 0.05); // 5vw starting size
-      setTotalH(window.innerHeight * 0.28); // 43% of viewport height
+      setTotalH(viewportHeight * 0.28); // 28% of viewport height
       setIsMobile(window.innerWidth < 768); // md breakpoint
       setIsReady(true);
     };
     updateSizes();
+    
+    // Listen to both window resize and visualViewport resize
+    // visualViewport resize fires when address bar shows/hides on Chrome
     window.addEventListener('resize', updateSizes);
-    return () => window.removeEventListener('resize', updateSizes);
+    if (typeof window !== 'undefined' && window.visualViewport) {
+      window.visualViewport.addEventListener('resize', updateSizes);
+      window.visualViewport.addEventListener('scroll', updateSizes);
+    }
+    
+    return () => {
+      window.removeEventListener('resize', updateSizes);
+      if (typeof window !== 'undefined' && window.visualViewport) {
+        window.visualViewport.removeEventListener('resize', updateSizes);
+        window.visualViewport.removeEventListener('scroll', updateSizes);
+      }
+    };
   }, []);
 
   // Use container scroll if available and scrollable, otherwise window scroll

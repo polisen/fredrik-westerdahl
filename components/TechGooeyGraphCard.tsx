@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { GooeyFilter } from '@/components/GooeyFilter';
 import { cn } from '@/lib/utils';
+import { useSafari } from '@/lib/useSafari';
 
 type CategoryId = 'frontend' | 'backend' | 'data' | 'analytics' | 'ai';
 
@@ -66,6 +67,7 @@ export function TechGooeyGraphCard({
 }: {
   className?: string;
 }) {
+  const isSafari = useSafari();
   const containerRef = useRef<HTMLDivElement>(null);
   const boundsRef = useRef({ width: 0, height: 0 });
   const positionsRef = useRef<Array<{ x: number; y: number }>>([]);
@@ -244,7 +246,15 @@ export function TechGooeyGraphCard({
       />
       <div
         className="absolute inset-0 z-10"
-        style={{ filter: 'url(#techGooeyCard)' }}
+        style={{
+          // Safari doesn't support applying SVG filters to DOM elements
+          ...(!isSafari && {
+            filter: 'url(#techGooeyCard)',
+            WebkitFilter: 'url(#techGooeyCard)',
+          }),
+          willChange: 'filter',
+          transform: 'translateZ(0)',
+        }}
       >
         {nodes.map((node, index) => (
           <div

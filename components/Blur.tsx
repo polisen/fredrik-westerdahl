@@ -35,7 +35,7 @@ export function Blur() {
       /> */}
       {/* Right Blur */}
       <div
-        className="pointer-events-none fixed top-0 -right-24 h-full w-48 backdrop-blur-md sm:w-48 z-30"
+        className="pointer-events-none fixed top-0 hidden md:block -right-24 h-full w-48 backdrop-blur-md sm:w-48 z-30"
         style={{ 
           mask: 'linear-gradient(to left, black 50%, transparent)', 
           opacity: 1,

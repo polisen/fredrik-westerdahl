@@ -26,7 +26,7 @@ export function Header({ children }: HeaderProps) {
   const highlighterPath = 'M 5 20 C 15 40, 25 60, 50 75 C 75 60, 85 40, 95 20';
 
   return (
-    <div id="intro" className="relative snap-center  shrink-0 !h-[70dvh] w-full">
+    <div id="intro" className="relative snap-center  shrink-0 !h-[70svh] w-full">
       <div className="justify-end h-full  flex flex-col p-16 pl-32 pb-8">
         <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
           Fredrik Westerdahl

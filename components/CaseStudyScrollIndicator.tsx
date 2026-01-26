@@ -7,10 +7,12 @@ import { allCaseStudies } from 'contentlayer/generated';
 import { useApp } from '@/context/AppContext';
 import { cn } from '@/lib/utils';
 import { GooeyFilter } from '@/components/GooeyFilter';
+import { useSafari } from '@/lib/useSafari';
 
 export default function CaseStudyScrollIndicator() {
   const pathname = usePathname();
   const { activeSection: contextActiveSection } = useApp();
+  const isSafari = useSafari();
   const [segmentHeights, setSegmentHeights] = useState({
     inactive: '2rem',
     active: '12rem',
@@ -130,7 +132,15 @@ export default function CaseStudyScrollIndicator() {
         <GooeyFilter filterId="caseStudyGooey" stdDeviation={15} />
         <div
           className="flex flex-col items-center justify-center relative"
-          style={{ filter: 'url(#caseStudyGooey)  ' }}
+          style={{
+            // Safari doesn't support applying SVG filters to DOM elements
+            ...(!isSafari && {
+              filter: 'url(#caseStudyGooey)',
+              WebkitFilter: 'url(#caseStudyGooey)',
+            }),
+            willChange: 'filter',
+            transform: 'translateZ(0)',
+          }}
         >
           <motion.div
             className="fixed  right-4 top-4 w-5 h-5 rounded-full bg-black z-[1000]"

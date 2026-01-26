@@ -56,7 +56,6 @@ export function CaseStudyItem({
         <div className="grid grid-cols-1 md:grid-cols-2 md:pl-24 gap-4 items-start">
           {/* Column 1: Header card */}
           <GooContainer
-          shape="rectangle"
             color={color}
             className={`md:sticky md:top-32 z-10 rounded-lg p-12 py-6 md:p-12 flex flex-col justify-between ${
               'max-h-[20vh] md:max-h-[50vh] md:aspect-video'

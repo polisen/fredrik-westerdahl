@@ -6,7 +6,7 @@ import { motion } from 'motion/react';
 export function Footer() {
   return (
     <motion.footer
-      className="w-full h-[50dvh] z-50 bg-black text-white border-t border-white/10"
+      className="w-full h-[50svh] z-50 bg-black text-white border-t border-white/10"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}

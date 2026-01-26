@@ -169,7 +169,7 @@ export default function PortfolioPage() {
             <div className="w-full py-2 px-2 md:px-5 ">
               <div className="w-full mx-auto">
                 <GooContainer
-                  shape="rectangle"
+                  // shape="rectangle"
                   backgroundStyle={{
                     backgroundColor: '#002FA7',
                   }}

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { GooeyFilter } from '@/components/GooeyFilter';
 import { cn } from '@/lib/utils';
 import { motion } from 'motion/react';
+import { useSafari } from '@/lib/useSafari';
 
 type BlobConfig = {
   id: string;
@@ -40,6 +41,7 @@ export function HeaderGooeyCluster({
   className?: string;
   blobCount?: number;
 }) {
+  const isSafari = useSafari();
   const containerRef = useRef<HTMLDivElement>(null);
   const boundsRef = useRef({ width: 0, height: 0 });
   const positionsRef = useRef<Array<{ x: number; y: number }>>([]);
@@ -163,7 +165,15 @@ export function HeaderGooeyCluster({
       <GooeyFilter filterId="headerGooey" stdDeviation={40} />
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ filter: 'url(#headerGooey)' }}
+        style={{
+          // Safari doesn't support applying SVG filters to DOM elements
+          ...(!isSafari && {
+            filter: 'url(#headerGooey)',
+            WebkitFilter: 'url(#headerGooey)',
+          }),
+          willChange: 'filter',
+          transform: 'translateZ(0)',
+        }}
       >
         {blobs.map((blob, index) => (
           <motion.div

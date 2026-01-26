@@ -238,7 +238,7 @@ export function GooProvider({ children }: GooProviderProps) {
         unregisterUpdateCallback, 
       }}
     >
-      <GooeyFilter filterId="gooeyContainerFilter" stdDeviation={isMobile ? 40 : 50} />
+      <GooeyFilter filterId="gooeyContainerFilter" stdDeviation={isMobile ? 40 : 50} additionalBlur={12} />
       {children}
     </GooContext.Provider>
   );

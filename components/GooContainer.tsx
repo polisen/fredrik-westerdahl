@@ -3,6 +3,7 @@
 import { useEffect, useRef, useId, useCallback, ReactNode } from 'react';
 import { useGooContext, ContainerShape, ContainerBounds } from './GooContext';
 import { cn } from '@/lib/utils';
+import { useSafari } from '@/lib/useSafari';
 
 interface GooContainerProps {
   children: ReactNode;
@@ -27,6 +28,7 @@ export function GooContainer({
   backgroundStyle,
   style,
 }: GooContainerProps) {
+  const isSafari = useSafari();
   const containerRef = useRef<HTMLDivElement>(null);
   const id = useId();
   const { registerContainer, unregisterContainer, updateContainerBounds, registerUpdateCallback, unregisterUpdateCallback } = useGooContext();
@@ -100,7 +102,13 @@ export function GooContainer({
     animationFrameRef.current = requestAnimationFrame(trackPosition);
   }, [updateBounds]);
 
+  // In Safari, render inline instead of using GooLayer (since SVG filters don't work on DOM elements)
   useEffect(() => {
+    // Skip GooLayer registration in Safari - we'll render inline instead
+    if (isSafari) {
+      return;
+    }
+
     if (!containerRef.current) return;
 
     // Initial bounds calculation - use full update for initial registration
@@ -205,11 +213,48 @@ export function GooContainer({
       window.removeEventListener('resize', handleScroll);
       unregisterContainer(id);
     };
-  }, [id, updateBounds, unregisterContainer, registerUpdateCallback, unregisterUpdateCallback, triggerUpdate, trackPosition]);
+  }, [id, updateBounds, unregisterContainer, registerUpdateCallback, unregisterUpdateCallback, triggerUpdate, trackPosition, isSafari]);
+
+  // In Safari, render a blurred background div underneath the content
+  const borderRadiusClass = isSafari && shape === 'rounded' ? borderRadius || 'rounded-3xl' : '';
 
   return (
-    <div ref={containerRef} className={cn('h-full w-full', className)} style={style}>
-      {children}
+    <div 
+      ref={containerRef} 
+      className={cn('h-full w-full', className)} 
+      style={style}
+    >
+      {isSafari && (
+        <div
+          className={borderRadiusClass}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            zIndex: 0,
+            ...(color && { backgroundColor: color }),
+            ...(backgroundImage && { backgroundImage }),
+            ...backgroundStyle,
+            filter: 'blur(20px)',
+            WebkitFilter: 'blur(20px)',
+          }}
+        >
+          {customShape && (
+            <div
+              style={{
+                position: 'relative',
+                width: '100%',
+                height: '100%',
+                overflow: 'visible',
+              }}
+            >
+              {customShape}
+            </div>
+          )}
+        </div>
+      )}
+      <div style={{ position: 'relative', zIndex: 1 }}>
+        {children}
+      </div>
     </div>
   );
 }
