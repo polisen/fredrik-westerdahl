@@ -2,7 +2,7 @@
   "name": "fredrik-westerdahl",
   "version": "0.1.0",
   "private": true,
-  "packageManager": "bun@1.0.0",
+  "packageManager": "bun@1.1.24",
   "scripts": {
     "dev": "contentlayer dev",
     "dev:next": "next dev",
