@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useEffect, useRef, useId, useCallback, ReactNode } from 'react';
 import { useGooContext, ContainerShape, ContainerBounds } from './GooContext';
@@ -31,39 +31,58 @@ export function GooContainer({
   const isSafari = useSafari();
   const containerRef = useRef<HTMLDivElement>(null);
   const id = useId();
-  const { registerContainer, unregisterContainer, updateContainerBounds, registerUpdateCallback, unregisterUpdateCallback } = useGooContext();
+  const {
+    registerContainer,
+    unregisterContainer,
+    updateContainerBounds,
+    registerUpdateCallback,
+    unregisterUpdateCallback,
+  } = useGooContext();
   const resizeTimeoutRef = useRef<number | null>(null);
   const lastBoundsRef = useRef<ContainerBounds | null>(null);
   const animationFrameRef = useRef<number | null>(null);
 
-  const updateBounds = useCallback((useDirectUpdate = false) => {
-    if (!containerRef.current) return;
+  const updateBounds = useCallback(
+    (useDirectUpdate = false) => {
+      if (!containerRef.current) return;
 
-    const rect = containerRef.current.getBoundingClientRect();
-    // Use viewport coordinates since GooLayer uses position: fixed
-    const bounds: ContainerBounds = {
-      x: rect.x,
-      y: rect.y,
-      width: rect.width,
-      height: rect.height,
-    };
+      const rect = containerRef.current.getBoundingClientRect();
+      // Use viewport coordinates since GooLayer uses position: fixed
+      const bounds: ContainerBounds = {
+        x: rect.x,
+        y: rect.y,
+        width: rect.width,
+        height: rect.height,
+      };
 
-    if (useDirectUpdate) {
-      // Use direct DOM update for position changes (faster)
-      updateContainerBounds(id, bounds);
-    } else {
-      // Full update for initial registration or style changes
-      registerContainer(id, {
-        bounds,
-        shape,
-        borderRadius,
-        color,
-        customShape,
-        backgroundImage,
-        backgroundStyle,
-      });
-    }
-  }, [id, shape, borderRadius, color, customShape, backgroundImage, backgroundStyle, registerContainer, updateContainerBounds]);
+      if (useDirectUpdate) {
+        // Use direct DOM update for position changes (faster)
+        updateContainerBounds(id, bounds);
+      } else {
+        // Full update for initial registration or style changes
+        registerContainer(id, {
+          bounds,
+          shape,
+          borderRadius,
+          color,
+          customShape,
+          backgroundImage,
+          backgroundStyle,
+        });
+      }
+    },
+    [
+      id,
+      shape,
+      borderRadius,
+      color,
+      customShape,
+      backgroundImage,
+      backgroundStyle,
+      registerContainer,
+      updateContainerBounds,
+    ]
+  );
 
   // Create stable update callback for registration
   const triggerUpdate = useCallback(() => {
@@ -86,18 +105,20 @@ export function GooContainer({
     };
 
     const lastBounds = lastBoundsRef.current;
-    
+
     // Only update if position actually changed
-    if (!lastBounds || 
-        lastBounds.x !== currentBounds.x || 
-        lastBounds.y !== currentBounds.y ||
-        lastBounds.width !== currentBounds.width ||
-        lastBounds.height !== currentBounds.height) {
+    if (
+      !lastBounds ||
+      lastBounds.x !== currentBounds.x ||
+      lastBounds.y !== currentBounds.y ||
+      lastBounds.width !== currentBounds.width ||
+      lastBounds.height !== currentBounds.height
+    ) {
       // Position changed - update bounds
       updateBounds(true); // Use direct update for performance
       lastBoundsRef.current = currentBounds;
     }
-    
+
     // Always continue tracking (no auto-stop)
     animationFrameRef.current = requestAnimationFrame(trackPosition);
   }, [updateBounds]);
@@ -146,16 +167,23 @@ export function GooContainer({
     resizeObserver.observe(containerRef.current);
 
     // Find all scroll containers (could be window or parent elements)
-    const findScrollContainers = (element: HTMLElement | null): Array<HTMLElement | Window> => {
+    const findScrollContainers = (
+      element: HTMLElement | null
+    ): Array<HTMLElement | Window> => {
       const containers: Array<HTMLElement | Window> = [window];
       if (!element) return containers;
-      
+
       let parent = element.parentElement;
       while (parent) {
         const style = window.getComputedStyle(parent);
         const hasScroll = parent.scrollHeight > parent.clientHeight;
-        if ((style.overflow === 'auto' || style.overflow === 'scroll' || 
-            style.overflowY === 'auto' || style.overflowY === 'scroll') && hasScroll) {
+        if (
+          (style.overflow === 'auto' ||
+            style.overflow === 'scroll' ||
+            style.overflowY === 'auto' ||
+            style.overflowY === 'scroll') &&
+          hasScroll
+        ) {
           containers.push(parent);
         }
         parent = parent.parentElement;
@@ -188,7 +216,7 @@ export function GooContainer({
     };
 
     // Listen to scroll on all containers
-    scrollContainers.forEach(container => {
+    scrollContainers.forEach((container) => {
       container.addEventListener('scroll', handleScroll, { passive: true });
     });
     window.addEventListener('resize', handleScroll, { passive: true });
@@ -196,39 +224,48 @@ export function GooContainer({
     return () => {
       // Unregister callback first to avoid calling it during unmount
       unregisterUpdateCallback(id);
-      
+
       // Stop animation tracking
       if (animationFrameRef.current !== null) {
         cancelAnimationFrame(animationFrameRef.current);
         animationFrameRef.current = null;
       }
-      
+
       resizeObserver.disconnect();
       if (resizeTimeoutRef.current !== null) {
         cancelAnimationFrame(resizeTimeoutRef.current);
       }
-      scrollContainers.forEach(container => {
+      scrollContainers.forEach((container) => {
         container.removeEventListener('scroll', handleScroll);
       });
       window.removeEventListener('resize', handleScroll);
       unregisterContainer(id);
     };
-  }, [id, updateBounds, unregisterContainer, registerUpdateCallback, unregisterUpdateCallback, triggerUpdate, trackPosition, isSafari]);
+  }, [
+    id,
+    updateBounds,
+    unregisterContainer,
+    registerUpdateCallback,
+    unregisterUpdateCallback,
+    triggerUpdate,
+    trackPosition,
+    isSafari,
+  ]);
 
   // In Safari, render a blurred background div underneath the content
-  const borderRadiusClass = isSafari && shape === 'rounded' ? borderRadius || 'rounded-3xl' : '';
+  const borderRadiusClass =
+    isSafari && shape === 'rounded' ? borderRadius || 'rounded-3xl' : '';
 
   return (
-    <div 
-      ref={containerRef} 
-      className={cn('h-full w-full', className)} 
+    <div
+      ref={containerRef}
+      className={cn('h-full w-full relative', className)}
       style={style}
     >
       {isSafari && (
         <div
-          className={borderRadiusClass}
+          className={cn(borderRadiusClass, 'absolute')}
           style={{
-            position: 'absolute',
             inset: 0,
             zIndex: 0,
             ...(color && { backgroundColor: color }),
@@ -252,9 +289,7 @@ export function GooContainer({
           )}
         </div>
       )}
-      <div style={{ position: 'relative', zIndex: 1 }}>
-        {children}
-      </div>
+      <div style={{ position: 'relative', zIndex: 1 }}>{children}</div>
     </div>
   );
 }
