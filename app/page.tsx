@@ -1,15 +1,12 @@
 'use client';
 import { allCaseStudies } from 'contentlayer/generated';
 import { FadeIn } from '@/components/FadeIn';
-import ScrollLinked from '@/components/ScrollLinked';
-import { FooterNavigation } from '@/components/FooterNavigation';
 import { Footer } from '@/components/Footer';
 import { useRef, useEffect, useMemo, useState } from 'react';
 import { useMotionValueEvent, useScroll, motion } from 'motion/react';
 import { usePathname } from 'next/navigation';
 import { useApp } from '@/context/AppContext';
 import type { ActiveSection } from '@/context/AppContext';
-import { TechGooeyGraphCard } from '@/components/TechGooeyGraphCard';
 import { GooContainer } from '@/components/GooContainer';
 import { StyleCard } from '@/components/StyleCard';
 import { CaseStudy01SublinkNew } from '@/components/CaseStudy01SublinkNew';
@@ -17,12 +14,6 @@ import { CaseStudy02ArbitragePlatformNew } from '@/components/CaseStudy02Arbitra
 import { CaseStudy03SocialGraphNew } from '@/components/CaseStudy03SocialGraphNew';
 import { CaseStudy04RenewcellToolkitNew } from '@/components/CaseStudy04RenewcellToolkitNew';
 import { CaseStudy05AuctionHouseNew } from '@/components/CaseStudy05AuctionHouseNew';
-import dynamic from 'next/dynamic';
-import AsciiWave from '@/components/AsciiWave';
-
-const Button3D = dynamic(() => import('@/components/3d/Button3D'), {
-  ssr: false,
-});
 
 export default function PortfolioPage() {
   const pathname = usePathname();
@@ -72,6 +63,8 @@ export default function PortfolioPage() {
   const sections = useMemo(() => {
     return [
       { type: 'intro' as const, id: 'intro' },
+      { type: 'case-study' as const, id: 'tech-stack' },
+      { type: 'case-study' as const, id: 'case-studies' },
       ...sortedCaseStudies.map((cs) => ({
         type: 'case-study' as const,
         id: cs.slug,
@@ -154,7 +147,7 @@ export default function PortfolioPage() {
     >
       <FadeIn>
         <div className="flex flex-col h-min ">
-          {/* About Me Header Section */}
+          {/* Intro Goo Container — first content after hero */}
           <motion.section
             id="intro"
             onViewportEnter={() =>
@@ -164,30 +157,89 @@ export default function PortfolioPage() {
               })
             }
             viewport={{ margin: '-20% 0px -20% 0px' }}
-            className="md:snap-center flex flex-col overflow-visible "
+            className="md:snap-center flex flex-col overflow-visible"
           >
-            <div className="w-full py-2 px-2 md:px-5 ">
+            <div className="w-full py-2 px-2 md:px-5">
               <div className="w-full mx-auto">
                 <GooContainer
-                  // shape="rectangle"
-                  backgroundStyle={{
-                    backgroundColor: '#002FA7',
-                  }}
-                  style={{
-                    paddingTop: 'calc(80vh)',
-                    color: 'white',
-                  }}
+                  backgroundStyle={{ backgroundColor: '#002FA7' }}
+                  style={{ paddingTop: 'calc(80vh)', color: 'white' }}
+                  className="rounded-lg p-8 md:p-12 relative z-10 *:text-white"
+                >
+                  <div className="flex flex-col gap-4 relative z-10 mx-auto ml-0 md:ml-20 max-w-4xl px-4 md:px-0 text-lg md:text-xl font-normal leading-relaxed">
+                    <p>
+                      <strong>I&apos;m a full-stack software developer who builds products end-to-end — from UI and interaction to backend systems and architecture.</strong>
+                    </p>
+                    <p>
+                      I&apos;ve been coding most of my life, and for the past five years I&apos;ve worked professionally as a consultant and startup founder.
+                    </p>
+                    <p>
+                      I care about what it takes to bring a product to life: design, implementation, trade-offs, and long-term viability.
+                      At the core, I&apos;m motivated by product design — not as aesthetics, but as tools that enable people to do meaningful things.
+                    </p>
+                  </div>
+                </GooContainer>
+              </div>
+            </div>
+          </motion.section>
+
+          {/* Tech Stack Goo Container */}
+          <motion.section
+            id="tech-stack"
+            onViewportEnter={() =>
+              setActiveSection({
+                type: 'case-study',
+                identifier: 'tech-stack',
+              })
+            }
+            viewport={{ margin: '-20% 0px -20% 0px' }}
+            className="md:snap-center flex flex-col overflow-visible"
+          >
+            <div className="w-full py-2 px-2 md:px-5">
+              <div className="w-full mx-auto">
+                <GooContainer
+                  backgroundStyle={{ backgroundColor: '#f0f4f8' }}
+                  style={{ color: '#1a1a1a' }}
+                  className="rounded-lg p-8 md:p-10 relative z-10"
+                >
+                  <div className="flex flex-col gap-3 relative z-10 mx-auto ml-0 md:ml-20 max-w-4xl px-4 md:px-0 text-base md:text-lg">
+                    <p><strong>Frontend</strong> — React, Next.js, TypeScript, Tailwind, Motion / animation systems</p>
+                    <p><strong>Backend &amp; Platform</strong> — Node.js, Firebase, GCP, auth, storage, real-time systems</p>
+                    <p><strong>Product &amp; Systems</strong> — architecture, scalability, data modeling, cost control, shipping &amp; iteration</p>
+                  </div>
+                </GooContainer>
+              </div>
+            </div>
+          </motion.section>
+
+          {/* Case Studies — section intro (formerly About) */}
+          <motion.section
+            id="case-studies"
+            onViewportEnter={() =>
+              setActiveSection({
+                type: 'case-study',
+                identifier: 'case-studies',
+              })
+            }
+            viewport={{ margin: '-20% 0px -20% 0px' }}
+            className="md:snap-center flex flex-col overflow-visible"
+          >
+            <div className="w-full py-2 px-2 md:px-5">
+              <div className="w-full mx-auto">
+                <GooContainer
+                  backgroundStyle={{ backgroundColor: '#002FA7' }}
+                  style={{ color: 'white' }}
                   className="rounded-lg p-8 md:p-12 relative z-10 *:text-white"
                 >
                   <div className="flex flex-col gap-6 relative z-10 mx-auto ml-0 md:ml-20 max-w-4xl px-4 md:px-0">
-                    <StyleCard.Paragraph title="About" textColor="white">
+                    <StyleCard.Paragraph title="Case Studies" textColor="white">
                       The case studies below reflect a handful of systems
                       I&apos;ve worked on over the past few years, each shaped
                       by a different set of real-world constraints. They&apos;re
                       intentionally concise, aiming to capture the essence of
                       each challenge.
                     </StyleCard.Paragraph>
-                    <div className="w-full px-2 z-50 pb-6 ">
+                    <div className="w-full px-2 z-50 pb-6">
                       <div className="w-full z-[100]">
                         <div className="h-px bg-white/10" />
                       </div>
@@ -196,7 +248,6 @@ export default function PortfolioPage() {
                 </GooContainer>
               </div>
             </div>
-            {/* Bottom border */}
           </motion.section>
 
           <motion.section

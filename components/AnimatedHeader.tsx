@@ -110,7 +110,7 @@ export function AnimatedHeader() {
           : window.innerHeight;
       
       setStartSize(window.innerWidth * 0.05); // 5vw starting size
-      setTotalH(viewportHeight * 0.28); // 28% of viewport height
+      setTotalH(viewportHeight * 0.20); // 20% of viewport height
       setIsMobile(window.innerWidth < 768); // md breakpoint
       setIsReady(true);
     };
@@ -148,40 +148,44 @@ export function AnimatedHeader() {
   // On non-main routes, force header to collapsed state by using a high scroll value
   // This ensures the top header is always minimized on routes other than "/"
   const isMainRoute = pathname === '/';
+  // Collapse completes over less scroll (faster response); reduced start height
+  const mainCollapseEnd = totalH * 0.65;
+  const secondaryRange = totalH * 1.55;
+  const secondaryEnd = mainCollapseEnd + secondaryRange;
+  const startHeight = totalH + 48;
+
   const scrollY = useTransform(smoothBaseScrollY, (val) => {
     if (!isMainRoute && totalH > 0) {
-      // Return a value that represents fully scrolled (collapsed state)
-      // Use a value higher than totalH / 0.8 to ensure collapsed state
-      return totalH / 0.8 + 400;
+      return mainCollapseEnd + 400;
     }
     return val;
   });
 
   // Map scroll to progress value (0–1)
-  const scrollRange = totalH * (1 / 0.6);
+  const scrollRange = mainCollapseEnd;
   const p = useTransform(scrollY, [0, scrollRange], [0, 1]);
 
   // Animate scale and header height
   // Text should finish scaling when header reaches collapsed state
   // On mobile, make collapsed state 30% larger (0.4 * 1.3 = 0.52)
   const collapsedScale = useMemo(() => (isMobile ? 0.52 : 0.4), [isMobile]);
-  const textScale = useTransform(scrollY, [0, totalH / 0.8], [1, collapsedScale]);
+  const textScale = useTransform(scrollY, [0, mainCollapseEnd], [1, collapsedScale]);
   const headerHeight = useTransform(
     scrollY,
-    [0, totalH / 0.8],
-    [totalH + 60, 48]
+    [0, mainCollapseEnd],
+    [startHeight, 48]
   );
 
   // Animate top offset for main name to keep it centered when collapsed
   // When expanded: align to bottom. When collapsed: center in 48px
   // Using flexbox approach: position at 50% and use translateY to center
   // For expanded state, calculate pixel position. For collapsed, use 50% with -50% translateY
-  const nameTopExpanded = totalH + 60 - 48 - 8;
+  const nameTopExpanded = startHeight - 48 - 8;
   const nameTopCollapsed = 24; // 50% of 48px
 
   const nameTop = useTransform(
     scrollY,
-    [0, totalH / 0.8],
+    [0, mainCollapseEnd],
     [nameTopExpanded, nameTopCollapsed]
   );
 
@@ -189,7 +193,7 @@ export function AnimatedHeader() {
   // Convert numeric value to percentage string for CSS
   const nameTranslateYValue = useTransform(
     scrollY,
-    [0, totalH / 0.8],
+    [0, mainCollapseEnd],
     [0, -50]
   );
   const nameTranslateY = useTransform(nameTranslateYValue, (val) => `${val}%`);
@@ -197,24 +201,24 @@ export function AnimatedHeader() {
   // Animate top offset for nav links to keep them centered when collapsed
   // When expanded: top-3 (12px). When collapsed: center in 48px
   // For text-xs, approximate height is ~14px, so center at (48-14)/2 = 17px
-  const navLinksTop = useTransform(scrollY, [0, totalH / 0.8], [12, 17]);
+  const navLinksTop = useTransform(scrollY, [0, mainCollapseEnd], [12, 17]);
 
   // Secondary bar should stick below the main header
   // It starts collapsing AFTER the main header finishes collapsing
   // Scale much slower (4-5x) for a more graceful animation
   const secondaryBarHeight = useTransform(
     scrollY,
-    [totalH / 0.8, totalH * 2.8],
-    [totalH + 60, 48]
+    [mainCollapseEnd, secondaryEnd],
+    [startHeight, 48]
   );
   const secondaryTop = headerHeight;
 
-  // Scale for secondary bar text - smaller when expanded, same when collapsed
-  // When expanded: 0.8 (smaller), when collapsed: 0.525 (perfect as is)
+  // Scale for secondary bar text - matches name size when fully collapsed
+  // When expanded: 0.8 (smaller), when collapsed: same as name (collapsedScale)
   const secondaryTextScale = useTransform(
     scrollY,
-    [totalH / 0.8, totalH * 2.8],
-    [0.8, 0.525]
+    [mainCollapseEnd, secondaryEnd],
+    [0.8, collapsedScale]
   );
 
   // Inverse scale for scroll container width - ensures scroll boundaries match visual boundaries
@@ -231,24 +235,23 @@ export function AnimatedHeader() {
 
   // Animate top offset for secondary menu to keep it centered when collapsed
   // When expanded: positioned higher (with more padding). When collapsed: center in 48px
-  // Position higher when expanded by reducing the starting value
   const secondaryMenuTop = useTransform(
     scrollY,
-    [totalH / 0.8, totalH * 3.0],
-    [totalH - 60, 12] // Higher position when expanded (was totalH + 0, now totalH - 60)
+    [mainCollapseEnd, secondaryEnd],
+    [totalH - 48, 12]
   );
 
   // Animate padding bottom for secondary menu - more padding when expanded
   const secondaryMenuPaddingBottom = useTransform(
     scrollY,
-    [totalH / 0.8, totalH * 3.0],
+    [mainCollapseEnd, secondaryEnd],
     [12, 0] // More padding when expanded, none when collapsed
   );
 
   // Opacity for bio text - fades out aggressively when secondary bar is about 50% collapsed
   const bioTextOpacity = useTransform(
     scrollY,
-    [totalH / 0.8, totalH / 0.8 + (totalH * 2.8 - totalH / 0.8) * 0.5],
+    [mainCollapseEnd, mainCollapseEnd + secondaryRange * 0.5],
     [1, 0]
   );
 
@@ -256,8 +259,8 @@ export function AnimatedHeader() {
   const bioTextBlur = useTransform(
     scrollY,
     [
-      totalH / 0.8 + (totalH * 2.8 - totalH / 0.8) * 0.3,
-      totalH / 0.8 + (totalH * 2.8 - totalH / 0.8) * 0.5,
+      mainCollapseEnd + secondaryRange * 0.3,
+      mainCollapseEnd + secondaryRange * 0.5,
     ],
     [0, 10]
   );
@@ -265,35 +268,35 @@ export function AnimatedHeader() {
   // Opacity for AsciiWave - fades out as main header collapses
   const asciiWaveOpacity = useTransform(
     scrollY,
-    [0, totalH / 0.8],
+    [0, mainCollapseEnd],
     [0.3, 0]
   );
 
-  // Background color transition for main header - fluorescent yellow to white
+  // Background color transition for main header - pastel to white
   const headerBgColor = useTransform(
     scrollY,
-    [0, totalH / 0.8],
-    ['rgb(212, 249, 25)', 'rgb(255, 255, 255)']
+    [0, mainCollapseEnd],
+    ['rgb(250, 252, 245)', 'rgb(255, 255, 255)']
   );
 
-  // Text color for name - black throughout (visible on both yellow and white)
+  // Text color for name - black throughout (visible on both pastel and white)
   const nameTextColor = useTransform(
     scrollY,
-    [0, totalH / 0.8],
+    [0, mainCollapseEnd],
     ['rgb(0, 0, 0)', 'rgb(0, 0, 0)']
   );
 
   // Text color for nav links - black throughout
   const navTextColor = useTransform(
     scrollY,
-    [0, totalH / 0.8],
+    [0, mainCollapseEnd],
     ['rgb(0, 0, 0)', 'rgb(0, 0, 0)']
   );
 
   // Text color for tagline - black throughout
   const taglineTextColor = useTransform(
     scrollY,
-    [0, totalH / 0.8],
+    [0, mainCollapseEnd],
     ['rgb(0, 0, 0)', 'rgb(0, 0, 0)']
   );
 
@@ -310,7 +313,10 @@ export function AnimatedHeader() {
   }, [scrollY]);
 
   // Navigation items for the secondary bar
-  const secondaryNavItems = [{ label: 'Portfolio', path: '/' }];
+  const secondaryNavItems = [
+    { label: 'Portfolio', path: '/' },
+    { label: 'Front-end Experiments', path: '/front-end-experiments' },
+  ];
 
   // Don't render until we have calculated sizes
   if (!isReady) {
@@ -410,10 +416,10 @@ export function AnimatedHeader() {
           >
             <div className="font-semibold tracking-tight space-y-1">
               <div className="text-2xl">
-                Software Engineer — Systems & Architecture
+                Full-stack Software Engineer
               </div>
               <div className="text-base text-gray-700 max-w-4xl">
-                Designing and operating production systems under real-world
+                Shipping production systems, UI, and architecture under real-world
                 constraints.
               </div>
             </div>
