@@ -1,7 +1,27 @@
+import "flickity/dist/flickity.min.css";
 import { motion } from "motion/react";
-import { Children, useEffect, useRef, useState, type ReactNode, type CSSProperties } from "react";
+import Flickity from "react-flickity-component";
+import {
+  Children,
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+  type CSSProperties,
+} from "react";
 import { useReducedMotion } from "@/lib/useReducedMotion";
-import { useHorizontalScrollDrag } from "@/lib/useHorizontalScrollDrag";
+
+/** Minimal Flickity instance shape we use (library has no TS types). */
+interface FlickityInstance {
+  applyForce: (force: number) => void;
+  startAnimation: () => void;
+  dragEnd: () => void;
+  on: (event: string, fn: (...args: unknown[]) => void) => void;
+  off: (event: string, fn: (...args: unknown[]) => void) => void;
+  element: HTMLElement;
+  select: (index: number, isWrapped?: boolean, isInstant?: boolean) => void;
+}
+
 interface CardLineProps {
   children: ReactNode;
   title?: string;
@@ -22,7 +42,7 @@ export function CardItem({
 }: CardItemProps) {
   return (
     <div
-      className={`rounded-lg bg-gray-100 overflow-hidden ${className ?? ""}`}
+      className={`rounded-lg max-w-[80dvw] bg-gray-100 overflow-hidden ${className ?? ""}`}
       style={{
         height: "var(--cardline-height, 40vh)",
         width:
@@ -36,6 +56,15 @@ export function CardItem({
   );
 }
 
+const flickityOptions = {
+  initialIndex: 0,
+  freeScroll: true,
+  draggable: true,
+  contain: true,
+  cellAlign: "left" as const,
+  prevNextButtons: false,
+  pageDots: false,
+};
 
 export function CardLine({
   children,
@@ -46,36 +75,46 @@ export function CardLine({
   const [isHovered, setIsHovered] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [flkty, setFlkty] = useState<FlickityInstance | null>(null);
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const childItems = Children.toArray(children);
-
   const reducedMotion = useReducedMotion();
-  const { scrollerRef, handlers } = useHorizontalScrollDrag({
-    inertia: !reducedMotion,
-  });
 
-  const wrappedHandlers = {
-    onPointerDown: (e: React.PointerEvent) => {
+  useEffect(() => {
+    if (!flkty) return;
+
+    const onDragStart = (...args: unknown[]) => {
+      const ev = args[0] as Event;
+      ev.preventDefault();
       setIsDragging(true);
-      handlers.onPointerDown(e);
-    },
-    onPointerMove: handlers.onPointerMove,
-    onPointerUp: (e: React.PointerEvent) => {
-      handlers.onPointerUp(e);
-      setIsDragging(false);
-    },
-    onPointerCancel: (e: React.PointerEvent) => {
-      handlers.onPointerCancel(e);
-      setIsDragging(false);
-    },
-  };
+    };
+    const onDragEnd = () => setIsDragging(false);
+
+    const onWheel = (ev: WheelEvent) => {
+      if (Math.abs(ev.deltaX) > Math.abs(ev.deltaY)) {
+        ev.preventDefault();
+        flkty.applyForce(-ev.deltaX / 16);
+        flkty.startAnimation();
+        flkty.dragEnd();
+      }
+    };
+
+    flkty.on("dragStart", onDragStart);
+    flkty.on("dragEnd", onDragEnd);
+    flkty.element.addEventListener("wheel", onWheel, { passive: false });
+
+    return () => {
+      flkty.off("dragStart", onDragStart);
+      flkty.off("dragEnd", onDragEnd);
+      flkty.element.removeEventListener("wheel", onWheel);
+    };
+  }, [flkty]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     const query = window.matchMedia("(max-width: 768px)");
-    const update = () => setIsMobile(query.matches);
     const listener = (event: MediaQueryListEvent) => setIsMobile(event.matches);
-    update();
+    setIsMobile(query.matches);
     if ("addEventListener" in query) {
       query.addEventListener("change", listener);
       return () => query.removeEventListener("change", listener);
@@ -99,12 +138,9 @@ export function CardLine({
 
   return (
     <div
-      ref={scrollerRef}
-      className="w-full overflow-x-auto overflow-y-hidden px-32 relative"
+      className="w-full px-4 md:px-[130px] relative"
       style={
         {
-          touchAction: "pan-y",
-          WebkitOverflowScrolling: "touch",
           cursor: isDragging ? "grabbing" : isHovered ? "grab" : "default",
           height: "var(--cardline-height, 40vh)",
           ["--cardline-height"]:
@@ -123,51 +159,68 @@ export function CardLine({
         setIsHovered(true);
       }}
       onMouseLeave={() => {
-        if (hoverTimeoutRef.current) {
-          clearTimeout(hoverTimeoutRef.current);
-        }
+        if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
         hoverTimeoutRef.current = setTimeout(() => {
           setIsHovered(false);
-          const el = scrollerRef.current;
-          if (el) el.scrollTo({ left: 0, behavior: reducedMotion ? "auto" : "smooth" });
+          if (flkty) flkty.select(0, false, reducedMotion);
         }, 500);
       }}
-      {...wrappedHandlers}
     >
       {title ? (
-        <div className="top-0 left-32 z-10 absolute">
-          <div className="inline-block bg-white/80 p-1 backdrop-blur-md rounded-md shadow-sm">
-            {title}
+        <div className="absolute inset-0 z-40 pointer-events-none">
+          <div className="sticky pl-0.5 top-[72px]">
+            <div className="inline-block bg-white/80 p-1 backdrop-blur-md text-lg rounded-md shadow-sm ml-4 md:ml-32 pointer-events-auto">
+              {title}
+            </div>
           </div>
         </div>
       ) : null}
 
-      <div className="flex gap-2 min-w-max -mx-4 md:-mx-32 px-4 md:px-32">
+      <Flickity
+        options={flickityOptions}
+        flickityRef={setFlkty}
+        className="overflow-hidden -mx-4 md:-mx-32"
+      >
         {childItems.map((child, index) => {
-          const shouldShow = isMobile || isHovered || index < alwaysVisibleCount;
+          const shouldShow =
+            isMobile || isHovered || index < alwaysVisibleCount;
+          const isFirst = index === 0;
+          const isLast = index === childItems.length - 1;
+          const cellClass = [
+            "shrink-0 w-auto ",
+            isFirst ? "pl-4 md:pl-32" : "",
+            isLast ? "pr-4 md:pr-32" : "pr-2",
+          ]
+            .filter(Boolean)
+            .join(" ");
           return (
-            <motion.div
+            <div
               key={(child as { key?: string | number }).key ?? index}
-              initial={{
-                opacity: index < alwaysVisibleCount ? 1 : 0,
-                filter: index < alwaysVisibleCount ? "blur(0px)" : "blur(10px)",
-              }}
-              animate={{
-                opacity: shouldShow ? 1 : 0,
-                filter: shouldShow ? "blur(0px)" : "blur(10px)",
-              }}
-              transition={{
-                duration: 0.5,
-                delay: index * 0.1,
-                ease: "easeOut",
-              }}
-              className="relative shrink-0 cursor-pointer"
+              className={cellClass}
             >
-              {child}
-            </motion.div>
+              <motion.div
+                initial={{
+                  opacity: index < alwaysVisibleCount ? 1 : 0,
+                  filter:
+                    index < alwaysVisibleCount ? "blur(0px)" : "blur(10px)",
+                }}
+                animate={{
+                  opacity: shouldShow ? 1 : 0,
+                  filter: shouldShow ? "blur(0px)" : "blur(10px)",
+                }}
+                transition={{
+                  duration: 0.5,
+                  delay: index * 0.1,
+                  ease: "easeOut",
+                }}
+                className="relative cursor-pointer h-full"
+              >
+                {child}
+              </motion.div>
+            </div>
           );
         })}
-      </div>
+      </Flickity>
     </div>
   );
 }

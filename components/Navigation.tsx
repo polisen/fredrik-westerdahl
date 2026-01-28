@@ -60,15 +60,15 @@ export function Navigation() {
       <motion.nav
         layout={false}
         layoutScroll
-        className="fixed top-0 left-0 p-8 md:pl-8 md:py-8 z-50"
+        className="fixed top-0 left-0 p-8 pl-4 md:pl-10 md:py-8 z-50"
       >
         <div className="flex gap-4 items-start">
           <div className="relative">
             <Link 
               href="/" 
               className={cn(
-                'h-8 bg-gray-100 px-2 rounded-md text-lg hover:underline block relative transition-opacity',
-                isFredrikSelected ? 'opacity-100' : 'opacity-60'
+                'h-8 bg-gray-100 px-2 rounded-md backdrop-blur-md text-lg hover:underline shadow-md block relative transition-opacity',
+                isFredrikSelected ? 'opacity-100' : 'bg-gray-100/80'
               )}
             >
               <div className="z-30 opacity-0">Fredrik</div>

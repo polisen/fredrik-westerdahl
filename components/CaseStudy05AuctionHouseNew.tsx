@@ -32,7 +32,7 @@ export function CaseStudy05AuctionHouseNew() {
   const sections = parseMarkdownSections(rawMarkdown);
 
   return (
-    <CardLine>
+    <CardLine title={caseStudy?.title}>
       {/* Title card */}
       <CardItem aspectRatio="square">
         <div className="p-4">

@@ -24,18 +24,18 @@ export function Blur() {
         }}
       />
       {/* Left Blur */}
-      {/* <div
-        className="pointer-events-none fixed top-0 -left-24 h-full w-48 backdrop-blur-md sm:w-48 z-30"
+      <div
+        className="pointer-events-none hidden md:block fixed top-0 -left-24 h-full w-48 backdrop-blur-md sm:w-48 z-30"
         style={{ 
           mask: 'linear-gradient(to right, black 50%, transparent)', 
           opacity: 1,
           backdropFilter: 'blur(12px)',
           WebkitBackdropFilter: 'blur(12px)',
         }}
-      /> */}
+      />
       {/* Right Blur */}
       <div
-        className="pointer-events-none fixed top-0 hidden md:block -right-24 h-full w-48 backdrop-blur-md sm:w-48 z-30"
+        className="pointer-events-none hidden md:block fixed top-0 hidden md:block -right-24 h-full w-48 backdrop-blur-md sm:w-48 z-30"
         style={{ 
           mask: 'linear-gradient(to left, black 50%, transparent)', 
           opacity: 1,

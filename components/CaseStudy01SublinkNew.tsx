@@ -32,7 +32,7 @@ export function CaseStudy01SublinkNew() {
   const sections = parseMarkdownSections(rawMarkdown);
 
   return (
-    <CardLine title="Sublink">
+    <CardLine title={caseStudy?.title}>
       {/* Title card */}
       <CardItem aspectRatio="square">
         <div className="p-4">
