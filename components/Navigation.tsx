@@ -60,7 +60,7 @@ export function Navigation() {
       <motion.nav
         layout={false}
         layoutScroll
-        className="fixed top-0 left-0 p-8 md:pl-16 md:py-12 z-50"
+        className="fixed top-0 left-0 p-8 md:pl-8 md:py-8 z-50"
       >
         <div className="flex gap-4 items-start">
           <div className="relative">

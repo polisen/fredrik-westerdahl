@@ -9,18 +9,18 @@ export function Blur() {
         style={{ 
           mask: 'linear-gradient(black 50%, transparent)', 
           opacity: 1,
-          backdropFilter: 'blur(12px)',
-          WebkitBackdropFilter: 'blur(12px)',
+          backdropFilter: 'blur(24px)',
+          WebkitBackdropFilter: 'blur(24px)',
         }}
       />
       {/* Bottom Blur */}
       <div
-        className="pointer-events-none fixed -bottom-32 left-0 h-52 w-full backdrop-blur-md sm:h-60 z-40"
+        className="pointer-events-none fixed -bottom-32 left-0 h-52 w-full backdrop-blur-md sm:h-72 z-40"
         style={{ 
           mask: 'linear-gradient(transparent, black 50%)', 
           opacity: 1,
-          backdropFilter: 'blur(12px)',
-          WebkitBackdropFilter: 'blur(12px)',
+          backdropFilter: 'blur(24px)',
+          WebkitBackdropFilter: 'blur(24px)',
         }}
       />
       {/* Left Blur */}
@@ -39,8 +39,8 @@ export function Blur() {
         style={{ 
           mask: 'linear-gradient(to left, black 50%, transparent)', 
           opacity: 1,
-          backdropFilter: 'blur(12px)',
-          WebkitBackdropFilter: 'blur(12px)',
+          backdropFilter: 'blur(24px)',
+          WebkitBackdropFilter: 'blur(24px)',
         }}
       />
     </>

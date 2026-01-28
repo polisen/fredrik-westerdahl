@@ -15,6 +15,8 @@ import { CursorLayers } from '@/components/CursorLayers';
 import { BackgroundLayer } from '@/components/BackgroundLayer';
 import AsciiWave from '@/components/AsciiWave';
 import { PageLoadAnimation } from '@/components/PageLoadAnimation';
+import { Navigation } from '@/components/Navigation';
+import { VideoBackground } from '@/components/VideoBackground';
 
 export const metadata: Metadata = {
   title: 'fredrik-westerdahl.me',
@@ -36,17 +38,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full antialiased">
-      <body className={`${GeistSans.variable} ${GeistMono.variable} font-sans  relative text-black bg-white`}>
+      <body className={`${GeistSans.variable} ${GeistMono.variable} font-sans  relative text-black bg-gray-900`}>
         <CursorProvider>
           <GooProvider>
             <AppProvider>
               <LayoutGroup>
                 <PageLoadAnimation />
+                <VideoBackground />
                 {/* <BackgroundLayer>
                   <AsciiWave width={200} height={80} />
                 </BackgroundLayer> */}
                 <Blur />
-                <AnimatedHeader />
+                <Navigation />
+                {/* <AnimatedHeader /> */}
                 {/* <FooterNavigation /> */}
                 <GooLayer />
                 <CursorLayers />

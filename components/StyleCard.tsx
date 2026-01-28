@@ -10,7 +10,7 @@ export function StyleCard({ children }: { children: ReactNode }) {
 // Variant 1: Title - Large H1/H2 text, left-aligned, wraps
 StyleCard.Title = function Title({ children }: { children: ReactNode }) {
   return (
-    <h1 className="text-2xl md:text-3xl font-medium text-[#0f0f0f] leading-[1.2] tracking-tight">
+    <h1 className="text-2xl h-full flex justify-end items-end md:text-3xl font-medium text-[#0f0f0f] leading-[1.2] tracking-tight">
       {children}
     </h1>
   );
