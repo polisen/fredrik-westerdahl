@@ -111,3 +111,81 @@ StyleCard.End = function End({ title, subtitle }: EndProps) {
     </div>
   );
 };
+
+StyleCard.IntroHeading = function IntroHeading({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  return (
+    <h2 className="text-2xl md:text-3xl font-medium text-[#0f0f0f] leading-[1.2] tracking-tight">
+      {children}
+    </h2>
+  );
+};
+
+StyleCard.IntroParagraph = function IntroParagraph({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  return (
+    <p className="text-lg md:text-xl font-normal text-[#0f0f0f] leading-[1.5]">
+      {children}
+    </p>
+  );
+};
+
+StyleCard.IntroQuote = function IntroQuote({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  return (
+    <blockquote className="text-lg md:text-xl font-medium text-[#0f0f0f] leading-[1.5]">
+      {children}
+    </blockquote>
+  );
+};
+
+StyleCard.TitleCorner = function TitleCorner({
+  title,
+  tagline,
+}: {
+  title: string;
+  tagline?: string;
+}) {
+  return (
+    <div className="flex flex-col justify-between h-full">
+      <p className="text-lg md:text-xl font-medium text-[#0f0f0f]">{title}</p>
+      {tagline ? (
+        <div className="flex justify-end">
+          <p className="text-base md:text-lg font-normal text-[#0f0f0f] text-right">
+            {tagline}
+          </p>
+        </div>
+      ) : null}
+    </div>
+  );
+};
+
+StyleCard.IntroList = function IntroList({
+  title,
+  items,
+}: {
+  title: string;
+  items: string[];
+}) {
+  return (
+    <div className="space-y-2">
+      <p className="text-base md:text-lg font-medium text-[#0f0f0f]">
+        {title}
+      </p>
+      <ul className="list-disc pl-4 text-base md:text-lg font-normal text-[#0f0f0f] space-y-1">
+        {items.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};

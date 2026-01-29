@@ -45,15 +45,14 @@ export function Footer() {
   }, []);
 
   const cardContent = (
-    <div className="flex flex-col p-4 md:flex-row md:items-start gap-8 md:gap-12">
+    <div className="flex flex-col p-2 md:flex-row md:items-start h-20 gap-8 md:gap-12">
       {/* Left: I'm looking for clients + GitHub + email cards */}
-      <div className="flex flex-col gap-3">
-        <span className={cardClass}>I&apos;m looking for clients.</span>
+      <div className="flex items-end gap-3">
         <a
           href="https://github.com/polisen"
           target="_blank"
           rel="noopener noreferrer"
-          className={`${cardClass} w-fit`}
+          className={`${cardClass} h-12 w-fit`}
         >
           GitHub
         </a>
@@ -63,10 +62,7 @@ export function Footer() {
       </div>
 
       {/* Right: copy + download CV CTA */}
-      <div className="flex flex-col gap-3 md:flex-1">
-        <p className="text-gray-900 font-medium">
-          I don&apos;t know, download PDF CV.
-        </p>
+      <div className="flex flex-col h-full gap-3 md:flex-1 justify-end items-end">
         <Link
           href="/fredrik_westerdahl_cv.pdf"
           download
@@ -75,7 +71,7 @@ export function Footer() {
           <span className="flex-1 px-4 py-3 text-gray-900 font-medium">
             Download PDF CV
           </span>
-          <span className="flex items-center justify-center w-12 h-full bg-gray-200/80 text-gray-900 group-hover:bg-gray-300/80 transition-colors">
+          <span className="flex items-center justify-center w-12 shrink-0 h-full bg-gray-200/80 text-gray-900 group-hover:bg-gray-300/80 transition-colors">
             <svg
               width="20"
               height="20"

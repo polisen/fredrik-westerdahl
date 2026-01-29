@@ -27,6 +27,7 @@ interface CardLineProps {
   title?: string;
   alwaysVisibleCount?: number;
   heightVariant?: "regular" | "tall" | "large";
+  outerPadding?: boolean;
 }
 
 interface CardItemProps {
@@ -71,6 +72,7 @@ export function CardLine({
   title,
   alwaysVisibleCount = 1,
   heightVariant = "regular",
+  outerPadding = true,
 }: CardLineProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
@@ -136,9 +138,14 @@ export function CardLine({
     };
   }, []);
 
+  const containerPaddingClass = outerPadding ? "px-4 md:px-[130px]" : "px-0";
+  const carouselClass = outerPadding
+    ? "overflow-hidden -mx-4 md:-mx-32"
+    : "overflow-hidden";
+
   return (
     <div
-      className="w-full px-4 md:px-[130px] relative"
+      className={`w-full ${containerPaddingClass} relative`}
       style={
         {
           cursor: isDragging ? "grabbing" : isHovered ? "grab" : "default",
@@ -179,17 +186,26 @@ export function CardLine({
       <Flickity
         options={flickityOptions}
         flickityRef={setFlkty}
-        className="overflow-hidden -mx-4 md:-mx-32"
+        className={carouselClass}
       >
         {childItems.map((child, index) => {
           const shouldShow =
             isMobile || isHovered || index < alwaysVisibleCount;
           const isFirst = index === 0;
           const isLast = index === childItems.length - 1;
+          const leftPaddingClass =
+            outerPadding && isFirst ? "pl-4 md:pl-32" : "";
+          const rightPaddingClass = outerPadding
+            ? isLast
+              ? "pr-4 md:pr-32"
+              : "pr-2"
+            : isLast
+              ? "pr-0"
+              : "pr-2";
           const cellClass = [
             "shrink-0 w-auto ",
-            isFirst ? "pl-4 md:pl-32" : "",
-            isLast ? "pr-4 md:pr-32" : "pr-2",
+            leftPaddingClass,
+            rightPaddingClass,
           ]
             .filter(Boolean)
             .join(" ");

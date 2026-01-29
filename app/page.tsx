@@ -8,7 +8,7 @@ import { usePathname } from 'next/navigation';
 import { useApp } from '@/context/AppContext';
 import type { ActiveSection } from '@/context/AppContext';
 import { GooContainer } from '@/components/GooContainer';
-import { StyleCard } from '@/components/StyleCard';
+import { IntroCardLines } from '@/components/IntroCardLines';
 import { CaseStudy01SublinkNew } from '@/components/CaseStudy01SublinkNew';
 import { CaseStudy02ArbitragePlatformNew } from '@/components/CaseStudy02ArbitragePlatformNew';
 import { CaseStudy03SocialGraphNew } from '@/components/CaseStudy03SocialGraphNew';
@@ -147,6 +147,7 @@ export default function PortfolioPage() {
     >
       <FadeIn>
         <div className="flex flex-col h-min  overflow-x-visible gap-2 pt-[60vh] pb-[30vh] ">
+          <IntroCardLines />
           <CaseStudy01SublinkNew />
           <CaseStudy02ArbitragePlatformNew />
           <CaseStudy03SocialGraphNew />
