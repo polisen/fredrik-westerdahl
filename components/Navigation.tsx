@@ -13,7 +13,7 @@ export function Navigation() {
   const { activeSection } = useApp();
 
   const links = [
-    { href: '/', label: 'portfolio' },
+    { href: '/', label: 'Case Studies' },
     // { href: '/creative', label: 'Creative' },
   ];
 

@@ -7,7 +7,7 @@ import { StyleCard } from '@/components/StyleCard';
 
 export function CaseStudy02ArbitragePlatformNew() {
   return (
-    <CaseStudySection title="arbitrage platform">
+    <>
       <CardLine backgroundColor={getArbitrageCardLineColor(0)}>
         <CardItem aspectRatio="square">
           <div className="p-4 h-full">
@@ -196,6 +196,6 @@ export function CaseStudy02ArbitragePlatformNew() {
           </div>
         </CardItem>
       </CardLine>
-    </CaseStudySection>
+    </>
   );
 }

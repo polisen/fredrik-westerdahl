@@ -10,12 +10,14 @@ import { StyleCard } from '@/components/StyleCard';
 
 export function CaseStudy04RenewcellToolkitNew() {
   return (
-    <CaseStudySection title="renewcell / circulose">
+    <CaseStudySection title="circulose">
       <Script
         src="/renewcell/circulose-bundle.js"
         strategy="lazyOnload"
       />
       <CardLine backgroundColor={getRenewcellCardLineColor(0)}>
+      <MediaCardItem type="image" src="/renewcell/circulose.png" alt="Made with Circulose" />
+
         <MediaCardItem
           type="video"
           src="/renewcell/circulose.webm"

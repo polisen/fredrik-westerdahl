@@ -7,8 +7,7 @@ import { StyleCard } from '@/components/StyleCard';
 
 export function CaseStudy03SocialGraphNew() {
   return (
-    <CaseStudySection title="social graph">
-      <CardLine backgroundColor={getSocialGraphCardLineColor(0)}>
+    <CardLine backgroundColor={getSocialGraphCardLineColor(0)}>
         <CardItem aspectRatio="square">
           <div className="p-4 h-full">
             <StyleCard.Title font="badger">social graph</StyleCard.Title>
@@ -84,6 +83,5 @@ export function CaseStudy03SocialGraphNew() {
           </div>
         </CardItem>
       </CardLine>
-    </CaseStudySection>
   );
 }
