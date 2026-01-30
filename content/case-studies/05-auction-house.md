@@ -3,7 +3,7 @@
 title: Lilla Auktionsstudion
 subtitle: Domain-specific production platform
 tagline: Shipping a production system under tight budget and domain constraints
-order: 5
+order: 3
 insightSlugs: ["constraint-driven-delivery"]
 theme:
   background: "#EFEFEF"

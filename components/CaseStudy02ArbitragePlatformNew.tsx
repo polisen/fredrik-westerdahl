@@ -10,8 +10,8 @@ export function CaseStudy02ArbitragePlatformNew() {
     <CaseStudySection title="arbitrage platform">
       <CardLine backgroundColor={getArbitrageCardLineColor(0)}>
         <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.Title>arbitrage platform</StyleCard.Title>
+          <div className="p-4 h-full">
+            <StyleCard.Title font="badger">arbitrage platform</StyleCard.Title>
           </div>
         </CardItem>
         <CardItem aspectRatio="square">
@@ -19,9 +19,6 @@ export function CaseStudy02ArbitragePlatformNew() {
             <StyleCard.ImagePlaceholder filename="arbitrage-01.jpg" />
           </div>
         </CardItem>
-      </CardLine>
-
-      <CardLine backgroundColor={getArbitrageCardLineColor(1)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>what it was</StyleCard.IntroHeading>
@@ -46,9 +43,6 @@ export function CaseStudy02ArbitragePlatformNew() {
             <StyleCard.IntroParagraph>treated ai as infrastructure.</StyleCard.IntroParagraph>
           </div>
         </CardItem>
-      </CardLine>
-
-      <CardLine backgroundColor={getArbitrageCardLineColor(2)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>key challenge: cost at scale</StyleCard.IntroHeading>
@@ -75,9 +69,6 @@ export function CaseStudy02ArbitragePlatformNew() {
             </StyleCard.IntroParagraph>
           </div>
         </CardItem>
-      </CardLine>
-
-      <CardLine backgroundColor={getArbitrageCardLineColor(3)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>cost-aware ai orchestration</StyleCard.IntroHeading>
@@ -102,9 +93,6 @@ export function CaseStudy02ArbitragePlatformNew() {
             <StyleCard.IntroParagraph>batched work to keep behavior predictable.</StyleCard.IntroParagraph>
           </div>
         </CardItem>
-      </CardLine>
-
-      <CardLine backgroundColor={getArbitrageCardLineColor(4)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>mcp-based control layer</StyleCard.IntroHeading>
@@ -131,9 +119,6 @@ export function CaseStudy02ArbitragePlatformNew() {
             </StyleCard.IntroParagraph>
           </div>
         </CardItem>
-      </CardLine>
-
-      <CardLine backgroundColor={getArbitrageCardLineColor(5)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>high-throughput ingestion</StyleCard.IntroHeading>
@@ -160,9 +145,6 @@ export function CaseStudy02ArbitragePlatformNew() {
             </StyleCard.IntroParagraph>
           </div>
         </CardItem>
-      </CardLine>
-
-      <CardLine backgroundColor={getArbitrageCardLineColor(6)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>analytics and feedback</StyleCard.IntroHeading>
@@ -187,9 +169,6 @@ export function CaseStudy02ArbitragePlatformNew() {
             <StyleCard.IntroParagraph>optimized for predictability.</StyleCard.IntroParagraph>
           </div>
         </CardItem>
-      </CardLine>
-
-      <CardLine backgroundColor={getArbitrageCardLineColor(7)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>outcome</StyleCard.IntroHeading>

@@ -2,213 +2,84 @@
 
 import { CardItem, CardLine } from '@/components/CardLine';
 import { CaseStudySection } from '@/components/CaseStudySection';
+import { MediaCardItem } from '@/components/MediaCardItem';
 import { getAuctionHouseCardLineColor } from '@/lib/cardLineColors';
 import { StyleCard } from '@/components/StyleCard';
+
+const LILLA_IMAGES = ['lilla_1.png', 'lilla_2.png', 'lilla_3.png', 'lilla_4.png'];
 
 export function CaseStudy05AuctionHouseNew() {
   return (
     <CaseStudySection title="lilla auktionsstudion">
+      <CardLine backgroundColor={'#fff'}>
+        {LILLA_IMAGES.map((filename) => (
+          <MediaCardItem
+            key={filename}
+            type="image"
+            src={`/lilla/${filename}`}
+            alt="Lilla auktionsstudion"
+          />
+        ))}
+      </CardLine>
+
       <CardLine backgroundColor={getAuctionHouseCardLineColor(0)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
-            <StyleCard.Title>lilla auktionsstudion</StyleCard.Title>
+            <StyleCard.IntroHeading>project overview</StyleCard.IntroHeading>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="video">
+          <div className="p-4 h-full">
+            <StyleCard.CornerLabel label="what it was">
+              a production auction platform built for a small auction house
+              running live and online auctions, including payments, seller
+              onboarding, customer service tooling, and email marketing.
+            </StyleCard.CornerLabel>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="video">
+          <div className="p-4 h-full">
+            <StyleCard.CornerLabel label="my role">
+              consultant and lead developer. full responsibility for system
+              design, implementation, and delivery.
+            </StyleCard.CornerLabel>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="video">
+          <div className="p-4 h-full">
+            <StyleCard.CornerLabel label="technologies">
+              next.js, node.js, payment integrations, email systems, cloud
+              hosting
+            </StyleCard.CornerLabel>
           </div>
         </CardItem>
         <CardItem aspectRatio="square">
           <div className="p-4">
-            <StyleCard.ImagePlaceholder filename="lilla-auktionsstudion-01.jpg" />
+            <StyleCard.IntroHeading>domain-first auction workflows</StyleCard.IntroHeading>
           </div>
         </CardItem>
-      </CardLine>
-
-      <CardLine backgroundColor={getAuctionHouseCardLineColor(1)}>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroHeading>what it was</StyleCard.IntroHeading>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
+        <CardItem aspectRatio="video">
           <div className="p-4">
             <StyleCard.IntroParagraph>
-              a production auction platform for live and online auctions.
+              the platform was modeled around how auctions actually operate:
+              listings, bids, settlements, and sellers. generic ecommerce
+              abstractions were deliberately avoided.
             </StyleCard.IntroParagraph>
           </div>
         </CardItem>
         <CardItem aspectRatio="square">
           <div className="p-4">
-            <StyleCard.IntroParagraph>
-              included payments, seller onboarding, customer service, and email marketing.
-            </StyleCard.IntroParagraph>
+            <StyleCard.IntroHeading>
+              production delivery under pressure
+            </StyleCard.IntroHeading>
           </div>
         </CardItem>
-        <CardItem aspectRatio="square">
+        <CardItem aspectRatio="video">
           <div className="p-4">
             <StyleCard.IntroParagraph>
-              delivered as a consultancy project with full ownership.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-      </CardLine>
-
-      <CardLine backgroundColor={getAuctionHouseCardLineColor(2)}>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroHeading>key challenge: tight constraints</StyleCard.IntroHeading>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              delivered under a limited budget and timeline.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              needed to cover the full operational surface of an auction business.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              every decision had to justify its cost.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-      </CardLine>
-
-      <CardLine backgroundColor={getAuctionHouseCardLineColor(3)}>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroHeading>domain-first design</StyleCard.IntroHeading>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>modeled auction workflows directly.</StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              avoided generic ecommerce abstractions.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              aligned the system with real operations.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-      </CardLine>
-
-      <CardLine backgroundColor={getAuctionHouseCardLineColor(4)}>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroHeading>integrated business workflows</StyleCard.IntroHeading>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              implemented payments and settlements as core domain features.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              supported seller onboarding and administration.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              built customer communication into the platform.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-      </CardLine>
-
-      <CardLine backgroundColor={getAuctionHouseCardLineColor(5)}>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroHeading>lean architecture</StyleCard.IntroHeading>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>avoided over-engineering.</StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>favored simple, explicit solutions.</StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              treated constraints as design inputs.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-      </CardLine>
-
-      <CardLine backgroundColor={getAuctionHouseCardLineColor(6)}>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroHeading>production delivery</StyleCard.IntroHeading>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>shipped as a live platform.</StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>handled hosting and deployment.</StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              ensured usability for non-technical staff.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-      </CardLine>
-
-      <CardLine backgroundColor={getAuctionHouseCardLineColor(7)}>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroHeading>outcome</StyleCard.IntroHeading>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              delivered a full-featured platform within constraints.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              supported real auctions and payments in production.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              demonstrated pragmatic engineering judgment.
+              delivered a full-featured system within strict constraints,
+              prioritizing clarity and maintainability over unnecessary
+              flexibility.
             </StyleCard.IntroParagraph>
           </div>
         </CardItem>

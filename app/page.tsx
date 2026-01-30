@@ -140,11 +140,18 @@ export default function PortfolioPage() {
       <FadeIn>
         <div className="flex flex-col h-min  overflow-x-visible gap-2 pt-[60vh] pb-[30vh] ">
           <IntroCardLines />
+          <div className="h-12" />
+
           <CaseStudy01SublinkNew />
+          <div className="h-12" />
+ 
+          <CaseStudy04RenewcellToolkitNew />
+          <div className="h-12" />
+
+          <CaseStudy05AuctionHouseNew />
+          <div className="h-12" />
           <CaseStudy02ArbitragePlatformNew />
           <CaseStudy03SocialGraphNew />
-          <CaseStudy04RenewcellToolkitNew />
-          <CaseStudy05AuctionHouseNew />
           <Footer />
         </div>
       </FadeIn>

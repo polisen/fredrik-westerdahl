@@ -71,13 +71,13 @@ export function Navigation() {
                 isFredrikSelected ? 'opacity-100' : 'bg-gray-100/80'
               )}
             >
-              <div className="z-30 opacity-0">fredrik</div>
+              <div className="z-30 opacity-0">fredrik westerdahl</div>
               <motion.div
                 onHoverStart={() => setHoveredLink('/fredrik')}
                 onHoverEnd={() => setHoveredLink(isFredrikSelected ? '/fredrik' : null)}
                 className="z-30 absolute inset-0 flex items-center justify-center"
               >
-                fredrik
+                Fredrik Westerdahl
               </motion.div>
               {(hoveredLink === '/fredrik' || isFredrikSelected) ? (
                 <motion.div

@@ -43,10 +43,13 @@ interface CardLineProps {
 
 interface CardItemProps {
   children: ReactNode;
-  aspectRatio?: "square" | "video";
+  /** "square" | "video" (13/9) | number (width/height) – number lets media cards fit the asset exactly: height from card line, width = height × ratio */
+  aspectRatio?: "square" | "video" | number;
   className?: string;
   /** Optional text color; when omitted, uses WCAG AA contrasting color from the card line background. */
   textColor?: string;
+  /** When true, card background is transparent (e.g. for image/video cards). */
+  noBackground?: boolean;
 }
 
 const cardItemRevealVariants = {
@@ -59,11 +62,19 @@ export function CardItem({
   aspectRatio = "square",
   className,
   textColor,
+  noBackground = false,
 }: CardItemProps) {
   const { scrollContainerRef } = useApp();
   const reducedMotion = useReducedMotion();
   const defaultTextColor = useContext(CardLineTextColorContext);
   const effectiveTextColor = textColor ?? defaultTextColor;
+
+  const widthStyle =
+    aspectRatio === "square"
+      ? "var(--cardline-height, 40vh)"
+      : typeof aspectRatio === "number"
+        ? `calc(var(--cardline-height, 40vh) * ${aspectRatio})`
+        : "calc(var(--cardline-height, 40vh) * 13 / 9)";
 
   return (
     <motion.div
@@ -79,14 +90,11 @@ export function CardItem({
       transition={{ duration: 0.5, ease: "easeOut" }}
       style={{
         height: "var(--cardline-height, 40vh)",
-        width:
-          aspectRatio === "square"
-            ? "var(--cardline-height, 40vh)"
-            : "calc(var(--cardline-height, 40vh) * 13 / 9)",
-        backgroundColor: "var(--cardline-bg, #f3f4f6)",
+        width: widthStyle,
+        backgroundColor: noBackground ? "transparent" : "var(--cardline-bg, #f3f4f6)",
       }}
     >
-      <div style={{ color: effectiveTextColor }}>{children}</div>
+      <div className="h-full min-h-0 flex flex-col" style={{ color: effectiveTextColor }}>{children}</div>
     </motion.div>
   );
 }

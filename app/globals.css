@@ -3,6 +3,14 @@
 @tailwind utilities;
 @custom-variant dark (&:is(.dark *));
 
+@font-face {
+  font-family: 'Badger';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/badger.woff2') format('woff2');
+}
+
 :root {
   --font-size: 16px;
   

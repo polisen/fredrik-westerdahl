@@ -57,15 +57,17 @@ export function CursorProvider({ children }: CursorProviderProps) {
     hoveredRectRef.current = hoveredRect;
   }, [hoveredRect]);
 
-  // Track mouse position
+  // Track mouse position (pointermove + capture so we get updates during drag/capture)
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
+    const handlePointerMove = (e: PointerEvent) => {
+      if (e.pointerType !== 'mouse') return;
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    document.addEventListener('pointermove', handlePointerMove, { capture: true });
+    return () =>
+      document.removeEventListener('pointermove', handlePointerMove, { capture: true });
   }, [mouseX, mouseY]);
 
   // Track mouse press state

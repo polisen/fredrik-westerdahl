@@ -2,295 +2,97 @@
 
 import { CardItem, CardLine } from '@/components/CardLine';
 import { CaseStudySection } from '@/components/CaseStudySection';
+import { MediaCardItem } from '@/components/MediaCardItem';
 import { getSublinkCardLineColor } from '@/lib/cardLineColors';
 import { StyleCard } from '@/components/StyleCard';
+
+const SUBLINK_IMAGES = [
+  'sublink_1.png',
+  'sublink_2.png',
+  'sublink_3.png',
+  'sublink_4.png',
+  'sublink_5.png',
+  'sublink_6.png',
+  'sublink_7.png',
+  'sublink_8.png',
+];
 
 export function CaseStudy01SublinkNew() {
   return (
     <CaseStudySection title="sublink">
       <CardLine backgroundColor={getSublinkCardLineColor(0)}>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.Title>sublink</StyleCard.Title>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.ImagePlaceholder filename="sublink-01.jpg" />
-          </div>
-        </CardItem>
+        {SUBLINK_IMAGES.map((filename) => (
+          <MediaCardItem
+            key={filename}
+            type="image"
+            src={`/sublink/${filename}`}
+            alt="Sublink"
+          />
+        ))}
       </CardLine>
 
       <CardLine backgroundColor={getSublinkCardLineColor(1)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
-            <StyleCard.IntroHeading>what it was</StyleCard.IntroHeading>
+            <StyleCard.IntroHeading>project overview</StyleCard.IntroHeading>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="video">
+          <div className="p-4 h-full">
+            <StyleCard.CornerLabel label="what it was">
+              a funded saas platform (€1.4m) built to help creators collaborate
+              and express themselves online. rather than shipping a single fixed
+              product, the platform was designed as a modular system capable of
+              supporting multiple directions over time.
+            </StyleCard.CornerLabel>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="video">
+          <div className="p-4 h-full">
+            <StyleCard.CornerLabel label="my role">
+              co-founder & cto. owned system architecture, frontend and backend
+              implementation, and production delivery end-to-end.
+            </StyleCard.CornerLabel>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="video">
+          <div className="p-4 h-full">
+            <StyleCard.CornerLabel label="technologies">
+              typescript, next.js, node.js, expo, firebase, google cloud,
+              realtime sync, custom authorization, analytics
+            </StyleCard.CornerLabel>
           </div>
         </CardItem>
         <CardItem aspectRatio="square">
           <div className="p-4">
-            <StyleCard.IntroParagraph>
-              a funded saas platform (€1.4m) built for creators to collaborate
-              and express themselves more effectively online.
-            </StyleCard.IntroParagraph>
+            <StyleCard.IntroHeading>modular architecture as the product</StyleCard.IntroHeading>
           </div>
         </CardItem>
-        <CardItem aspectRatio="square">
+        <CardItem aspectRatio="video">
           <div className="p-4">
             <StyleCard.IntroParagraph>
-              designed as a modular system where the core product was the
-              architecture itself, not a fixed use case.
+              in an early-stage startup, uncertainty is constant. instead of
+              optimizing for a specific audience or workflow, the system was
+              designed so the architecture itself carried the value. use cases,
+              branding, and positioning could change without invalidating the
+              core.
             </StyleCard.IntroParagraph>
           </div>
         </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              owned end-to-end as co-founder and cto, from early system design to
-              production delivery.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-      </CardLine>
-
-      <CardLine backgroundColor={getSublinkCardLineColor(2)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>
-              key challenge: modular architecture as the product
+              collaboration and trust as first-class systems
             </StyleCard.IntroHeading>
           </div>
         </CardItem>
-        <CardItem aspectRatio="square">
+        <CardItem aspectRatio="video">
           <div className="p-4">
             <StyleCard.IntroParagraph>
-              treated modularity as the core value instead of optimizing for a
-              specific audience or workflow.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              allowed use cases, branding, and positioning to change without
-              invalidating the system.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              focused on first principles and domain boundaries rather than
-              presumed customer behavior.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-      </CardLine>
-
-      <CardLine backgroundColor={getSublinkCardLineColor(3)}>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroHeading>real-time collaboration</StyleCard.IntroHeading>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              built a collaborative system for individuals and groups working
-              together in real time.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              enforced strict consistency guarantees, closer to figma or google
-              docs than typical web apps.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              treated collaboration as a foundational capability, not an add-on.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-      </CardLine>
-
-      <CardLine backgroundColor={getSublinkCardLineColor(4)}>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroHeading>split payments</StyleCard.IntroHeading>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              designed a custom split-payments system for collaborative creation.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              enabled creators to sell together without needing to meet, trust,
-              or manually settle.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              removed coordination and trust barriers that usually block
-              collaborative monetization.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-      </CardLine>
-
-      <CardLine backgroundColor={getSublinkCardLineColor(5)}>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroHeading>
-              key challenge: designing for uncertainty
-            </StyleCard.IntroHeading>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              accepted fluid and changing requirements as a starting point.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              prioritized reversibility and isolation over premature optimization.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              supported multiple plausible futures without collapsing under change.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-      </CardLine>
-
-      <CardLine backgroundColor={getSublinkCardLineColor(6)}>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroHeading>frontend and interaction as systems</StyleCard.IntroHeading>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              built the interface around composable blocks rather than fixed flows.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              aligned layout, interaction, and collaboration under the same mental model.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              evolved visual language and system design together.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-      </CardLine>
-
-      <CardLine backgroundColor={getSublinkCardLineColor(7)}>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroHeading>data, permissions, and visibility</StyleCard.IntroHeading>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              implemented custom authorization and visibility models across real-time data stores.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              supported complex roles and public/private collaboration spaces.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              treated permissions as part of the domain.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-      </CardLine>
-
-      <CardLine backgroundColor={getSublinkCardLineColor(8)}>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroHeading>analytics and feedback</StyleCard.IntroHeading>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              integrated analytics as core infrastructure.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              validated assumptions and detected structural issues early.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              used feedback loops to guide technical and product decisions.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-      </CardLine>
-
-      <CardLine backgroundColor={getSublinkCardLineColor(9)}>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroHeading>outcome</StyleCard.IntroHeading>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              built and operated the platform under real startup constraints.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              the company was later dissolved, with ip retained.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              demonstrated architectural ownership and comfort operating under uncertainty.
+              real-time collaboration and split payments were built into the
+              foundation. creators could work together live and sell together
+              without needing to meet, trust, or manually settle with each other,
+              removing a major coordination barrier.
             </StyleCard.IntroParagraph>
           </div>
         </CardItem>

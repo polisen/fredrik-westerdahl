@@ -1,18 +1,35 @@
 'use client';
 
 import { useState, ReactNode } from 'react';
+import { cn } from '@/lib/cn';
+import { type TitleFontId, getTitleFontClass } from '@/lib/titleFonts';
 
 // Main wrapper component - no styling, just passes through children
 export function StyleCard({ children }: { children: ReactNode }) {
   return <>{children}</>;
 }
 
-// Variant 1: Title - Large H1/H2 text, left-aligned, wraps (inherits text color from CardItem when not set)
-StyleCard.Title = function Title({ children }: { children: ReactNode }) {
+// Variant 1: Title - Large H1/H2 text, bottom-right aligned, wraps (inherits text color from CardItem when not set)
+StyleCard.Title = function Title({
+  children,
+  font = 'default',
+}: {
+  children: ReactNode;
+  font?: TitleFontId;
+}) {
+  const fontClass = getTitleFontClass(font);
   return (
-    <h1 className="text-2xl h-full flex justify-end items-end md:text-3xl font-medium leading-[1.2] tracking-tight" style={{ color: 'inherit' }}>
-      {children}
-    </h1>
+    <div className="h-full flex flex-col justify-end items-end text-right">
+      <h1
+        className={cn(
+          'text-2xl md:text-3xl font-medium leading-[1.2] tracking-tight',
+          fontClass
+        )}
+        style={{ color: 'inherit' }}
+      >
+        {children}
+      </h1>
+    </div>
   );
 };
 
@@ -106,6 +123,25 @@ StyleCard.End = function End({ title, subtitle }: EndProps) {
         <h2 className="text-lg md:text-xl font-normal text-right">
           {subtitle}
         </h2>
+      </div>
+    </div>
+  );
+};
+
+// Variant: Label (big, like a title) top-left; body (paragraph-sized) bottom-right (for my role, insights, etc.)
+interface CornerLabelProps {
+  label: string;
+  children: ReactNode;
+}
+
+StyleCard.CornerLabel = function CornerLabel({ label, children }: CornerLabelProps) {
+  return (
+    <div className="flex flex-col justify-between min-h-0 h-full" style={{ color: 'inherit' }}>
+      <h2 className="text-2xl md:text-3xl font-medium leading-[1.2] tracking-tight shrink-0">
+        {label}
+      </h2>
+      <div className="flex justify-end mt-auto pt-4 text-right text-xl md:text-2xl font-normal leading-[1.5] shrink-0">
+        {children}
       </div>
     </div>
   );

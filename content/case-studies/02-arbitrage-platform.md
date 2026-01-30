@@ -3,7 +3,7 @@
 title: Arbitrage Platform
 subtitle: High-throughput document analysis system
 tagline: Designing cost-aware AI pipelines for large-scale document ingestion
-order: 2
+order: 4
 insightSlugs: ["cost-aware-ai-pipelines"]
 theme:
   background: "#C3E9E3"

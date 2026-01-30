@@ -41,10 +41,11 @@ export function getContrastingTextColor(
  * cycle by row index.
  */
 export const CARD_LINE_COLORS = [
-  "#D2E81A",
-  "#8E85AA",
-  "#D5AAB1",
-  "#98CA3C",
+  "#C0BED1",
+  "#658FBD",
+  "#6F6C74",
+  "#00296A",
+  "#9A9FB3",
 ] as const;
 
 export type CardLineColorHex = (typeof CARD_LINE_COLORS)[number];
@@ -96,13 +97,13 @@ export function getSocialGraphCardLineColor(index: number): string {
  */
 export const SUBLINK_CARD_LINE_COLORS = [
   "#292010",
-  "#78847D",
+  "#e6e2e1",
   "#2C2C22",
   "#555E58",
   "#B9CBBD",
 ] as const;
 
-const SORTED_SUBLINK_CARD_LINE_COLORS = sortColorsByIntensity(SUBLINK_CARD_LINE_COLORS);
+const SORTED_SUBLINK_CARD_LINE_COLORS = SUBLINK_CARD_LINE_COLORS
 
 /** Get the sublink card line color for a given row index (cycles through the palette, sorted bright→dark). */
 export function getSublinkCardLineColor(index: number): string {
@@ -113,11 +114,12 @@ export function getSublinkCardLineColor(index: number): string {
  * Lilla auktionsstudion (auction house) card line palette.
  */
 export const AUCTION_HOUSE_CARD_LINE_COLORS = [
-  "#FC469D",
-  "#F8155A",
-  "#FB4CA7",
-  "#F6CAE4",
-  "#FC59B4",
+  "#fffffff2",
+  "#f3facb",
+  "#f0f0f0",
+  "#e5e7eb",
+  "#ebaad0",
+  "#ec1607",
 ] as const;
 
 const SORTED_AUCTION_HOUSE_CARD_LINE_COLORS = sortColorsByIntensity(AUCTION_HOUSE_CARD_LINE_COLORS);
