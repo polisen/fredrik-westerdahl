@@ -2,14 +2,13 @@
 
 import { CardItem, CardLine } from '@/components/CardLine';
 import { CaseStudySection } from '@/components/CaseStudySection';
+import { getSocialGraphCardLineColor } from '@/lib/cardLineColors';
 import { StyleCard } from '@/components/StyleCard';
-
-const socialGraphColor = '#fd2c50';
 
 export function CaseStudy03SocialGraphNew() {
   return (
     <CaseStudySection title="social graph">
-      <CardLine backgroundColor={socialGraphColor}>
+      <CardLine backgroundColor={getSocialGraphCardLineColor(0)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.Title>social graph</StyleCard.Title>
@@ -22,7 +21,7 @@ export function CaseStudy03SocialGraphNew() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor={socialGraphColor}>
+      <CardLine backgroundColor={getSocialGraphCardLineColor(1)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>what it was</StyleCard.IntroHeading>
@@ -49,7 +48,7 @@ export function CaseStudy03SocialGraphNew() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor={socialGraphColor}>
+      <CardLine backgroundColor={getSocialGraphCardLineColor(2)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>key challenge: structure over metrics</StyleCard.IntroHeading>
@@ -76,7 +75,7 @@ export function CaseStudy03SocialGraphNew() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor={socialGraphColor}>
+      <CardLine backgroundColor={getSocialGraphCardLineColor(3)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>graph-first data model</StyleCard.IntroHeading>
@@ -103,7 +102,7 @@ export function CaseStudy03SocialGraphNew() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor={socialGraphColor}>
+      <CardLine backgroundColor={getSocialGraphCardLineColor(4)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>community detection and influence</StyleCard.IntroHeading>
@@ -128,7 +127,7 @@ export function CaseStudy03SocialGraphNew() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor={socialGraphColor}>
+      <CardLine backgroundColor={getSocialGraphCardLineColor(5)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>strategic applications</StyleCard.IntroHeading>
@@ -155,7 +154,7 @@ export function CaseStudy03SocialGraphNew() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor={socialGraphColor}>
+      <CardLine backgroundColor={getSocialGraphCardLineColor(6)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>outcome</StyleCard.IntroHeading>

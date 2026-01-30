@@ -1,32 +1,37 @@
 "use client"
 
-import { useApp } from "@/context/AppContext"
-import { motion } from "motion/react"
+import { motion, useScroll, useSpring, useTransform } from "motion/react"
 import { usePathname } from "next/navigation"
 
+const scrollBarSpring = { stiffness: 120, damping: 16 }
+
 export default function ScrollLinked() {
-    const { scrollYProgress } = useApp()
     const pathname = usePathname()
     const isInsightPage = pathname.startsWith('/insights/')
 
-
-    const scrollYNumber = scrollYProgress ?? 0
-
-    const IS_AT_ENDS = scrollYNumber < .002 || isInsightPage
+    const { scrollYProgress } = useScroll()
+    const progress = useSpring(scrollYProgress, scrollBarSpring)
+    const height = useTransform(progress, (v) =>
+        v < 0.002 ? "0%" : `${v * 100}%`
+    )
+    const opacity = useTransform(progress, (v) => (v < 0.002 || v > 0.994 ? 0 : 1))
+    const x = useTransform(progress, (v) => (v < 0.002 || v > 0.994 ? 40 : 0))
+    const filter = useTransform(
+        progress,
+        (v) => (v < 0.002 || v > 0.994 ? "blur(4px)" : "blur(0px)")
+    )
 
     return (
-        <>
-            <motion.div
-                id="scroll-indicator"
-                className="fixed right-0 inset-y-0 w-1 md:w-2.5 z-50 origin-top bg-[#21de73]"
-                style={{
-                    scaleY: scrollYNumber < .002 ? 0 : scrollYNumber,
-
-                }}
-                transition={{ type: "easeInOut", duration: .2 }}
-                initial={{ scaleY: 0, }}
-                animate={{ filter: !IS_AT_ENDS ? "blur(0px)" : "blur(4px)", y: IS_AT_ENDS ? "40px" : "0px", opacity: IS_AT_ENDS ? 0 : 1 }}
-            />
-        </>
+        <motion.div
+            id="scroll-indicator"
+            className="fixed top-2 right-2 bottom-2 w-1 md:w-2.5 z-50 bg-gray-200/60 rounded-md backdrop-blur-md backdrop-invert-0 origin-top"
+            style={{
+                height: isInsightPage ? "0%" : height,
+                opacity: isInsightPage ? 0 : opacity,
+                x: isInsightPage ? 40 : x,
+                filter: isInsightPage ? "blur(4px)" : filter,
+            }}
+            initial={{ height: "0%" }}
+        />
     )
 }

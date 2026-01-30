@@ -1,10 +1,11 @@
 import { CardItem, CardLine } from "@/components/CardLine";
+import { getCardLineColor } from "@/lib/cardLineColors";
 import { StyleCard } from "@/components/StyleCard";
 
 export function IntroCardLines() {
   return (
     <>
-      <CardLine  backgroundColor="#957bf1">
+      <CardLine backgroundColor={getCardLineColor(0)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>about</StyleCard.IntroHeading>
@@ -17,7 +18,7 @@ export function IntroCardLines() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor="#ff5a0d" heightVariant="large">
+      <CardLine backgroundColor={getCardLineColor(1)} heightVariant="tall">
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.TitleCorner title="hey!" tagline="my name is fredrik"/>
@@ -76,7 +77,7 @@ export function IntroCardLines() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor="#fd2c50">
+      <CardLine backgroundColor={getCardLineColor(2)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>I&apos;m a full stack developer.</StyleCard.IntroHeading>
@@ -144,7 +145,7 @@ export function IntroCardLines() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor="#ceff58">
+      <CardLine backgroundColor={getCardLineColor(3)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>founder and startup work</StyleCard.IntroHeading>
@@ -206,7 +207,7 @@ export function IntroCardLines() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor="#fee144">
+      <CardLine backgroundColor={getCardLineColor(4)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>digital products are systems</StyleCard.IntroHeading>
@@ -268,13 +269,6 @@ export function IntroCardLines() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor="#04bffe">
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroHeading>case studies</StyleCard.IntroHeading>
-          </div>
-        </CardItem>
-      </CardLine>
     </>
   );
 }

@@ -13,7 +13,7 @@ export function Navigation() {
   const { activeSection } = useApp();
 
   const links = [
-    { href: '/', label: 'Portfolio' },
+    { href: '/', label: 'portfolio' },
     // { href: '/creative', label: 'Creative' },
   ];
 
@@ -71,13 +71,13 @@ export function Navigation() {
                 isFredrikSelected ? 'opacity-100' : 'bg-gray-100/80'
               )}
             >
-              <div className="z-30 opacity-0">Fredrik</div>
+              <div className="z-30 opacity-0">fredrik</div>
               <motion.div
                 onHoverStart={() => setHoveredLink('/fredrik')}
                 onHoverEnd={() => setHoveredLink(isFredrikSelected ? '/fredrik' : null)}
                 className="z-30 absolute inset-0 flex items-center justify-center"
               >
-                Fredrik
+                fredrik
               </motion.div>
               {(hoveredLink === '/fredrik' || isFredrikSelected) ? (
                 <motion.div

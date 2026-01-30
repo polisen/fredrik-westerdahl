@@ -2,14 +2,13 @@
 
 import { CardItem, CardLine } from '@/components/CardLine';
 import { CaseStudySection } from '@/components/CaseStudySection';
+import { getSublinkCardLineColor } from '@/lib/cardLineColors';
 import { StyleCard } from '@/components/StyleCard';
-
-const sublinkColor = '#ed6968';
 
 export function CaseStudy01SublinkNew() {
   return (
     <CaseStudySection title="sublink">
-      <CardLine backgroundColor={sublinkColor}>
+      <CardLine backgroundColor={getSublinkCardLineColor(0)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.Title>sublink</StyleCard.Title>
@@ -22,7 +21,7 @@ export function CaseStudy01SublinkNew() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor={sublinkColor}>
+      <CardLine backgroundColor={getSublinkCardLineColor(1)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>what it was</StyleCard.IntroHeading>
@@ -54,7 +53,7 @@ export function CaseStudy01SublinkNew() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor={sublinkColor}>
+      <CardLine backgroundColor={getSublinkCardLineColor(2)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>
@@ -88,7 +87,7 @@ export function CaseStudy01SublinkNew() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor={sublinkColor}>
+      <CardLine backgroundColor={getSublinkCardLineColor(3)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>real-time collaboration</StyleCard.IntroHeading>
@@ -119,7 +118,7 @@ export function CaseStudy01SublinkNew() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor={sublinkColor}>
+      <CardLine backgroundColor={getSublinkCardLineColor(4)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>split payments</StyleCard.IntroHeading>
@@ -150,7 +149,7 @@ export function CaseStudy01SublinkNew() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor={sublinkColor}>
+      <CardLine backgroundColor={getSublinkCardLineColor(5)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>
@@ -181,7 +180,7 @@ export function CaseStudy01SublinkNew() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor={sublinkColor}>
+      <CardLine backgroundColor={getSublinkCardLineColor(6)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>frontend and interaction as systems</StyleCard.IntroHeading>
@@ -210,7 +209,7 @@ export function CaseStudy01SublinkNew() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor={sublinkColor}>
+      <CardLine backgroundColor={getSublinkCardLineColor(7)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>data, permissions, and visibility</StyleCard.IntroHeading>
@@ -239,7 +238,7 @@ export function CaseStudy01SublinkNew() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor={sublinkColor}>
+      <CardLine backgroundColor={getSublinkCardLineColor(8)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>analytics and feedback</StyleCard.IntroHeading>
@@ -268,7 +267,7 @@ export function CaseStudy01SublinkNew() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor={sublinkColor}>
+      <CardLine backgroundColor={getSublinkCardLineColor(9)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>outcome</StyleCard.IntroHeading>

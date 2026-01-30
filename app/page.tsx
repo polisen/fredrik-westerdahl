@@ -3,7 +3,7 @@ import { allCaseStudies } from 'contentlayer/generated';
 import { FadeIn } from '@/components/FadeIn';
 import { Footer } from '@/components/Footer';
 import { useRef, useEffect, useMemo, useState } from 'react';
-import { useMotionValueEvent, useScroll, motion } from 'motion/react';
+import { motion } from 'motion/react';
 import { usePathname } from 'next/navigation';
 import { useApp } from '@/context/AppContext';
 import type { ActiveSection } from '@/context/AppContext';
@@ -38,21 +38,13 @@ export default function PortfolioPage() {
     };
   }, [setScrollContainerRef]);
 
-  const { scrollYProgress } = useScroll({
-    container: ref as React.RefObject<HTMLDivElement>,
-  });
-
-  // Update global scrollYProgress when it changes
+  // Scroll progress is no longer synced to context; ScrollLinked uses useScroll() directly
+  // so the indicator updates via MotionValues without triggering React re-renders.
   useEffect(() => {
     return () => {
       setScrollYProgress(null);
     };
-  }, [scrollYProgress, setScrollYProgress]);
-
-  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
-    // reacts on every update
-    setScrollYProgress(latest);
-  });
+  }, [setScrollYProgress]);
 
   const sortedCaseStudies = useMemo(
     () => [...allCaseStudies].sort((a, b) => (a.order || 0) - (b.order || 0)),

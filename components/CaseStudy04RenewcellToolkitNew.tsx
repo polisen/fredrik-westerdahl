@@ -2,14 +2,13 @@
 
 import { CardItem, CardLine } from '@/components/CardLine';
 import { CaseStudySection } from '@/components/CaseStudySection';
+import { getRenewcellCardLineColor } from '@/lib/cardLineColors';
 import { StyleCard } from '@/components/StyleCard';
-
-const renewcellColor = '#957bf1';
 
 export function CaseStudy04RenewcellToolkitNew() {
   return (
     <CaseStudySection title="renewcell / circulose">
-      <CardLine backgroundColor={renewcellColor}>
+      <CardLine backgroundColor={getRenewcellCardLineColor(0)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.Title>renewcell / circulose</StyleCard.Title>
@@ -22,7 +21,7 @@ export function CaseStudy04RenewcellToolkitNew() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor={renewcellColor}>
+      <CardLine backgroundColor={getRenewcellCardLineColor(1)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>what it was</StyleCard.IntroHeading>
@@ -53,7 +52,7 @@ export function CaseStudy04RenewcellToolkitNew() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor={renewcellColor}>
+      <CardLine backgroundColor={getRenewcellCardLineColor(2)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>
@@ -84,7 +83,7 @@ export function CaseStudy04RenewcellToolkitNew() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor={renewcellColor}>
+      <CardLine backgroundColor={getRenewcellCardLineColor(3)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>performance as a hard constraint</StyleCard.IntroHeading>
@@ -111,7 +110,7 @@ export function CaseStudy04RenewcellToolkitNew() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor={renewcellColor}>
+      <CardLine backgroundColor={getRenewcellCardLineColor(4)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>branding without duplication</StyleCard.IntroHeading>
@@ -138,7 +137,7 @@ export function CaseStudy04RenewcellToolkitNew() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor={renewcellColor}>
+      <CardLine backgroundColor={getRenewcellCardLineColor(5)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>
@@ -169,7 +168,7 @@ export function CaseStudy04RenewcellToolkitNew() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor={renewcellColor}>
+      <CardLine backgroundColor={getRenewcellCardLineColor(6)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>privacy-preserving analytics</StyleCard.IntroHeading>
@@ -196,7 +195,7 @@ export function CaseStudy04RenewcellToolkitNew() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor={renewcellColor}>
+      <CardLine backgroundColor={getRenewcellCardLineColor(7)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>data ingestion and analysis</StyleCard.IntroHeading>
@@ -225,7 +224,7 @@ export function CaseStudy04RenewcellToolkitNew() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor={renewcellColor}>
+      <CardLine backgroundColor={getRenewcellCardLineColor(8)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>outcome</StyleCard.IntroHeading>

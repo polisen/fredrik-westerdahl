@@ -2,14 +2,13 @@
 
 import { CardItem, CardLine } from '@/components/CardLine';
 import { CaseStudySection } from '@/components/CaseStudySection';
+import { getAuctionHouseCardLineColor } from '@/lib/cardLineColors';
 import { StyleCard } from '@/components/StyleCard';
-
-const auctionColor = '#ff5a0d';
 
 export function CaseStudy05AuctionHouseNew() {
   return (
     <CaseStudySection title="lilla auktionsstudion">
-      <CardLine backgroundColor={auctionColor}>
+      <CardLine backgroundColor={getAuctionHouseCardLineColor(0)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.Title>lilla auktionsstudion</StyleCard.Title>
@@ -22,7 +21,7 @@ export function CaseStudy05AuctionHouseNew() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor={auctionColor}>
+      <CardLine backgroundColor={getAuctionHouseCardLineColor(1)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>what it was</StyleCard.IntroHeading>
@@ -51,7 +50,7 @@ export function CaseStudy05AuctionHouseNew() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor={auctionColor}>
+      <CardLine backgroundColor={getAuctionHouseCardLineColor(2)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>key challenge: tight constraints</StyleCard.IntroHeading>
@@ -80,7 +79,7 @@ export function CaseStudy05AuctionHouseNew() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor={auctionColor}>
+      <CardLine backgroundColor={getAuctionHouseCardLineColor(3)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>domain-first design</StyleCard.IntroHeading>
@@ -107,7 +106,7 @@ export function CaseStudy05AuctionHouseNew() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor={auctionColor}>
+      <CardLine backgroundColor={getAuctionHouseCardLineColor(4)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>integrated business workflows</StyleCard.IntroHeading>
@@ -136,7 +135,7 @@ export function CaseStudy05AuctionHouseNew() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor={auctionColor}>
+      <CardLine backgroundColor={getAuctionHouseCardLineColor(5)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>lean architecture</StyleCard.IntroHeading>
@@ -161,7 +160,7 @@ export function CaseStudy05AuctionHouseNew() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor={auctionColor}>
+      <CardLine backgroundColor={getAuctionHouseCardLineColor(6)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>production delivery</StyleCard.IntroHeading>
@@ -186,7 +185,7 @@ export function CaseStudy05AuctionHouseNew() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor={auctionColor}>
+      <CardLine backgroundColor={getAuctionHouseCardLineColor(7)}>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>outcome</StyleCard.IntroHeading>

@@ -1,15 +1,24 @@
+"use client";
+
 import "flickity/dist/flickity.min.css";
 import { motion } from "motion/react";
 import Flickity from "react-flickity-component";
 import {
+  createContext,
   Children,
+  useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
   type ReactNode,
   type CSSProperties,
 } from "react";
+import { useApp } from "@/context/AppContext";
+import { getContrastingTextColor } from "@/lib/cardLineColors";
 import { useReducedMotion } from "@/lib/useReducedMotion";
+
+const CardLineTextColorContext = createContext<string>("#0f0f0f");
 
 /** Minimal Flickity instance shape we use (library has no TS types). */
 interface FlickityInstance {
@@ -36,27 +45,49 @@ interface CardItemProps {
   children: ReactNode;
   aspectRatio?: "square" | "video";
   className?: string;
+  /** Optional text color; when omitted, uses WCAG AA contrasting color from the card line background. */
+  textColor?: string;
 }
+
+const cardItemRevealVariants = {
+  hidden: { opacity: 0, filter: "blur(32px)" },
+  visible: { opacity: 1, filter: "blur(0px)" },
+};
 
 export function CardItem({
   children,
   aspectRatio = "square",
   className,
+  textColor,
 }: CardItemProps) {
+  const { scrollContainerRef } = useApp();
+  const reducedMotion = useReducedMotion();
+  const defaultTextColor = useContext(CardLineTextColorContext);
+  const effectiveTextColor = textColor ?? defaultTextColor;
+
   return (
-    <div
+    <motion.div
       className={`rounded-lg max-w-[80dvw] overflow-hidden ${className ?? ""}`}
+      initial={reducedMotion ? "visible" : "hidden"}
+      whileInView="visible"
+      viewport={{
+        once: true,
+        amount: 0.1,
+        root: scrollContainerRef ?? undefined,
+      }}
+      variants={cardItemRevealVariants}
+      transition={{ duration: 0.5, ease: "easeOut" }}
       style={{
         height: "var(--cardline-height, 40vh)",
         width:
           aspectRatio === "square"
             ? "var(--cardline-height, 40vh)"
-            : "calc(var(--cardline-height, 40vh) * 16 / 9)",
+            : "calc(var(--cardline-height, 40vh) * 13 / 9)",
         backgroundColor: "var(--cardline-bg, #f3f4f6)",
       }}
     >
-      {children}
-    </div>
+      <div style={{ color: effectiveTextColor }}>{children}</div>
+    </motion.div>
   );
 }
 
@@ -86,6 +117,10 @@ export function CardLine({
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const childItems = Children.toArray(children);
   const reducedMotion = useReducedMotion();
+  const defaultTextColor = useMemo(
+    () => getContrastingTextColor(backgroundColor ?? "#f3f4f6", 0.9),
+    [backgroundColor]
+  );
 
   useEffect(() => {
     if (!flkty) return;
@@ -149,13 +184,14 @@ export function CardLine({
     : "overflow-hidden";
 
   return (
-    <div
-      className={`w-full ${containerPaddingClass} relative`}
-      style={
-        {
-          cursor: isDragging ? "grabbing" : isHovered ? "grab" : "default",
-          height: "var(--cardline-height, 40vh)",
-          ["--cardline-bg"]: backgroundColor ?? "#f3f4f6",
+    <CardLineTextColorContext.Provider value={defaultTextColor}>
+      <div
+        className={`w-full ${containerPaddingClass} relative`}
+        style={
+          {
+            cursor: isDragging ? "grabbing" : isHovered ? "grab" : "default",
+            height: "var(--cardline-height, 40vh)",
+            ["--cardline-bg"]: backgroundColor ?? "#f3f4f6",
           ["--cardline-height"]:
             heightVariant === "large"
               ? "60vh"
@@ -247,5 +283,6 @@ export function CardLine({
         })}
       </Flickity>
     </div>
+    </CardLineTextColorContext.Provider>
   );
 }

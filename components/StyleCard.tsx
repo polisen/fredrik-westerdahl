@@ -7,10 +7,10 @@ export function StyleCard({ children }: { children: ReactNode }) {
   return <>{children}</>;
 }
 
-// Variant 1: Title - Large H1/H2 text, left-aligned, wraps
+// Variant 1: Title - Large H1/H2 text, left-aligned, wraps (inherits text color from CardItem when not set)
 StyleCard.Title = function Title({ children }: { children: ReactNode }) {
   return (
-    <h1 className="text-2xl h-full flex justify-end items-end md:text-3xl font-medium text-[#0f0f0f] leading-[1.2] tracking-tight">
+    <h1 className="text-2xl h-full flex justify-end items-end md:text-3xl font-medium leading-[1.2] tracking-tight" style={{ color: 'inherit' }}>
       {children}
     </h1>
   );
@@ -30,32 +30,34 @@ StyleCard.Paragraph = function Paragraph({
   children,
   expandedContent,
   defaultExpanded = false,
-  textColor = '#0f0f0f',
+  textColor,
 }: ParagraphProps) {
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
+  const color = textColor ?? 'inherit';
+  const isDefaultDark = color === '#0f0f0f' || color === 'inherit';
 
   return (
     <div className="flex flex-col">
       {/* Small title - tiny, bold, matching image (12-14px) */}
-      <h3 className="text-xs font-bold" style={{ color: textColor }}>
+      <h3 className="text-xs font-bold" style={{ color }}>
         {title}
       </h3>
 
       {/* Body text - main content, always visible (18-20px) */}
-      <div className="text-lg md:text-xl font-normal" style={{ color: textColor }}>
+      <div className="text-lg md:text-xl font-normal" style={{ color }}>
         {children}
       </div>
 
       {/* Expanded content - shown when expanded */}
       {expandedContent && isExpanded && (
-        <div className="text-lg font-normal leading-[1.5] space-y-3 mt-3" style={{ color: textColor }}>
+        <div className="text-lg font-normal leading-[1.5] space-y-3 mt-3" style={{ color }}>
           {expandedContent}
         </div>
       )}
 
       {/* Truncated/faded preview when collapsed */}
       {expandedContent && !isExpanded && (
-        <div className="text-lg font-normal leading-[1.5] mt-3" style={{ color: textColor === '#0f0f0f' ? '#AAAAAA' : textColor }}>
+        <div className="text-lg font-normal leading-[1.5] mt-3" style={{ color: isDefaultDark ? '#AAAAAA' : color }}>
           {expandedContent}
         </div>
       )}
@@ -65,16 +67,14 @@ StyleCard.Paragraph = function Paragraph({
         <button
           onClick={() => setIsExpanded(!isExpanded)}
           className="text-lg font-bold mt-4 text-left transition-colors"
-          style={{ 
-            color: textColor === '#0f0f0f' ? '#555555' : textColor,
-          }}
+          style={{ color: isDefaultDark ? '#555555' : color }}
           onMouseEnter={(e) => {
-            if (textColor === '#0f0f0f') {
-              e.currentTarget.style.color = '#0f0f0f';
+            if (isDefaultDark) {
+              e.currentTarget.style.color = color === 'inherit' ? 'inherit' : '#0f0f0f';
             }
           }}
           onMouseLeave={(e) => {
-            if (textColor === '#0f0f0f') {
+            if (isDefaultDark) {
               e.currentTarget.style.color = '#555555';
             }
           }}
@@ -95,16 +95,15 @@ interface EndProps {
 
 StyleCard.End = function End({ title, subtitle }: EndProps) {
   return (
-    <div className="flex flex-col justify-between min-h-[200px]">
+    <div className="flex flex-col justify-between min-h-[200px]" style={{ color: 'inherit' }}>
       {/* Top-left title */}
-      <h3 className="text-xs font-bold text-[#0f0f0f] ">
+      <h3 className="text-xs font-bold">
         {title}
       </h3>
 
-
       {/* Bottom-right subtitle */}
       <div className="flex justify-end mt-auto pt-4">
-        <h2 className="text-lg md:text-xl font-normal text-[#0f0f0f] text-right">
+        <h2 className="text-lg md:text-xl font-normal text-right">
           {subtitle}
         </h2>
       </div>
@@ -118,7 +117,7 @@ StyleCard.IntroHeading = function IntroHeading({
   children: ReactNode;
 }) {
   return (
-    <h2 className="text-2xl md:text-3xl font-medium text-[#0f0f0f] leading-[1.2] tracking-tight">
+    <h2 className="text-3xl text-right md:text-4xl font-medium leading-[1.2] tracking-tight" style={{ color: 'inherit' }}>
       {children}
     </h2>
   );
@@ -130,7 +129,7 @@ StyleCard.IntroParagraph = function IntroParagraph({
   children: ReactNode;
 }) {
   return (
-    <p className="text-lg md:text-xl font-normal text-[#0f0f0f] leading-[1.5]">
+    <p className="text-xl md:text-2xl font-normal leading-[1.5]" style={{ color: 'inherit' }}>
       {children}
     </p>
   );
@@ -142,7 +141,7 @@ StyleCard.IntroQuote = function IntroQuote({
   children: ReactNode;
 }) {
   return (
-    <blockquote className="text-lg md:text-xl font-medium text-[#0f0f0f] leading-[1.5]">
+    <blockquote className="text-lg md:text-xl font-medium leading-[1.5]" style={{ color: 'inherit' }}>
       {children}
     </blockquote>
   );
@@ -156,13 +155,13 @@ StyleCard.TitleCorner = function TitleCorner({
   tagline?: string;
 }) {
   return (
-    <div className="flex flex-col justify-between h-full">
-      <p className="text-3xl md:text-4xl font-medium text-[#0f0f0f]">
+    <div className="flex flex-col justify-between h-full" style={{ color: 'inherit' }}>
+      <p className="text-3xl md:text-4xl font-medium">
         {title}
       </p>
       {tagline ? (
         <div className="flex justify-end">
-          <p className="text-xl md:text-2xl font-normal text-[#0f0f0f] text-right">
+          <p className="text-xl md:text-2xl font-normal text-right">
             {tagline}
           </p>
         </div>
@@ -179,11 +178,11 @@ StyleCard.IntroList = function IntroList({
   items: string[];
 }) {
   return (
-    <div className="space-y-2">
-      <p className="text-base md:text-lg font-medium text-[#0f0f0f]">
+    <div className="space-y-2" style={{ color: 'inherit' }}>
+      <p className="text-base md:text-lg font-medium">
         {title}
       </p>
-      <ul className="list-disc pl-4 text-base md:text-lg font-normal text-[#0f0f0f] space-y-1">
+      <ul className="list-disc pl-4 text-base md:text-lg font-normal space-y-1">
         {items.map((item) => (
           <li key={item}>{item}</li>
         ))}
@@ -198,8 +197,8 @@ StyleCard.ImagePlaceholder = function ImagePlaceholder({
   filename: string;
 }) {
   return (
-    <div className="flex items-center justify-center h-full">
-      <p className="text-lg md:text-xl font-medium text-[#0f0f0f]">
+    <div className="flex items-center justify-center h-full" style={{ color: 'inherit' }}>
+      <p className="text-lg md:text-xl font-medium">
         {filename}
       </p>
     </div>

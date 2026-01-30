@@ -17,6 +17,7 @@ import AsciiWave from '@/components/AsciiWave';
 import { PageLoadAnimation } from '@/components/PageLoadAnimation';
 import { Navigation } from '@/components/Navigation';
 import { VideoBackground } from '@/components/VideoBackground';
+import ScrollLinked from '@/components/ScrollLinked';
 
 export const metadata: Metadata = {
   title: 'fredrik-westerdahl.me',
@@ -37,8 +38,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full antialiased">
-      <body className={`${GeistSans.variable} ${GeistMono.variable} font-sans  relative text-black bg-gray-900`}>
+    <html lang="en" className="h-full antialiased hide-scrollbar">
+      <body className={`${GeistSans.variable} ${GeistMono.variable} font-sans relative text-black bg-gray-900 hide-scrollbar`}>
         <CursorProvider>
           <GooProvider>
             <AppProvider>
@@ -50,6 +51,7 @@ export default function RootLayout({
                 </BackgroundLayer> */}
                 <Blur />
                 <Navigation />
+                <ScrollLinked />
                 {/* <AnimatedHeader /> */}
                 {/* <FooterNavigation /> */}
                 <GooLayer />
