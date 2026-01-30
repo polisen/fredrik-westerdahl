@@ -28,6 +28,8 @@ interface CardLineProps {
   alwaysVisibleCount?: number;
   heightVariant?: "regular" | "tall" | "large";
   outerPadding?: boolean;
+  backgroundColor?: string;
+  showTitle?: boolean;
 }
 
 interface CardItemProps {
@@ -43,13 +45,14 @@ export function CardItem({
 }: CardItemProps) {
   return (
     <div
-      className={`rounded-lg max-w-[80dvw] bg-gray-100 overflow-hidden ${className ?? ""}`}
+      className={`rounded-lg max-w-[80dvw] overflow-hidden ${className ?? ""}`}
       style={{
         height: "var(--cardline-height, 40vh)",
         width:
           aspectRatio === "square"
             ? "var(--cardline-height, 40vh)"
             : "calc(var(--cardline-height, 40vh) * 16 / 9)",
+        backgroundColor: "var(--cardline-bg, #f3f4f6)",
       }}
     >
       {children}
@@ -73,6 +76,8 @@ export function CardLine({
   alwaysVisibleCount = 1,
   heightVariant = "regular",
   outerPadding = true,
+  backgroundColor,
+  showTitle = true,
 }: CardLineProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
@@ -150,13 +155,17 @@ export function CardLine({
         {
           cursor: isDragging ? "grabbing" : isHovered ? "grab" : "default",
           height: "var(--cardline-height, 40vh)",
+          ["--cardline-bg"]: backgroundColor ?? "#f3f4f6",
           ["--cardline-height"]:
             heightVariant === "large"
               ? "60vh"
               : heightVariant === "tall"
                 ? "50vh"
                 : "40vh",
-        } as CSSProperties & { ["--cardline-height"]?: string }
+        } as CSSProperties & {
+          ["--cardline-height"]?: string;
+          ["--cardline-bg"]?: string;
+        }
       }
       onMouseEnter={() => {
         if (hoverTimeoutRef.current) {
@@ -173,7 +182,7 @@ export function CardLine({
         }, 500);
       }}
     >
-      {title ? (
+      {showTitle && title ? (
         <div className="absolute inset-0 z-40 pointer-events-none">
           <div className="sticky pl-0.5 top-[72px]">
             <div className="inline-block bg-white/80 p-1 backdrop-blur-md text-lg rounded-md shadow-sm ml-4 md:ml-32 pointer-events-auto">

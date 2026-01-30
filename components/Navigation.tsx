@@ -60,9 +60,9 @@ export function Navigation() {
       <motion.nav
         layout={false}
         layoutScroll
-        className="fixed top-0 left-0 p-8 pl-4 md:pl-10 md:py-8 z-50"
+        className="fixed top-0 left-0 right-0 w-full p-8 pl-4 pr-4 md:pl-10 md:pr-10 md:py-8 z-50"
       >
-        <div className="flex gap-4 items-start">
+        <div className="flex gap-4 items-start w-full">
           <div className="relative">
             <Link 
               href="/" 
@@ -213,6 +213,16 @@ export function Navigation() {
               );
             })}
           </motion.div>
+
+          {/* CV button - green, far right of screen, opens PDF */}
+          <a
+            href="/fredrik_westerdahl_cv.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ml-auto h-8 px-2 rounded-md bg-emerald-500 text-black text-lg font-medium shadow-md hover:bg-emerald-600 transition-colors flex items-center justify-center"
+          >
+            CV
+          </a>
         </div>
       </motion.nav>
     </>

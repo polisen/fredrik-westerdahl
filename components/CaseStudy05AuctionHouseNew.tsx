@@ -1,90 +1,219 @@
 'use client';
 
-import { allCaseStudies } from 'contentlayer/generated';
-import { StyleCard } from '@/components/StyleCard';
 import { CardItem, CardLine } from '@/components/CardLine';
+import { CaseStudySection } from '@/components/CaseStudySection';
+import { StyleCard } from '@/components/StyleCard';
 
-// Helper function to parse markdown sections
-function parseMarkdownSections(markdown: string): Record<string, string> {
-  const sections: Record<string, string> = {};
-  
-  // Match **Section** followed by content until next **Section** or end
-  // Use [\s\S] instead of . to match any character including newlines (works without 's' flag)
-  const sectionRegex = /\*\*(.+?)\*\*\n([\s\S]+?)(?=\n\*\*|$)/g;
-  let match;
-  
-  while ((match = sectionRegex.exec(markdown)) !== null) {
-    const sectionName = match[1].trim();
-    const content = match[2].trim();
-    sections[sectionName] = content;
-  }
-  
-  return sections;
-}
+const auctionColor = '#ff5a0d';
 
 export function CaseStudy05AuctionHouseNew() {
-  const caseStudy = allCaseStudies.find((cs) => cs.slug === '05-auction-house');
-  
-  if (!caseStudy) return null;
-
-  // Parse markdown sections
-  const rawMarkdown = (caseStudy as any).body?.raw || '';
-  const sections = parseMarkdownSections(rawMarkdown);
-
   return (
-    <CardLine title={caseStudy?.title}>
-      {/* Title card */}
-      <CardItem aspectRatio="square">
-        <div className="p-4">
-          <StyleCard.Title>
-            {caseStudy.tagline || caseStudy.title}
-          </StyleCard.Title>
-        </div>
-      </CardItem>
-
-      {/* Context section */}
-      {sections['Context'] && (
-        <CardItem aspectRatio="video">
+    <CaseStudySection title="lilla auktionsstudion">
+      <CardLine backgroundColor={auctionColor}>
+        <CardItem aspectRatio="square">
           <div className="p-4">
-            <StyleCard.Paragraph title="Context">
-              <p>{sections['Context']}</p>
-            </StyleCard.Paragraph>
+            <StyleCard.Title>lilla auktionsstudion</StyleCard.Title>
           </div>
         </CardItem>
-      )}
-
-      {/* Problem section */}
-      {sections['Problem'] && (
-        <CardItem aspectRatio="video">
+        <CardItem aspectRatio="square">
           <div className="p-4">
-            <StyleCard.Paragraph title="Problem">
-              <p>{sections['Problem']}</p>
-            </StyleCard.Paragraph>
+            <StyleCard.ImagePlaceholder filename="lilla-auktionsstudion-01.jpg" />
           </div>
         </CardItem>
-      )}
+      </CardLine>
 
-      {/* Key decisions section */}
-      {sections['Key decisions'] && (
-        <CardItem aspectRatio="video">
+      <CardLine backgroundColor={auctionColor}>
+        <CardItem aspectRatio="square">
           <div className="p-4">
-            <StyleCard.Paragraph title="Key decisions">
-              <p>{sections['Key decisions']}</p>
-            </StyleCard.Paragraph>
+            <StyleCard.IntroHeading>what it was</StyleCard.IntroHeading>
           </div>
         </CardItem>
-      )}
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              a production auction platform for live and online auctions.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              included payments, seller onboarding, customer service, and email marketing.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              delivered as a consultancy project with full ownership.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+      </CardLine>
 
-      {/* Outcome section */}
-      {sections['Outcome'] && (
-        <CardItem aspectRatio="video">
-          <div className="p-4 pb-32">
-            <StyleCard.Paragraph title="Outcome">
-              <p>{sections['Outcome']}</p>
-            </StyleCard.Paragraph>
+      <CardLine backgroundColor={auctionColor}>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroHeading>key challenge: tight constraints</StyleCard.IntroHeading>
           </div>
         </CardItem>
-      )}
-    </CardLine>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              delivered under a limited budget and timeline.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              needed to cover the full operational surface of an auction business.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              every decision had to justify its cost.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+      </CardLine>
+
+      <CardLine backgroundColor={auctionColor}>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroHeading>domain-first design</StyleCard.IntroHeading>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>modeled auction workflows directly.</StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              avoided generic ecommerce abstractions.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              aligned the system with real operations.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+      </CardLine>
+
+      <CardLine backgroundColor={auctionColor}>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroHeading>integrated business workflows</StyleCard.IntroHeading>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              implemented payments and settlements as core domain features.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              supported seller onboarding and administration.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              built customer communication into the platform.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+      </CardLine>
+
+      <CardLine backgroundColor={auctionColor}>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroHeading>lean architecture</StyleCard.IntroHeading>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>avoided over-engineering.</StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>favored simple, explicit solutions.</StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              treated constraints as design inputs.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+      </CardLine>
+
+      <CardLine backgroundColor={auctionColor}>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroHeading>production delivery</StyleCard.IntroHeading>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>shipped as a live platform.</StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>handled hosting and deployment.</StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              ensured usability for non-technical staff.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+      </CardLine>
+
+      <CardLine backgroundColor={auctionColor}>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroHeading>outcome</StyleCard.IntroHeading>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              delivered a full-featured platform within constraints.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              supported real auctions and payments in production.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              demonstrated pragmatic engineering judgment.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+      </CardLine>
+    </CaseStudySection>
   );
 }

@@ -157,10 +157,12 @@ StyleCard.TitleCorner = function TitleCorner({
 }) {
   return (
     <div className="flex flex-col justify-between h-full">
-      <p className="text-lg md:text-xl font-medium text-[#0f0f0f]">{title}</p>
+      <p className="text-3xl md:text-4xl font-medium text-[#0f0f0f]">
+        {title}
+      </p>
       {tagline ? (
         <div className="flex justify-end">
-          <p className="text-base md:text-lg font-normal text-[#0f0f0f] text-right">
+          <p className="text-xl md:text-2xl font-normal text-[#0f0f0f] text-right">
             {tagline}
           </p>
         </div>
@@ -186,6 +188,20 @@ StyleCard.IntroList = function IntroList({
           <li key={item}>{item}</li>
         ))}
       </ul>
+    </div>
+  );
+};
+
+StyleCard.ImagePlaceholder = function ImagePlaceholder({
+  filename,
+}: {
+  filename: string;
+}) {
+  return (
+    <div className="flex items-center justify-center h-full">
+      <p className="text-lg md:text-xl font-medium text-[#0f0f0f]">
+        {filename}
+      </p>
     </div>
   );
 };

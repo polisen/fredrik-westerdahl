@@ -1,90 +1,188 @@
 'use client';
 
-import { allCaseStudies } from 'contentlayer/generated';
-import { StyleCard } from '@/components/StyleCard';
 import { CardItem, CardLine } from '@/components/CardLine';
+import { CaseStudySection } from '@/components/CaseStudySection';
+import { StyleCard } from '@/components/StyleCard';
 
-// Helper function to parse markdown sections
-function parseMarkdownSections(markdown: string): Record<string, string> {
-  const sections: Record<string, string> = {};
-  
-  // Match **Section** followed by content until next **Section** or end
-  // Use [\s\S] instead of . to match any character including newlines (works without 's' flag)
-  const sectionRegex = /\*\*(.+?)\*\*\n([\s\S]+?)(?=\n\*\*|$)/g;
-  let match;
-  
-  while ((match = sectionRegex.exec(markdown)) !== null) {
-    const sectionName = match[1].trim();
-    const content = match[2].trim();
-    sections[sectionName] = content;
-  }
-  
-  return sections;
-}
+const socialGraphColor = '#fd2c50';
 
 export function CaseStudy03SocialGraphNew() {
-  const caseStudy = allCaseStudies.find((cs) => cs.slug === '03-social-graph');
-  
-  if (!caseStudy) return null;
-
-  // Parse markdown sections
-  const rawMarkdown = (caseStudy as any).body?.raw || '';
-  const sections = parseMarkdownSections(rawMarkdown);
-
   return (
-    <CardLine title={caseStudy?.title}>
-      {/* Title card */}
-      <CardItem aspectRatio="square">
-        <div className="p-4">
-          <StyleCard.Title>
-            {caseStudy.tagline || caseStudy.title}
-          </StyleCard.Title>
-        </div>
-      </CardItem>
-
-      {/* Context section */}
-      {sections['Context'] && (
-        <CardItem aspectRatio="video">
+    <CaseStudySection title="social graph">
+      <CardLine backgroundColor={socialGraphColor}>
+        <CardItem aspectRatio="square">
           <div className="p-4">
-            <StyleCard.Paragraph title="Context">
-              <p>{sections['Context']}</p>
-            </StyleCard.Paragraph>
+            <StyleCard.Title>social graph</StyleCard.Title>
           </div>
         </CardItem>
-      )}
-
-      {/* Problem section */}
-      {sections['Problem'] && (
-        <CardItem aspectRatio="video">
+        <CardItem aspectRatio="square">
           <div className="p-4">
-            <StyleCard.Paragraph title="Problem">
-              <p>{sections['Problem']}</p>
-            </StyleCard.Paragraph>
+            <StyleCard.ImagePlaceholder filename="social-graph-01.jpg" />
           </div>
         </CardItem>
-      )}
+      </CardLine>
 
-      {/* Key decisions section */}
-      {sections['Key decisions'] && (
-        <CardItem aspectRatio="video">
+      <CardLine backgroundColor={socialGraphColor}>
+        <CardItem aspectRatio="square">
           <div className="p-4">
-            <StyleCard.Paragraph title="Key decisions">
-              <p>{sections['Key decisions']}</p>
-            </StyleCard.Paragraph>
+            <StyleCard.IntroHeading>what it was</StyleCard.IntroHeading>
           </div>
         </CardItem>
-      )}
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              a system for understanding markets through relationships.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              focused on users, communities, and influence.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>treated the market as a graph.</StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+      </CardLine>
 
-      {/* Outcome section */}
-      {sections['Outcome'] && (
-        <CardItem aspectRatio="video">
-          <div className="p-4 pb-16">
-            <StyleCard.Paragraph title="Outcome">
-              <p>{sections['Outcome']}</p>
-            </StyleCard.Paragraph>
+      <CardLine backgroundColor={socialGraphColor}>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroHeading>key challenge: structure over metrics</StyleCard.IntroHeading>
           </div>
         </CardItem>
-      )}
-    </CardLine>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              traditional analytics failed to explain discovery and momentum.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              structure needed to emerge from relationships.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>aggregates were insufficient.</StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+      </CardLine>
+
+      <CardLine backgroundColor={socialGraphColor}>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroHeading>graph-first data model</StyleCard.IntroHeading>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              designed relationships as first-class entities.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              modeled users, interactions, and communities.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>avoided premature flattening.</StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+      </CardLine>
+
+      <CardLine backgroundColor={socialGraphColor}>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroHeading>community detection and influence</StyleCard.IntroHeading>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>applied community detection.</StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              identified influential nodes via structural measures.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>avoided vanity metrics.</StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+      </CardLine>
+
+      <CardLine backgroundColor={socialGraphColor}>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroHeading>strategic applications</StyleCard.IntroHeading>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              informed positioning and go-to-market strategy.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              revealed invisible leverage points.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>treated analysis as a decision tool.</StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+      </CardLine>
+
+      <CardLine backgroundColor={socialGraphColor}>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroHeading>outcome</StyleCard.IntroHeading>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              produced clearer insight into influence and momentum.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              demonstrated the value of graph-based thinking.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              changed the questions the system could answer.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+      </CardLine>
+    </CaseStudySection>
   );
 }

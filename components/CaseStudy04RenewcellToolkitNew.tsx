@@ -1,90 +1,258 @@
 'use client';
 
-import { allCaseStudies } from 'contentlayer/generated';
-import { StyleCard } from '@/components/StyleCard';
 import { CardItem, CardLine } from '@/components/CardLine';
+import { CaseStudySection } from '@/components/CaseStudySection';
+import { StyleCard } from '@/components/StyleCard';
 
-// Helper function to parse markdown sections
-function parseMarkdownSections(markdown: string): Record<string, string> {
-  const sections: Record<string, string> = {};
-  
-  // Match **Section** followed by content until next **Section** or end
-  // Use [\s\S] instead of . to match any character including newlines (works without 's' flag)
-  const sectionRegex = /\*\*(.+?)\*\*\n([\s\S]+?)(?=\n\*\*|$)/g;
-  let match;
-  
-  while ((match = sectionRegex.exec(markdown)) !== null) {
-    const sectionName = match[1].trim();
-    const content = match[2].trim();
-    sections[sectionName] = content;
-  }
-  
-  return sections;
-}
+const renewcellColor = '#957bf1';
 
 export function CaseStudy04RenewcellToolkitNew() {
-  const caseStudy = allCaseStudies.find((cs) => cs.slug === '04-renewcell-toolkit');
-  
-  if (!caseStudy) return null;
-
-  // Parse markdown sections
-  const rawMarkdown = (caseStudy as any).body?.raw || '';
-  const sections = parseMarkdownSections(rawMarkdown);
-
   return (
-    <CardLine title={caseStudy?.title}>
-      {/* Title card */}
-      <CardItem aspectRatio="square">
-        <div className="p-4">
-          <StyleCard.Title>
-            {caseStudy.tagline || caseStudy.title}
-          </StyleCard.Title>
-        </div>
-      </CardItem>
-
-      {/* Context section */}
-      {sections['Context'] && (
-        <CardItem aspectRatio="video">
+    <CaseStudySection title="renewcell / circulose">
+      <CardLine backgroundColor={renewcellColor}>
+        <CardItem aspectRatio="square">
           <div className="p-4">
-            <StyleCard.Paragraph title="Context">
-              <p>{sections['Context']}</p>
-            </StyleCard.Paragraph>
+            <StyleCard.Title>renewcell / circulose</StyleCard.Title>
           </div>
         </CardItem>
-      )}
-
-      {/* Problem section */}
-      {sections['Problem'] && (
-        <CardItem aspectRatio="video">
+        <CardItem aspectRatio="square">
           <div className="p-4">
-            <StyleCard.Paragraph title="Problem">
-              <p>{sections['Problem']}</p>
-            </StyleCard.Paragraph>
+            <StyleCard.ImagePlaceholder filename="renewcell-01.jpg" />
           </div>
         </CardItem>
-      )}
+      </CardLine>
 
-      {/* Key decisions section */}
-      {sections['Key decisions'] && (
-        <CardItem aspectRatio="video">
+      <CardLine backgroundColor={renewcellColor}>
+        <CardItem aspectRatio="square">
           <div className="p-4">
-            <StyleCard.Paragraph title="Key decisions">
-              <p>{sections['Key decisions']}</p>
-            </StyleCard.Paragraph>
+            <StyleCard.IntroHeading>what it was</StyleCard.IntroHeading>
           </div>
         </CardItem>
-      )}
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              an embeddable web system built to educate users about a new textile
+              material at the point of purchase.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              developed for a publicly traded company operating at global scale.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              delivered as a lightweight, brand-safe integration for third-party
+              websites.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+      </CardLine>
 
-      {/* Outcome section */}
-      {sections['Outcome'] && (
-        <CardItem aspectRatio="video">
-          <div className="p-4 pb-16">
-            <StyleCard.Paragraph title="Outcome">
-              <p>{sections['Outcome']}</p>
-            </StyleCard.Paragraph>
+      <CardLine backgroundColor={renewcellColor}>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroHeading>
+              key challenge: embedding at massive scale
+            </StyleCard.IntroHeading>
           </div>
         </CardItem>
-      )}
-    </CardLine>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              needed to run across unknown environments with unpredictable traffic.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              payload size, execution cost, and reliability were hard constraints.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              the widget could not degrade host site performance.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+      </CardLine>
+
+      <CardLine backgroundColor={renewcellColor}>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroHeading>performance as a hard constraint</StyleCard.IntroHeading>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              delivered as a small, cdn-served script.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              minimized execution paths to reduce runtime overhead.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>designed to fail gracefully.</StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+      </CardLine>
+
+      <CardLine backgroundColor={renewcellColor}>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroHeading>branding without duplication</StyleCard.IntroHeading>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              supported multiple visual variants without branching the codebase.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>treated branding as configuration.</StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              preserved creative consistency without sacrificing performance.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+      </CardLine>
+
+      <CardLine backgroundColor={renewcellColor}>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroHeading>
+              key challenge: analytics under legal constraints
+            </StyleCard.IntroHeading>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              traditional analytics were not viable.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              tracking had to remain compliant without cookies or third-party scripts.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              insight was required without legal exposure.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+      </CardLine>
+
+      <CardLine backgroundColor={renewcellColor}>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroHeading>privacy-preserving analytics</StyleCard.IntroHeading>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              used beacon-based impression and interaction tracking.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              optimized data collection for usefulness, not volume.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>avoided user-level identification.</StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+      </CardLine>
+
+      <CardLine backgroundColor={renewcellColor}>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroHeading>data ingestion and analysis</StyleCard.IntroHeading>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              handled large volumes of low-latency events efficiently.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              minimized network and infrastructure costs.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              structured analytics to answer concrete questions.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+      </CardLine>
+
+      <CardLine backgroundColor={renewcellColor}>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroHeading>outcome</StyleCard.IntroHeading>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              enabled large-scale rollout with predictable performance and compliance.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              balanced branding, performance, and legal constraints.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+        <CardItem aspectRatio="square">
+          <div className="p-4">
+            <StyleCard.IntroParagraph>
+              demonstrated careful system design under regulatory pressure.
+            </StyleCard.IntroParagraph>
+          </div>
+        </CardItem>
+      </CardLine>
+    </CaseStudySection>
   );
 }
