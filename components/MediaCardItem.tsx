@@ -12,7 +12,7 @@ export function MediaCardItem(props: MediaCardItemProps) {
   const [aspectRatio, setAspectRatio] = useState(1);
 
   return (
-    <CardItem aspectRatio={aspectRatio} noBackground>
+    <CardItem aspectRatio={aspectRatio} noBackground className='max-w-full'>
       <div className="relative w-full h-full flex items-center justify-center overflow-hidden rounded-lg">
         {props.type === 'image' ? (
           <img
