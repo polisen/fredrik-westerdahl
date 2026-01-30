@@ -4,7 +4,7 @@ import { StyleCard } from "@/components/StyleCard";
 export function IntroCardLines() {
   return (
     <>
-      <CardLine backgroundColor="#957bf1">
+      <CardLine  backgroundColor="#957bf1">
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>about</StyleCard.IntroHeading>
@@ -17,18 +17,14 @@ export function IntroCardLines() {
         </CardItem>
       </CardLine>
 
-      <CardLine backgroundColor="#ff5a0d">
+      <CardLine backgroundColor="#ff5a0d" heightVariant="large">
         <CardItem aspectRatio="square">
           <div className="p-4">
-            <StyleCard.IntroHeading>hey!</StyleCard.IntroHeading>
+            <StyleCard.TitleCorner title="hey!" tagline="my name is fredrik"/>
           </div>
         </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>my name is fredrik.</StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
+       
+        <CardItem  aspectRatio="video">
           <div className="p-4">
             <StyleCard.IntroParagraph>
               i’ve been creating digital things since i was around 11, mostly
@@ -47,9 +43,6 @@ export function IntroCardLines() {
             </StyleCard.IntroParagraph>
           </div>
         </CardItem>
-      </CardLine>
-
-      <CardLine backgroundColor="#aec9e0">
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroHeading>dreaming about products</StyleCard.IntroHeading>
@@ -86,7 +79,7 @@ export function IntroCardLines() {
       <CardLine backgroundColor="#fd2c50">
         <CardItem aspectRatio="square">
           <div className="p-4">
-            <StyleCard.IntroHeading>full‑stack, in practice</StyleCard.IntroHeading>
+            <StyleCard.IntroHeading>I&apos;m a full stack developer.</StyleCard.IntroHeading>
           </div>
         </CardItem>
         <CardItem aspectRatio="square">
