@@ -219,7 +219,7 @@ export function Navigation() {
             href="/fredrik_westerdahl_cv.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="ml-auto h-8 px-2 rounded-md bg-emerald-500 text-black text-lg font-medium shadow-md hover:bg-emerald-600 transition-colors flex items-center justify-center"
+            className="ml-auto h-8 px-4 rounded-md bg-gray-100/80 text-black text-lg font-medium shadow-md hover:bg-white transition-colors flex items-center justify-center"
           >
             CV
           </a>

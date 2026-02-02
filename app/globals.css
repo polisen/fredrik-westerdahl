@@ -180,23 +180,22 @@
 html {
   font-size: var(--font-size);
   background-color: white;
-  cursor: none;
+  cursor: none !important;
 }
 
 body {
   background-color: white;
   color: black;
-  cursor: none;
+  cursor: none !important;
   /* Account for safe areas in body positioning when needed */
   /* Safe area variables are available via CSS custom properties for use in components */
 }
 
-/* Force all elements to never show pointer cursor - override everything */
-/* This ensures all elements inherit cursor: none from body */
+/* Force all elements to hide native cursor - overrides inline styles and Tailwind utilities */
 *,
 *::before,
 *::after {
-  cursor: inherit !important;
+  cursor: none !important;
 }
 
 /* Override any cursor: pointer styles - must come after the general rule */
@@ -240,7 +239,12 @@ a[style*="cursor"],
 @media (max-width: 767px) {
   html,
   body {
-    cursor: auto;
+    cursor: auto !important;
+  }
+  *,
+  *::before,
+  *::after {
+    cursor: inherit !important;
   }
 }
 
@@ -248,7 +252,12 @@ a[style*="cursor"],
 @media (hover: none) and (pointer: coarse) {
   html,
   body {
-    cursor: auto;
+    cursor: auto !important;
+  }
+  *,
+  *::before,
+  *::after {
+    cursor: inherit !important;
   }
 }
 

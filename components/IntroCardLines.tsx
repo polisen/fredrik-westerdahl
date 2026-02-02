@@ -1,12 +1,12 @@
 import { CardItem, CardLine } from "@/components/CardLine";
 import { MediaCardItem } from "@/components/MediaCardItem";
-import { getCardLineColor } from "@/lib/cardLineColors";
+import { getIntroCardLineColor } from "@/lib/cardLineColors";
 import { StyleCard } from "@/components/StyleCard";
 
 export function IntroCardLines() {
   return (
     <>
-      <CardLine heightVariant="large" backgroundColor={getCardLineColor(0)}>
+      <CardLine heightVariant="large" backgroundColor={getIntroCardLineColor(0)}>
         <MediaCardItem
           type="image"
           src="/headshot.jpeg"
@@ -14,120 +14,66 @@ export function IntroCardLines() {
         />
       </CardLine>
 
-      <CardLine backgroundColor={getCardLineColor(1)}>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
+      <CardLine
+        backgroundColor={getIntroCardLineColor(1)}
+        alwaysVisibleCount={5}
+      >
+      <CardItem aspectRatio="square">
+        <div className="flex flex-col justify-between h-full p-4">
+          <div className="text-left">
             <StyleCard.IntroHeading>hey — i&apos;m fredrik.</StyleCard.IntroHeading>
           </div>
-        </CardItem>
-       
-        <CardItem aspectRatio="video">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              i&apos;ve been building digital things since i was around 11.
-            </StyleCard.IntroParagraph>
+          <div className="text-right">
+            <StyleCard.IntroHeading>full-stack developer. founder-minded.</StyleCard.IntroHeading>
           </div>
-        </CardItem>
-        <CardItem aspectRatio="video">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              i enjoy work where performance, cost, legal boundaries, and
-              changing requirements actually matter — because that&apos;s where
-              good decisions show.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="video">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              i work end-to-end across frontend and backend.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-      </CardLine>
+        </div>
+      </CardItem>
 
-      <CardLine backgroundColor={getCardLineColor(2)}>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroHeading>i&apos;m a full-stack developer</StyleCard.IntroHeading>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="video">
-          <div className="p-4">
+      <CardItem aspectRatio="video">
+        <div className="flex flex-col justify-between h-full p-4">
+          <div className="text-left">
             <StyleCard.IntroParagraph>
-              i&apos;m comfortable moving between goal-setting, design,
-              implementation, strategy, and analysis. most of the problems i
-              care about live between layers, not inside them.
+              building digital systems since i was around 11.
             </StyleCard.IntroParagraph>
           </div>
-        </CardItem>
-        <CardItem aspectRatio="video">
-          <div className="p-4 h-full">
-            <StyleCard.CornerLabel label="tools & systems">
-              typescript, next.js, react, node.js, express, event-driven
-              systems, firestore, rtdb, postgresql, neo4j, gcp, aws, docker,
-              analytics, payments, ai apis
-            </StyleCard.CornerLabel>
+          <div className="text-right">
+            <StyleCard.IntroParagraph>
+              mostly where performance, cost, and real constraints actually matter.
+            </StyleCard.IntroParagraph>
           </div>
-        </CardItem>
-      </CardLine>
+        </div>
+      </CardItem>
 
-      <CardLine backgroundColor={getCardLineColor(3)}>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroHeading>i&apos;ve been a founder and worked in startups</StyleCard.IntroHeading>
+      <CardItem aspectRatio="video">
+        <div className="flex flex-col justify-between h-full p-4">
+          <div className="text-left">
+            <StyleCard.IntroParagraph>i think in systems.</StyleCard.IntroParagraph>
           </div>
-        </CardItem>
-        <CardItem aspectRatio="video">
-          <div className="p-4">
+          <div className="text-right">
             <StyleCard.IntroParagraph>
-              i&apos;ve spent much of my career working in early and growth-stage
-              environments, where uncertainty is the default. i care about
-              delivery in real-life scenarios, working with people, and making
-              sure things actually happen.
+              products are chains of decisions — the user experience is how those decisions feel in practice.
             </StyleCard.IntroParagraph>
           </div>
-        </CardItem>
-        <CardItem aspectRatio="video">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              to me, leadership is empathy and responsibility — with enough
-              tolerance for discomfort to keep going when things are unclear,
-              and enough judgment to know when to pivot.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-      </CardLine>
+        </div>
+      </CardItem>
 
-      <CardLine backgroundColor={getCardLineColor(4)}>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroHeading>i dream about systems</StyleCard.IntroHeading>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              the essence of any product, no matter how simple, can be broken down into a system — a chain of interactions leading to a certain result.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              the subjective experience of that system by a user is essentially that product in practice.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
-              i have a certain knack for boiling it down into something satisfactory and achievable. — i can zoom out.
-            </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-      </CardLine>
+      <CardItem aspectRatio="video">
+        <div className="p-4">
+          <StyleCard.IntroParagraph>
+            i work end-to-end — from goal-setting and design
+            to implementation, infrastructure, and iteration.
+          </StyleCard.IntroParagraph>
+        </div>
+      </CardItem>
 
+      <CardItem aspectRatio="square">
+        <div className="p-4 h-full">
+          <StyleCard.CornerLabel label="tools & systems">
+            typescript, next.js, react, node, gcp, databases, payments, analytics, ai apis
+          </StyleCard.CornerLabel>
+        </div>
+      </CardItem>
+    </CardLine>
     </>
   );
 }

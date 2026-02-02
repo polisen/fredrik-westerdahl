@@ -1,118 +1,58 @@
 'use client';
 
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
 const itemClass =
-  'rounded-lg bg-gray-100/70 backdrop-blur-md shadow-sm inline-flex items-center px-4 py-3 text-gray-900 font-medium transition-opacity hover:opacity-80';
+  'rounded-md bg-gray-100 backdrop-blur-md shadow-sm inline-flex items-center px-3 py-2 text-gray-900 text-sm font-medium transition-opacity hover:opacity-80';
 
-const LEAVE_DELAY_MS = 200;
+const FLOAT_FROM_Y = 100;
 
 export function Footer() {
   const sentinelRef = useRef<HTMLDivElement>(null);
-  const [isAtBottom, setIsAtBottom] = useState(false);
-  const leaveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [isInView, setIsInView] = useState(false);
 
   useEffect(() => {
     const sentinel = sentinelRef.current;
     if (!sentinel) return;
 
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          if (leaveTimeoutRef.current) {
-            clearTimeout(leaveTimeoutRef.current);
-            leaveTimeoutRef.current = null;
-          }
-          setIsAtBottom(true);
-        } else {
-          leaveTimeoutRef.current = setTimeout(() => {
-            leaveTimeoutRef.current = null;
-            setIsAtBottom(false);
-          }, LEAVE_DELAY_MS);
-        }
-      },
-      { threshold: 0, rootMargin: '16px' }
+      ([entry]) => setIsInView(entry.isIntersecting),
+      { threshold: 0, rootMargin: '0px' }
     );
     observer.observe(sentinel);
-    return () => {
-      observer.disconnect();
-      if (leaveTimeoutRef.current) clearTimeout(leaveTimeoutRef.current);
-    };
+    return () => observer.disconnect();
   }, []);
 
-  const cardContent = (
-    <div className="flex flex-col p-2 md:flex-row md:items-start h-20 gap-8 md:gap-12">
-      {/* Left: I'm looking for clients + GitHub + email cards */}
-      <div className="flex items-end gap-3">
+  return (
+    <footer className="w-full" aria-hidden>
+      <div ref={sentinelRef} className="h-px w-full" aria-hidden />
+      <motion.div
+        initial={{ y: FLOAT_FROM_Y }}
+        animate={{ y: isInView ? 0 : FLOAT_FROM_Y }}
+        transition={{ type: 'spring', damping: 28, stiffness: 120 }}
+        className="flex flex-wrap items-center gap-3 pt-20 pl-4 pr-8 md:pl-32 md:pr-8 max-w-4xl"
+      >
+        <Link
+          href="/fredrik_westerdahl_cv.pdf"
+          download
+          className={`${itemClass} w-fit max-w-[12rem]`}
+        >
+          Download PDF CV
+        </Link>
         <a
           href="https://github.com/polisen"
           target="_blank"
           rel="noopener noreferrer"
-          className={`${cardClass} h-12 w-fit`}
+          className={`${itemClass} w-fit`}
         >
           GitHub
         </a>
-        <a href="mailto:fredrik@sublink.to" className={`${cardClass} w-fit`}>
+        <a href="mailto:fredrik@sublink.to" className={`${itemClass} w-fit`}>
           fredrik@sublink.to
         </a>
-      </div>
-
-      {/* Right: copy + download CV CTA */}
-      <div className="flex flex-col h-full gap-3 md:flex-1 justify-end items-end">
-        <Link
-          href="/fredrik_westerdahl_cv.pdf"
-          download
-          className={`group flex items-center rounded-lg overflow-hidden w-full md:max-w-md transition-opacity hover:opacity-90 ${cardItemClass}`}
-        >
-          <span className="flex-1 px-4 py-3 text-gray-900 font-medium">
-            Download PDF CV
-          </span>
-          <span className="flex items-center justify-center w-12 shrink-0 h-full bg-gray-200/80 text-gray-900 group-hover:bg-gray-300/80 transition-colors">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden
-            >
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </span>
-        </Link>
-      </div>
-    </div>
-  );
-
-  return (
-    <>
-      <footer className="relative w-full" aria-hidden>
-        <div
-          ref={sentinelRef}
-          className="absolute bottom-0 left-0 right-0 h-px pointer-events-none"
-          aria-hidden
-        />
-      </footer>
-
-      <AnimatePresence>
-        {isAtBottom && (
-          <motion.div
-            initial={{ y: '100%' }}
-            animate={{ y: 0 }}
-            exit={{ y: '100%' }}
-            transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-            className="fixed bottom-0 left-32 p-4 right-0 z-[1000] max-w-4xl bg-gray-100/70 backdrop-blur-md shadow-sm rounded-t-lg overflow-hidden text-gray-900"
-            style={{ padding: 0 }}
-          >
-            {cardContent}
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+      </motion.div>
+    </footer>
   );
 }

@@ -36,6 +36,25 @@ export function getContrastingTextColor(
 }
 
 /**
+ * Intro card line palette — white-ish backgrounds for the intro section.
+ * Use with getIntroCardLineColor(index).
+ */
+export const INTRO_CARD_LINE_COLORS = [
+  "#fafaf9",
+  "#f5f5f4",
+  "#f0f0ef",
+  "#ebebea",
+  "#e6e6e5",
+] as const;
+
+const SORTED_INTRO_CARD_LINE_COLORS = sortColorsByIntensity([...INTRO_CARD_LINE_COLORS]);
+
+/** Get the intro card line background color for a given row index (white-ish palette). */
+export function getIntroCardLineColor(index: number): string {
+  return SORTED_INTRO_CARD_LINE_COLORS[index % SORTED_INTRO_CARD_LINE_COLORS.length];
+}
+
+/**
  * Card line color palette. Change these values to update card line backgrounds
  * across the site (e.g. IntroCardLines). Use with getCardLineColor(index) to
  * cycle by row index.
@@ -76,13 +95,14 @@ export function getArbitrageCardLineColor(index: number): string {
 
 /**
  * Social graph card line palette. Change these to update social graph case study card line backgrounds.
+ * Neutral bright pastels (from Renewcell, main, Arbitrage, Auction house).
  */
 export const SOCIAL_GRAPH_CARD_LINE_COLORS = [
-  "#1E7754",
-  "#0A6F38",
-  "#076944",
-  "#058049",
-  "#005A2C",
+  "#EFF3F3",
+  "#E9EFF3",
+  "#E5E7EB",
+  "#DBD8C9",
+  "#C0BED1",
 ] as const;
 
 const SORTED_SOCIAL_GRAPH_CARD_LINE_COLORS = sortColorsByIntensity(SOCIAL_GRAPH_CARD_LINE_COLORS);
