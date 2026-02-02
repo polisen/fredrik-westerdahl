@@ -122,7 +122,7 @@ export function IntroCardLines() {
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroParagraph>
-              i have a certain knack for boiling it down into something satisfactory and achievable. — i can zoom out, and ask alignment questions that few others do.
+              i have a certain knack for boiling it down into something satisfactory and achievable. — i can zoom out.
             </StyleCard.IntroParagraph>
           </div>
         </CardItem>

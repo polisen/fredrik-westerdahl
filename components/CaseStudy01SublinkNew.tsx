@@ -40,7 +40,7 @@ export function CaseStudy01SublinkNew() {
         <CardItem aspectRatio="video">
           <div className="p-4 h-full">
             <StyleCard.CornerLabel label="what it was">
-              a funded saas platform (€1.4m) built to help creators collaborate
+              a funded saas platform (1.4m) built to help creators collaborate
               and express themselves online. rather than shipping a single fixed
               product, the platform was designed as a modular system capable of
               supporting multiple directions over time.

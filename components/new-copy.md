@@ -21,7 +21,7 @@ each project uses:
 ### card line 2 — what it was
 
 title card:**what it was**
-card 1: a funded saas platform (€1.4m) built to help creators collaborate and express themselves online. 
+card 1: a funded saas platform (1.4m) built to help creators collaborate and express themselves online. 
 card 2: rather than shipping a single fixed product, the platform was designed as a modular system capable of supporting multiple directions over time.
 
 card 3: 
