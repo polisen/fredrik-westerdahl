@@ -22,12 +22,7 @@ export function CaseStudy05AuctionHouseNew() {
         ))}
       </CardLine>
 
-      <CardLine backgroundColor={getAuctionHouseCardLineColor(0)}>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroHeading>project overview</StyleCard.IntroHeading>
-          </div>
-        </CardItem>
+      <CardLine backgroundColor={getAuctionHouseCardLineColor(0)} alwaysVisibleCount={99}>
         <CardItem aspectRatio="video">
           <div className="p-4 h-full">
             <StyleCard.CornerLabel label="what it was">

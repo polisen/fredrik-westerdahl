@@ -31,12 +31,7 @@ export function CaseStudy01SublinkNew() {
         ))}
       </CardLine>
 
-      <CardLine backgroundColor={getSublinkCardLineColor(1)}>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroHeading>project overview</StyleCard.IntroHeading>
-          </div>
-        </CardItem>
+      <CardLine backgroundColor={getSublinkCardLineColor(1)} alwaysVisibleCount={99}>
         <CardItem aspectRatio="video">
           <div className="p-4 h-full">
             <StyleCard.CornerLabel label="what it was">

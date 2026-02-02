@@ -32,7 +32,7 @@ export function CaseStudy04RenewcellToolkitNew() {
         <MediaCardItem type="image" src="/renewcell/supplier_circle.jpg" alt="Circulose supplier" />
       </CardLine>
 
-      <CardLine backgroundColor={getRenewcellCardLineColor(1)}>
+      <CardLine backgroundColor={getRenewcellCardLineColor(1)} alwaysVisibleCount={99}>
         <CardItem aspectRatio="video">
           <div className="p-4 h-full">
             <StyleCard.CornerLabel label="what it was">

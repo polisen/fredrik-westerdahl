@@ -4,10 +4,8 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
-const cardItemClass =
-  'rounded-lg bg-gray-100/70 backdrop-blur-md shadow-sm overflow-hidden';
-
-const cardClass = `inline-flex items-center px-4 py-3 ${cardItemClass} text-gray-900 font-medium transition-opacity hover:opacity-80`;
+const itemClass =
+  'rounded-lg bg-gray-100/70 backdrop-blur-md shadow-sm inline-flex items-center px-4 py-3 text-gray-900 font-medium transition-opacity hover:opacity-80';
 
 const LEAVE_DELAY_MS = 200;
 

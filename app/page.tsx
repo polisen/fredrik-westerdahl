@@ -144,11 +144,11 @@ export default function PortfolioPage() {
 
           <CaseStudy01SublinkNew />
           <div className="h-12" />
- 
-          <CaseStudy04RenewcellToolkitNew />
-          <div className="h-12" />
 
           <CaseStudy05AuctionHouseNew />
+          <div className="h-12" />
+
+          <CaseStudy04RenewcellToolkitNew />
           <div className="h-12" />
           <CaseStudy02ArbitragePlatformNew />
           <CaseStudy03SocialGraphNew />

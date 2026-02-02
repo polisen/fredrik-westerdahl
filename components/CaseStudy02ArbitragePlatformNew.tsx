@@ -8,39 +8,25 @@ import { StyleCard } from '@/components/StyleCard';
 export function CaseStudy02ArbitragePlatformNew() {
   return (
     <>
-      <CardLine backgroundColor={getArbitrageCardLineColor(0)}>
+      <CardLine backgroundColor={getArbitrageCardLineColor(0)} alwaysVisibleCount={99}>
         <CardItem aspectRatio="square">
           <div className="p-4 h-full">
             <StyleCard.Title font="badger">arbitrage platform</StyleCard.Title>
           </div>
         </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.ImagePlaceholder filename="arbitrage-01.jpg" />
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroHeading>what it was</StyleCard.IntroHeading>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>
+        <CardItem aspectRatio="video">
+          <div className="p-4 h-full">
+            <StyleCard.CornerLabel label="what it was">
               a system for surfacing time-sensitive market opportunities.
-            </StyleCard.IntroParagraph>
+            </StyleCard.CornerLabel>
           </div>
         </CardItem>
         <CardItem aspectRatio="square">
           <div className="p-4">
             <StyleCard.IntroParagraph>
               ingested and analyzed large volumes of unstructured documents.
+              treated ai as infrastructure.
             </StyleCard.IntroParagraph>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroParagraph>treated ai as infrastructure.</StyleCard.IntroParagraph>
           </div>
         </CardItem>
         <CardItem aspectRatio="square">

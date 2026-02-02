@@ -7,20 +7,10 @@ import { StyleCard } from '@/components/StyleCard';
 
 export function CaseStudy03SocialGraphNew() {
   return (
-    <CardLine backgroundColor={getSocialGraphCardLineColor(0)}>
+    <CardLine backgroundColor={getSocialGraphCardLineColor(0)} alwaysVisibleCount={99}>
         <CardItem aspectRatio="square">
           <div className="p-4 h-full">
             <StyleCard.Title font="badger">social graph</StyleCard.Title>
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.ImagePlaceholder filename="social-graph-01.jpg" />
-          </div>
-        </CardItem>
-        <CardItem aspectRatio="square">
-          <div className="p-4">
-            <StyleCard.IntroHeading>project overview</StyleCard.IntroHeading>
           </div>
         </CardItem>
         <CardItem aspectRatio="video">
