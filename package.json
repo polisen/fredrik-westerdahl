@@ -23,6 +23,7 @@
     "flickity": "^3.0.0",
     "geist": "^1.5.1",
     "lucide-react": "^0.562.0",
+    "matter-js": "^0.20.0",
     "motion": "11.18.2",
     "next": "14.2.4",
     "next-contentlayer": "^0.3.4",
@@ -35,6 +36,7 @@
     "three": "0.182.0"
   },
   "devDependencies": {
+    "@types/matter-js": "^0.20.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

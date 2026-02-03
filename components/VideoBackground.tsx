@@ -93,6 +93,10 @@ export function VideoBackground() {
   const scrollRangePx = 600;
 
   const progress = useTransform(smoothScrollY, (v) => clamp01(v / scrollRangePx));
+  // Raw progress (no spring) for playback rate so it responds immediately to scroll
+  const progressForPlayback = useTransform(baseScrollY, (v) =>
+    clamp01(v / scrollRangePx)
+  );
 
   const blurPx = useTransform(progress, [0, 1], [0, 32]);
   const blurFilter = useTransform(blurPx, (v) => `blur(${v.toFixed(2)}px)`);
@@ -102,7 +106,7 @@ export function VideoBackground() {
   // Track last playback state to avoid spamming play/pause.
   const lastWantedPausedRef = useRef<boolean | null>(null);
 
-  useMotionValueEvent(progress, 'change', (p) => {
+  useMotionValueEvent(progressForPlayback, 'change', (p) => {
     const video = videoRef.current;
     if (!video) return;
     if (prefersReducedMotion) return;
@@ -135,7 +139,7 @@ export function VideoBackground() {
     if (!video) return;
 
     // Default state at top of page.
-    video.playbackRate = 1;
+    video.playbackRate = 0.4;
     lastWantedPausedRef.current = false;
 
     if (!prefersReducedMotion) {
@@ -160,7 +164,7 @@ export function VideoBackground() {
       <motion.video
         ref={videoRef}
         className="h-full w-full object-cover"
-        src="/loop.webm"
+        src="/loop3.webm"
         muted
         playsInline
         autoPlay

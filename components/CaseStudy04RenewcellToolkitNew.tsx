@@ -10,7 +10,7 @@ import { StyleCard } from '@/components/StyleCard';
 
 export function CaseStudy04RenewcellToolkitNew() {
   return (
-    <CaseStudySection title="circulose">
+    <CaseStudySection title="circulose" visitUrl="https://www.circulose.com/">
       <Script
         src="/renewcell/circulose-bundle.js"
         strategy="lazyOnload"
@@ -28,18 +28,16 @@ export function CaseStudy04RenewcellToolkitNew() {
         />
         <MediaCardItem type="image" src="/renewcell/jeans.webp" alt="Made with Circulose" />
 
-        <MediaCardItem type="image" src="/renewcell/screenshot_website.png" alt="Circulose widget on website" />
-        <MediaCardItem type="image" src="/renewcell/supplier_circle.jpg" alt="Circulose supplier" />
+
       </CardLine>
 
       <CardLine backgroundColor={getRenewcellCardLineColor(1)} alwaysVisibleCount={99}>
         <CardItem aspectRatio="video">
           <div className="p-4 h-full">
-            <StyleCard.CornerLabel label="what it was">
-              an embeddable web system built for a publicly traded textile
-              company to educate customers about a new material at the point of
-              purchase, operating at global scale.
-            </StyleCard.CornerLabel>
+            <StyleCard.TitleCorner
+              font="badger"
+              title="an embeddable web system built for a publicly traded textile company to educate customers about a new material at the point of purchase, operating at global scale."
+            />
           </div>
         </CardItem>
         <CardItem aspectRatio="video">

@@ -10,7 +10,7 @@ const LILLA_IMAGES = ['lilla_1.png', 'lilla_2.png', 'lilla_3.png', 'lilla_4.png'
 
 export function CaseStudy05AuctionHouseNew() {
   return (
-    <CaseStudySection title="lilla auktionsstudion">
+    <CaseStudySection title="lilla auktionsstudion" visitUrl="https://www.lillaauktionsstudion.se/">
       <CardLine backgroundColor={'#fff'}>
         {LILLA_IMAGES.map((filename) => (
           <MediaCardItem
@@ -25,11 +25,10 @@ export function CaseStudy05AuctionHouseNew() {
       <CardLine backgroundColor={getAuctionHouseCardLineColor(0)} alwaysVisibleCount={99}>
         <CardItem aspectRatio="video">
           <div className="p-4 h-full">
-            <StyleCard.CornerLabel label="what it was">
-              a production auction platform built for a small auction house
-              running live and online auctions, including payments, seller
-              onboarding, customer service tooling, and email marketing.
-            </StyleCard.CornerLabel>
+            <StyleCard.TitleCorner
+              font="badger"
+              title="a production auction platform built for a small auction house running live and online auctions, including payments, seller onboarding, customer service tooling, and email marketing."
+            />
           </div>
         </CardItem>
         <CardItem aspectRatio="video">

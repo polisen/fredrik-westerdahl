@@ -186,13 +186,21 @@ StyleCard.IntroQuote = function IntroQuote({
 StyleCard.TitleCorner = function TitleCorner({
   title,
   tagline,
+  font = 'default',
 }: {
   title: string;
   tagline?: string;
+  font?: TitleFontId;
 }) {
+  const fontClass = getTitleFontClass(font);
   return (
     <div className="flex flex-col justify-between h-full" style={{ color: 'inherit' }}>
-      <p className="text-3xl md:text-4xl font-medium">
+      <p
+        className={cn(
+          'text-2xl md:text-[1.75rem] font-medium leading-[1.2] tracking-tight',
+          fontClass
+        )}
+      >
         {title}
       </p>
       {tagline ? (

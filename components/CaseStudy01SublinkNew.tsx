@@ -8,12 +8,13 @@ import { StyleCard } from '@/components/StyleCard';
 
 const SUBLINK_IMAGES = [
   'sublink_1.png',
+  'sublink_7.png',
   'sublink_2.png',
   'sublink_3.png',
   'sublink_4.png',
   'sublink_5.png',
   'sublink_6.png',
-  'sublink_7.png',
+  
   'sublink_8.png',
 ];
 
@@ -34,12 +35,10 @@ export function CaseStudy01SublinkNew() {
       <CardLine backgroundColor={getSublinkCardLineColor(1)} alwaysVisibleCount={99}>
         <CardItem aspectRatio="video">
           <div className="p-4 h-full">
-            <StyleCard.CornerLabel label="what it was">
-              a funded saas platform (1.4m) built to help creators collaborate
-              and express themselves online. rather than shipping a single fixed
-              product, the platform was designed as a modular system capable of
-              supporting multiple directions over time.
-            </StyleCard.CornerLabel>
+            <StyleCard.TitleCorner
+              font="badger"
+              title="a funded saas platform (1.4m) built to help creators collaborate and express themselves online. rather than shipping a single fixed product, the platform was designed as a modular system capable of supporting multiple directions over time."
+            />
           </div>
         </CardItem>
         <CardItem aspectRatio="video">

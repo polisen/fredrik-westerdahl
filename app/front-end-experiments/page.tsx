@@ -10,6 +10,14 @@ const Button3D = dynamic(() => import('@/components/3d/Button3D'), {
   ssr: false,
 });
 
+const PhysicsTerrarium = dynamic(
+  () =>
+    import('@/components/PhysicsTerrarium').then((m) => ({
+      default: m.PhysicsTerrarium,
+    })),
+  { ssr: false }
+);
+
 export default function FrontEndExperimentsPage() {
   return (
     <div
@@ -72,7 +80,23 @@ export default function FrontEndExperimentsPage() {
               </ul>
             </article>
 
-            {/* 4. Section Reveal on Scroll */}
+            {/* 4. Physics Terrarium */}
+            <article className="flex flex-col gap-5">
+              <h2 className="text-xl font-semibold text-gray-900">
+                Physics Terrarium
+              </h2>
+              <div className="rounded-xl border border-gray-200 overflow-hidden bg-white min-h-[320px]">
+                <PhysicsTerrarium className="min-h-[320px] w-full" />
+              </div>
+              <ul className="text-gray-600 text-base leading-relaxed list-disc list-inside space-y-1.5">
+                <li>2D rigid-body physics (Matter.js): pills bounce off walls and stack</li>
+                <li>Drag and flick to throw; flat, grotesque pill styling with black outlines</li>
+                <li>Reduced-motion: static layout of the same pills when preferred</li>
+                <li>Resize-safe: engine recreated when container bounds change</li>
+              </ul>
+            </article>
+
+            {/* 5. Section Reveal on Scroll */}
             <article className="flex flex-col gap-5">
               <h2 className="text-xl font-semibold text-gray-900">
                 Section Reveal on Scroll

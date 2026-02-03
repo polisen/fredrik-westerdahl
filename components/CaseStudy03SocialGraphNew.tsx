@@ -15,10 +15,10 @@ export function CaseStudy03SocialGraphNew() {
         </CardItem>
         <CardItem aspectRatio="video">
           <div className="p-4 h-full">
-            <StyleCard.CornerLabel label="what it was">
-              a system built to understand markets by modeling relationships
-              between users and communities rather than events or funnels.
-            </StyleCard.CornerLabel>
+            <StyleCard.TitleCorner
+              font="badger"
+              title="a system built to understand markets by modeling relationships between users and communities rather than events or funnels."
+            />
           </div>
         </CardItem>
         <CardItem aspectRatio="video">
