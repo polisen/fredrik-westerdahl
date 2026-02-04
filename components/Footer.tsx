@@ -38,7 +38,7 @@ export function Footer() {
         <Link
           href="/fredrik_westerdahl_cv.pdf"
           download
-          className={`${itemClass} w-fit overflow-hidden`}
+          className={`${itemClass} pr-0 w-fit overflow-hidden`}
         >
           <span className="px-2">Download PDF CV</span>
           <span className="h-8 w-8 flex-shrink-0 flex items-center justify-center bg-gray-200 rounded-r-md">

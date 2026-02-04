@@ -112,7 +112,7 @@ export function VideoBackground() {
     if (prefersReducedMotion) return;
 
     // Slow down as we scroll. Clamp to a small non-zero value so it eases into pausing.
-    const playbackRate = Math.min(1, Math.max(0.08, 1 - p));
+    const playbackRate = Math.min(0.8, Math.max(0.08, 1 - p));
     if (!Number.isNaN(playbackRate) && Number.isFinite(playbackRate)) {
       video.playbackRate = playbackRate;
     }
