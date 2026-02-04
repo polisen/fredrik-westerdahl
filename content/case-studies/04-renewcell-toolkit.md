@@ -1,9 +1,10 @@
 ---
 
-title: Re:Newcell
+title: Circulose
 subtitle: High-scale embeddable web system
 tagline: Embedding product education at scale under performance and legal constraints
 order: 2
+category: case-study
 insightSlugs: ["embedded-systems", "privacy-aware-analytics"]
 theme:
   background: "#F1EFEA"

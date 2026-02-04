@@ -4,6 +4,7 @@ title: Sublink
 subtitle: Co-Founder & CTO
 tagline: Designing a modular SaaS architecture under startup uncertainty
 order: 1
+category: case-study
 insightSlugs: ["startup-architecture", "cost-aware-ai-pipelines"]
 theme:
   background: "#404752"

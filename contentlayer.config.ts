@@ -72,6 +72,7 @@ export const CaseStudy = defineDocumentType(() => ({
     tagline: { type: 'string', required: false }, // e.g. Funded modular SaaS platform
     order: { type: 'number', required: false },
     insightSlugs: { type: 'list', of: { type: 'string' }, required: false }, // e.g. ["startup-architecture"]
+    category: { type: 'string', required: false }, // 'case-study' | 'project' - defaults to case-study
     theme: { type: 'nested', of: Theme, required: false },
   },
   computedFields: {

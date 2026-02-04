@@ -51,12 +51,10 @@ export default function PortfolioPage() {
     []
   );
 
-  // Create ordered list of all sections for navigation
+  // Create ordered list of all sections for navigation (matches DOM order)
   const sections = useMemo(() => {
     return [
       { type: 'intro' as const, id: 'intro' },
-      { type: 'case-study' as const, id: 'tech-stack' },
-      { type: 'case-study' as const, id: 'case-studies' },
       ...sortedCaseStudies.map((cs) => ({
         type: 'case-study' as const,
         id: cs.slug,
@@ -126,10 +124,50 @@ export default function PortfolioPage() {
       const element = document.getElementById(hash);
       if (element) {
         element.scrollIntoView({ behavior: 'auto', block: 'center' });
-        setActiveSection({ type: 'case-study', identifier: hash });
+        setActiveSection(hash === 'intro' ? { type: 'intro', identifier: 'intro' } : { type: 'case-study', identifier: hash });
       }
     }
   }, [setActiveSection]);
+
+  // Scroll-based active section tracking - picks section with largest intersection in center of viewport
+  const sectionRatiosRef = useRef<Record<string, number>>({});
+  useEffect(() => {
+    if (pathname !== '/') return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const id = (entry.target as HTMLElement).id;
+          if (!id) continue;
+          sectionRatiosRef.current[id] = entry.intersectionRatio;
+        }
+        const entries_ = Object.entries(sectionRatiosRef.current);
+        const best = entries_.reduce(
+          (a, b) => (a[1] > b[1] ? a : b),
+          ['intro', 0] as [string, number]
+        );
+        const [activeId] = best;
+        if (activeId === 'intro') {
+          setActiveSection({ type: 'intro', identifier: 'intro' });
+        } else if (activeId) {
+          setActiveSection({ type: 'case-study', identifier: activeId });
+        }
+      },
+      { root: null, rootMargin: '-30% 0px -30% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] }
+    );
+
+    const timer = setTimeout(() => {
+      sections.forEach((s) => {
+        const el = document.getElementById(s.id);
+        if (el) observer.observe(el);
+      });
+    }, 100);
+
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
+  }, [pathname, sections, setActiveSection]);
 
   return (
     <motion.main
@@ -138,20 +176,32 @@ export default function PortfolioPage() {
       className="w-full max-w-full py-2 md:py-0 flex flex-col bg-transparent scroll-pt-20 md:scroll-pt-0"
     >
       <FadeIn>
-        <div className="flex flex-col h-min  overflow-x-visible gap-2 pt-[60vh] pb-[30vh] ">
-          <IntroCardLines />
+        <div className="flex flex-col h-min overflow-x-visible gap-2 pt-[60vh] pb-[30vh] ">
+          <div id="intro">
+            <IntroCardLines />
+          </div>
           <div className="h-12" />
 
-          <CaseStudy01SublinkNew />
+          <div id="01-sublink">
+            <CaseStudy01SublinkNew />
+          </div>
           <div className="h-12" />
 
-          <CaseStudy05AuctionHouseNew />
+          <div id="05-auction-house">
+            <CaseStudy05AuctionHouseNew />
+          </div>
           <div className="h-12" />
 
-          <CaseStudy04RenewcellToolkitNew />
+          <div id="04-renewcell-toolkit">
+            <CaseStudy04RenewcellToolkitNew />
+          </div>
           <div className="h-12" />
-          <CaseStudy02ArbitragePlatformNew />
-          <CaseStudy03SocialGraphNew />
+          <div id="02-arbitrage-platform">
+            <CaseStudy02ArbitragePlatformNew />
+          </div>
+          <div id="03-social-graph">
+            <CaseStudy03SocialGraphNew />
+          </div>
           <Footer />
         </div>
       </FadeIn>

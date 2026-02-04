@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'motion/react';
-import { useEffect, useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { allCaseStudies } from 'contentlayer/generated';
 import { useApp } from '@/context/AppContext';
 
@@ -12,18 +12,8 @@ export function Navigation() {
   const pathname = usePathname();
   const { activeSection } = useApp();
 
-  const links = [
-    { href: '/', label: 'Case Studies' },
-    // { href: '/creative', label: 'Creative' },
-  ];
-
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
-  const [activeLink, setActiveLink] = useState<string | null>(null);
   const [caseStudiesMenuOpen, setCaseStudiesMenuOpen] = useState(false);
-
-  useEffect(() => {
-    setActiveLink(pathname);
-  }, [pathname]);
 
   const sortedCaseStudies = useMemo(() => {
     if (!allCaseStudies || !Array.isArray(allCaseStudies)) {
@@ -32,18 +22,39 @@ export function Navigation() {
     return [...allCaseStudies].sort((a, b) => (a.order || 0) - (b.order || 0));
   }, []);
 
+  const PROJECT_SLUGS = ['02-arbitrage-platform', '03-social-graph'];
+
+  const caseStudies = useMemo(
+    () => sortedCaseStudies.filter((cs) => !PROJECT_SLUGS.includes(cs.slug)),
+    [sortedCaseStudies]
+  );
+  const projects = useMemo(
+    () => sortedCaseStudies.filter((cs) => PROJECT_SLUGS.includes(cs.slug)),
+    [sortedCaseStudies]
+  );
+
+  const [projectsMenuOpen, setProjectsMenuOpen] = useState(false);
+
   // Determine if Fredrik should be selected (when at intro section on home page)
   const isFredrikSelected = pathname === '/' && activeSection?.type === 'intro';
-  
-  // Determine if Portfolio should be selected (when on home page but not at intro)
+
+  // Determine if Case Studies should be selected (when a case study is in view)
   const isCaseStudiesSelected =
-    pathname === '/' && activeSection?.type !== 'intro' && activeSection !== null;
+    pathname === '/' &&
+    activeSection?.type === 'case-study' &&
+    caseStudies.some((cs) => cs.slug === activeSection.identifier);
+
+  // Determine if Projects should be selected (when a project is in view)
+  const isProjectsSelected =
+    pathname === '/' &&
+    activeSection?.type === 'case-study' &&
+    projects.some((cs) => cs.slug === activeSection.identifier);
 
   return (
     <>
       {/* Backdrop overlay */}
       <AnimatePresence>
-        {caseStudiesMenuOpen && (
+        {(caseStudiesMenuOpen || projectsMenuOpen) && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -52,6 +63,7 @@ export function Navigation() {
             className="fixed inset-0 z-40 backdrop-blur-xl bg-black/10"
             onClick={() => {
               setCaseStudiesMenuOpen(false);
+              setProjectsMenuOpen(false);
             }}
           />
         )}
@@ -63,155 +75,188 @@ export function Navigation() {
         className="fixed top-0 left-0 right-0 w-full p-8 pl-4 pr-4 md:pl-10 md:pr-10 md:py-8 z-50"
       >
         <div className="flex gap-4 items-start w-full">
-          <div className="relative">
-            <Link 
-              href="/" 
-              className={cn(
-                'h-8 bg-gray-100 px-2 rounded-md backdrop-blur-md text-lg hover:underline shadow-md block relative transition-opacity',
-                isFredrikSelected ? 'opacity-100' : 'bg-gray-100/80'
-              )}
-            >
-              <div className="z-30 opacity-0">fredrik westerdahl</div>
-              <motion.div
-                onHoverStart={() => setHoveredLink('/fredrik')}
-                onHoverEnd={() => setHoveredLink(isFredrikSelected ? '/fredrik' : null)}
-                className="z-30 absolute inset-0 flex items-center justify-center"
+          {/* layoutRoot + shared layoutId for morph animation between Fredrik and nav buttons */}
+          <motion.div layoutRoot className="flex items-center gap-0 shrink-0 rounded-md h-8 bg-gray-100">
+            {/* Fredrik - inside layoutRoot for shared animation */}
+            <div className="relative">
+              <Link
+                href="/"
+                className={cn(
+                  'h-8 px-2 rounded-md backdrop-blur-md text-lg hover:underline shadow-md block relative transition-opacity',
+                  isFredrikSelected ? 'opacity-100' : 'bg-gray-100/80 opacity-80 hover:opacity-100'
+                )}
               >
-                Fredrik Westerdahl
-              </motion.div>
-              {(hoveredLink === '/fredrik' || isFredrikSelected) ? (
+                <div className="z-30 opacity-0">About</div>
                 <motion.div
-                  layoutId="active-link-fredrik"
-                  transition={{ type: 'spring', stiffness: 100, damping: 20 }}
-                  className="absolute inset-0 z-0 pointer-events-none bg-[#fdfdfd] rounded-md"
-                />
-              ) : null}
-            </Link>
-          </div>
+                  onHoverStart={() => setHoveredLink('/fredrik')}
+                  onHoverEnd={() => setHoveredLink(isFredrikSelected ? '/fredrik' : null)}
+                  className="z-30 absolute inset-0 flex items-center justify-center"
+                >
+                  About
+                </motion.div>
+                {(hoveredLink === '/fredrik' || (!hoveredLink && isFredrikSelected)) ? (
+                  <motion.div
+                    layoutId="active-nav-indicator"
+                    transition={{ type: 'spring', stiffness: 100, damping: 20 }}
+                    className="absolute inset-0 z-0 pointer-events-none bg-[#fdfdfd] rounded-md"
+                  />
+                ) : null}
+              </Link>
+            </div>
 
-          {/* layoutRoot scopes shared layout to THIS container */}
-          <motion.div
-            layoutRoot
-            className="flex shrink-0 rounded-md h-8 bg-gray-100 gap-0"
-          >
-            {links.map((link) => {
-              const isCaseStudies = link.label === 'Portfolio';
-              const showCaseStudiesList = isCaseStudies && caseStudiesMenuOpen;
-
-              // For Case Studies, render a button with dropdown
-              if (isCaseStudies) {
-                return (
-                  <div key={link.href} className="relative">
-                    <button
-                      onClick={() => {
-                        setCaseStudiesMenuOpen(prev => !prev);
-                      }}
-                      className={cn(
-                        'text-lg h-8 px-2 block relative transition-opacity hover:opacity-100',
-                        caseStudiesMenuOpen || isCaseStudiesSelected ? 'opacity-100' : 'opacity-60'
-                      )}
-                    >
-                      <div className="z-30 opacity-0">{link.label}</div>
-
-                      <motion.div
-                        onHoverStart={() => setHoveredLink(link.href)}
-                        onHoverEnd={() => setHoveredLink(caseStudiesMenuOpen ? link.href : null)}
-                        className="z-30 absolute inset-0 flex items-center justify-center"
-                      >
-                        {link.label}
-                      </motion.div>
-
-                      {(hoveredLink === link.href || caseStudiesMenuOpen || isCaseStudiesSelected) ? (
-                        <motion.div
-                          layoutId="active-link-portfolio"
-                          transition={{ type: 'spring', stiffness: 100, damping: 20 }}
-                          className="absolute inset-0 z-0 pointer-events-none bg-[#fdfdfd] rounded-md"
-                        />
-                      ) : null}
-                    </button>
-
-                    <AnimatePresence>
-                      {showCaseStudiesList && (
-                        <motion.div
-                          initial={{ opacity: 0, y: -10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
-                          transition={{ duration: 0.2 }}
-                          className="fixed md:absolute top-[5rem] md:top-full left-8 right-8 md:left-0 md:right-auto md:mt-2 max-h-[60vh] overflow-y-auto flex flex-col gap-2 "
-                        >
-                          {sortedCaseStudies.map((caseStudy, i) => {
-                            const isCurrentCaseStudy =
-                              pathname === '/' &&
-                              activeSection?.type === 'case-study' &&
-                              activeSection.identifier === caseStudy.slug;
-                            return (
-                              <motion.div
-                                key={caseStudy._id}
-                                initial={{ opacity: 0, x: -10, filter: 'blur(16px)' }}
-                                animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-                                exit={{ opacity: 0, x: -10, filter: 'blur(16px)' }}
-                                transition={{ delay: i * 0.05 }}
-                              >
-                                <Link
-                                  href={`/#${caseStudy.slug}`}
-                                  onClick={(e) => {
-                                    if (pathname === '/') {
-                                      e.preventDefault();
-                                      const element = document.getElementById(caseStudy.slug);
-                                      if (element) {
-                                        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                                      }
-                                    }
-                                    setCaseStudiesMenuOpen(false);
-                                  }}
-                                  className={cn(
-                                    "block px-2 py-1.5 text-lg hover:rounded-xl rounded-md transition-colors text-nowrap shrink-0 backdrop-blur-md bg-gray-50 w-full md:w-max",
-                                    isCurrentCaseStudy ? "text-black font-medium" : "text-gray-500 hover:text-black"
-                                  )}
-                                >
-                                  {caseStudy.title}
-                                </Link>
-                              </motion.div>
-                            );
-                          })}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                );
-              }
-
-              // For other links, render normally
-              return (
-                <div key={link.href} className="relative">
-                  <Link
-                    href={link.href}
-                    className={cn(
-                      'text-lg h-8 px-2 block relative transition-opacity hover:opacity-100',
-                      pathname === link.href ? 'opacity-100' : 'opacity-60'
-                    )}
+            {/* Case Studies dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => {
+                  setCaseStudiesMenuOpen((prev) => !prev);
+                  setProjectsMenuOpen(false);
+                }}
+                className={cn(
+                  'text-lg h-8 px-2 block relative transition-opacity hover:opacity-100',
+                  caseStudiesMenuOpen || isCaseStudiesSelected ? 'opacity-100' : 'opacity-60'
+                )}
+              >
+                <div className="z-30 opacity-0">Case Studies</div>
+                <motion.div
+                  onHoverStart={() => setHoveredLink('/case-studies')}
+                  onHoverEnd={() => setHoveredLink(caseStudiesMenuOpen ? '/case-studies' : null)}
+                  className="z-30 absolute inset-0 flex items-center justify-center"
+                >
+                  Case Studies
+                </motion.div>
+                {(hoveredLink === '/case-studies' || (!hoveredLink && (caseStudiesMenuOpen || isCaseStudiesSelected))) ? (
+                  <motion.div
+                    layoutId="active-nav-indicator"
+                    transition={{ type: 'spring', stiffness: 100, damping: 20 }}
+                    className="absolute inset-0 z-0 pointer-events-none bg-[#fdfdfd] rounded-md"
+                  />
+                ) : null}
+              </button>
+              <AnimatePresence>
+                {caseStudiesMenuOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                    className="fixed md:absolute top-[5rem] md:top-full left-8 right-8 md:left-0 md:right-auto md:mt-2 max-h-[60vh] overflow-y-auto flex flex-col gap-2 z-50"
                   >
-                    <div className="z-30 opacity-0">{link.label}</div>
+                    {caseStudies.map((caseStudy, i) => {
+                      const isCurrent =
+                        pathname === '/' &&
+                        activeSection?.type === 'case-study' &&
+                        activeSection.identifier === caseStudy.slug;
+                      return (
+                        <motion.div
+                          key={caseStudy._id}
+                          initial={{ opacity: 0, x: -10, filter: 'blur(16px)' }}
+                          animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+                          exit={{ opacity: 0, x: -10, filter: 'blur(16px)' }}
+                          transition={{ delay: i * 0.05 }}
+                        >
+                          <Link
+                            href={`/#${caseStudy.slug}`}
+                            onClick={(e) => {
+                              if (pathname === '/') {
+                                e.preventDefault();
+                                const element = document.getElementById(caseStudy.slug);
+                                if (element) {
+                                  element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                }
+                              }
+                              setCaseStudiesMenuOpen(false);
+                            }}
+                            className={cn(
+                              'block px-2 py-1.5 text-lg hover:rounded-xl rounded-md transition-colors text-nowrap shrink-0 backdrop-blur-md bg-gray-50 w-full md:w-max',
+                              isCurrent ? 'text-black font-medium' : 'text-gray-500 hover:text-black'
+                            )}
+                          >
+                            {caseStudy.title}
+                          </Link>
+                        </motion.div>
+                      );
+                    })}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
 
-                    <motion.div
-                      onHoverStart={() => setHoveredLink(link.href)}
-                      onHoverEnd={() => setHoveredLink(pathname)}
-                      className="z-30 absolute inset-0 flex items-center justify-center"
-                    >
-                      {link.label}
-                    </motion.div>
-
-                    {(hoveredLink === link.href || pathname === link.href) ? (
-                      <motion.div
-                        layoutId={`active-link-${link.href.replace('/', '')}`}
-                        transition={{ type: 'spring', stiffness: 100, damping: 20 }}
-                        className="absolute inset-0 z-0 pointer-events-none bg-[#fdfdfd] rounded-md"
-                      />
-                    ) : null}
-                  </Link>
-                </div>
-              );
-            })}
+            {/* Projects dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => {
+                  setProjectsMenuOpen((prev) => !prev);
+                  setCaseStudiesMenuOpen(false);
+                }}
+                className={cn(
+                  'text-lg h-8 px-2 block relative transition-opacity hover:opacity-100',
+                  projectsMenuOpen || isProjectsSelected ? 'opacity-100' : 'opacity-60'
+                )}
+              >
+                <div className="z-30 opacity-0">Projects</div>
+                <motion.div
+                  onHoverStart={() => setHoveredLink('/projects')}
+                  onHoverEnd={() => setHoveredLink(projectsMenuOpen ? '/projects' : null)}
+                  className="z-30 absolute inset-0 flex items-center justify-center"
+                >
+                  Projects
+                </motion.div>
+                {(hoveredLink === '/projects' || (!hoveredLink && (projectsMenuOpen || isProjectsSelected))) ? (
+                  <motion.div
+                    layoutId="active-nav-indicator"
+                    transition={{ type: 'spring', stiffness: 100, damping: 20 }}
+                    className="absolute inset-0 z-0 pointer-events-none bg-[#fdfdfd] rounded-md"
+                  />
+                ) : null}
+              </button>
+              <AnimatePresence>
+                {projectsMenuOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                    className="fixed md:absolute top-[5rem] md:top-full left-8 right-8 md:left-0 md:right-auto md:mt-2 max-h-[60vh] overflow-y-auto flex flex-col gap-2 z-50"
+                  >
+                    {projects.map((project, i) => {
+                      const isCurrent =
+                        pathname === '/' &&
+                        activeSection?.type === 'case-study' &&
+                        activeSection.identifier === project.slug;
+                      return (
+                        <motion.div
+                          key={project._id}
+                          initial={{ opacity: 0, x: -10, filter: 'blur(16px)' }}
+                          animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+                          exit={{ opacity: 0, x: -10, filter: 'blur(16px)' }}
+                          transition={{ delay: i * 0.05 }}
+                        >
+                          <Link
+                            href={`/#${project.slug}`}
+                            onClick={(e) => {
+                              if (pathname === '/') {
+                                e.preventDefault();
+                                const element = document.getElementById(project.slug);
+                                if (element) {
+                                  element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                }
+                              }
+                              setProjectsMenuOpen(false);
+                            }}
+                            className={cn(
+                              'block px-2 py-1.5 text-lg hover:rounded-xl rounded-md transition-colors text-nowrap shrink-0 backdrop-blur-md bg-gray-50 w-full md:w-max',
+                              isCurrent ? 'text-black font-medium' : 'text-gray-500 hover:text-black'
+                            )}
+                          >
+                            {project.title}
+                          </Link>
+                        </motion.div>
+                      );
+                    })}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </motion.div>
 
           {/* CV button - green, far right of screen, opens PDF */}

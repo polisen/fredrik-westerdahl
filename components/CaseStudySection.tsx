@@ -14,7 +14,7 @@ export function CaseStudySection({
 }: CaseStudySectionProps) {
   return (
     <div className="relative">
-      <div className="inset-2 sticky top-[72px] left-[4px] z-40 pointer-events-none pb-2 flex items-center  gap-2 ml-4 md:ml-32 pr-4 md:pr-32">
+      <div className="inset-2 sticky top-[72px] left-[4px] z-30 pointer-events-none pb-2 flex items-center  gap-2 ml-4 md:ml-32 pr-4 md:pr-32">
         <div className="inline-block h-9 bg-white p-1 backdrop-blur-md text-xl px-2 rounded-md shadow-sm pointer-events-auto capitalize">
           {title?.toWellFormed()}
         </div>

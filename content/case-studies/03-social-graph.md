@@ -3,6 +3,7 @@ title: Social Graph
 subtitle: Graph-based market and audience analysis
 tagline: Modeling markets through graph-based relationships and influence
 order: 5
+category: project
 insightSlugs: ["graph-modeling", "market-structure"]
 theme:
   background: "#E6E9F2"
