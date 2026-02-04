@@ -6,12 +6,12 @@ import { MediaCardItem } from '@/components/MediaCardItem';
 import { getAuctionHouseCardLineColor } from '@/lib/cardLineColors';
 import { StyleCard } from '@/components/StyleCard';
 
-const LILLA_IMAGES = ['lilla_1.png', 'lilla_2.png', 'lilla_3.png', 'lilla_4.png'];
+const LILLA_IMAGES = [ 'lilla_2.png', 'lilla_3.png', 'lilla_4.png'];
 
 export function CaseStudy05AuctionHouseNew() {
   return (
     <CaseStudySection title="lilla auktionsstudion" visitUrl="https://www.lillaauktionsstudion.se/">
-      <CardLine backgroundColor={'#fff'}>
+      <CardLine backgroundColor={'#fff'} heightVariant='large'> 
         {LILLA_IMAGES.map((filename) => (
           <MediaCardItem
             key={filename}
