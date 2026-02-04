@@ -34,10 +34,11 @@ export function CaseStudy04RenewcellToolkitNew() {
       <CardLine backgroundColor={getRenewcellCardLineColor(1)} alwaysVisibleCount={99}>
         <CardItem aspectRatio="video">
           <div className="p-4 h-full">
-            <StyleCard.TitleCorner
-              font="badger"
-              title="an embeddable web system built for a publicly traded textile company to educate customers about a new material at the point of purchase, operating at global scale."
-            />
+            <StyleCard.CornerLabel label="what" contentAlign="left">
+              an embeddable web system built for a publicly traded textile
+              company to educate customers about a new material at the point of
+              purchase, operating at global scale.
+            </StyleCard.CornerLabel>
           </div>
         </CardItem>
         <CardItem aspectRatio="video">

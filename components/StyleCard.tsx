@@ -128,19 +128,26 @@ StyleCard.End = function End({ title, subtitle }: EndProps) {
   );
 };
 
-// Variant: Label (big, like a title) top-left; body (paragraph-sized) bottom-right (for my role, insights, etc.)
+// Variant: Label (big, like a title) top-left; body (paragraph-sized) bottom, left or right aligned
 interface CornerLabelProps {
   label: string;
   children: ReactNode;
+  contentAlign?: 'left' | 'right';
 }
 
-StyleCard.CornerLabel = function CornerLabel({ label, children }: CornerLabelProps) {
+StyleCard.CornerLabel = function CornerLabel({ label, children, contentAlign = 'right' }: CornerLabelProps) {
+  const isLeft = contentAlign === 'left';
   return (
     <div className="flex flex-col justify-between min-h-0 h-full" style={{ color: 'inherit' }}>
       <h2 className="text-2xl md:text-3xl font-medium leading-[1.2] tracking-tight shrink-0">
         {label}
       </h2>
-      <div className="flex justify-end mt-auto pt-4 text-right text-xl md:text-2xl font-normal leading-[1.5] shrink-0">
+      <div
+        className={cn(
+          'flex mt-auto pt-4 text-xl md:text-2xl font-normal leading-[1.5] shrink-0',
+          isLeft ? 'justify-start text-left' : 'justify-end text-right'
+        )}
+      >
         {children}
       </div>
     </div>

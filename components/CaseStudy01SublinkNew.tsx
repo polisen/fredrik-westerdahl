@@ -35,10 +35,12 @@ export function CaseStudy01SublinkNew() {
       <CardLine backgroundColor={getSublinkCardLineColor(1)} alwaysVisibleCount={99}>
         <CardItem aspectRatio="video">
           <div className="p-4 h-full">
-            <StyleCard.TitleCorner
-              font="badger"
-              title="a funded saas platform (1.4m) built to help creators collaborate and express themselves online. rather than shipping a single fixed product, the platform was designed as a modular system capable of supporting multiple directions over time."
-            />
+            <StyleCard.CornerLabel label="what" contentAlign="left">
+              a funded saas platform (1.4m) built to help creators collaborate
+              and express themselves online. rather than shipping a single fixed
+              product, the platform was designed as a modular system capable of
+              supporting multiple directions over time.
+            </StyleCard.CornerLabel>
           </div>
         </CardItem>
         <CardItem aspectRatio="video">

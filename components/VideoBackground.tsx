@@ -139,7 +139,7 @@ export function VideoBackground() {
     if (!video) return;
 
     // Default state at top of page.
-    video.playbackRate = 0.4;
+    video.playbackRate = 0.2;
     lastWantedPausedRef.current = false;
 
     if (!prefersReducedMotion) {

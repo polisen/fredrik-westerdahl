@@ -16,10 +16,9 @@ export function CaseStudy02ArbitragePlatformNew() {
         </CardItem>
         <CardItem aspectRatio="video">
           <div className="p-4 h-full">
-            <StyleCard.TitleCorner
-              font="badger"
-              title="a system for surfacing time-sensitive market opportunities."
-            />
+            <StyleCard.CornerLabel label="what" contentAlign="left">
+              a system for surfacing time-sensitive market opportunities.
+            </StyleCard.CornerLabel>
           </div>
         </CardItem>
         <CardItem aspectRatio="square">

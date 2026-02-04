@@ -25,10 +25,11 @@ export function CaseStudy05AuctionHouseNew() {
       <CardLine backgroundColor={getAuctionHouseCardLineColor(0)} alwaysVisibleCount={99}>
         <CardItem aspectRatio="video">
           <div className="p-4 h-full">
-            <StyleCard.TitleCorner
-              font="badger"
-              title="a production auction platform built for a small auction house running live and online auctions, including payments, seller onboarding, customer service tooling, and email marketing."
-            />
+            <StyleCard.CornerLabel label="what" contentAlign="left">
+              a production auction platform built for a small auction house
+              running live and online auctions, including payments, seller
+              onboarding, customer service tooling, and email marketing.
+            </StyleCard.CornerLabel>
           </div>
         </CardItem>
         <CardItem aspectRatio="video">
