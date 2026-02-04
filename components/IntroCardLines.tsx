@@ -64,7 +64,7 @@ export function IntroCardLines() {
           </div>
         </CardItem>
       </CardLine>
-
+{/* 
       <CardLine
         backgroundColor={getIntroCardLineColor(1)}
         alwaysVisibleCount={5}
@@ -107,7 +107,7 @@ export function IntroCardLines() {
           </div>
         </CardItem>
      
-      </CardLine>
+      </CardLine> */}
     </>
   );
 }
