@@ -391,42 +391,6 @@ export function Navigation() {
                 )}
               </AnimatePresence>
             </div>
-
-            {/* Recruiters — scrolls to footer */}
-            <div className="relative">
-              <button
-                type="button"
-                className={navItemShell}
-                onClick={() => {
-                  closeMenus();
-                  if (pathname === '/') {
-                    document.getElementById('recruiters')?.scrollIntoView({
-                      behavior: 'smooth',
-                      block: 'end',
-                      inline: 'nearest',
-                    });
-                    return;
-                  }
-                  window.location.href = '/#recruiters';
-                }}
-              >
-                <div className="opacity-0">Recruiters</div>
-                {hoveredLink === '/recruiters' ? (
-                  <motion.div
-                    layoutId="active-nav-indicator"
-                    transition={{ type: 'spring', stiffness: 280, damping: 28 }}
-                    className={activePillClass}
-                  />
-                ) : null}
-                <motion.div
-                  onHoverStart={() => setHoveredLink('/recruiters')}
-                  onHoverEnd={() => setHoveredLink(null)}
-                  className={labelClass}
-                >
-                  Recruiters
-                </motion.div>
-              </button>
-            </div>
           </motion.div>
         </div>
       </motion.nav>
