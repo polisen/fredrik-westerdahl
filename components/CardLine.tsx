@@ -12,7 +12,6 @@ import {
   useRef,
   useState,
   type ReactNode,
-  type CSSProperties,
 } from "react";
 import { useApp } from "@/context/AppContext";
 import { getContrastingTextColor } from "@/lib/cardLineColors";
@@ -276,23 +275,18 @@ export function CardLine({
     <CardLineTextColorContext.Provider value={defaultTextColor}>
       <motion.div
         className={`w-full ${containerPaddingClass} relative origin-center`}
-        style={
-          {
-            cursor: isDragging
-              ? "grabbing"
-              : isHovered
-                ? "grab"
-                : onActivate
-                  ? "pointer"
-                  : "default",
-            height: animatedHeight,
-            ["--cardline-bg"]: backgroundColor ?? "#f3f4f6",
-            ["--cardline-height"]: animatedHeight,
-          } as CSSProperties & {
-            ["--cardline-height"]?: typeof animatedHeight;
-            ["--cardline-bg"]?: string;
-          }
-        }
+        style={{
+          cursor: isDragging
+            ? "grabbing"
+            : isHovered
+              ? "grab"
+              : onActivate
+                ? "pointer"
+                : "default",
+          height: animatedHeight,
+          ["--cardline-bg" as string]: backgroundColor ?? "#f3f4f6",
+          ["--cardline-height" as string]: animatedHeight,
+        }}
         onPointerDown={() => {
           dragMovedRef.current = false;
         }}

@@ -19,17 +19,33 @@ function ease_sin(t: number) {
   return (1 - Math.cos(t * Math.PI)) / 2;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function FrameLoop(this: any, max: number, from = 0, to = max, go_back = false, ease = (t: number) => t) {
-  this.max = max;
-  this.from = from;
-  this.to = to;
-  this.frame = 0;
-  this.value = from;
-  this.range = from < to ? to - from : -(from - to);
-  this.go_back = go_back;
-  this.ease = ease;
-  this.update_value = function () {
+class FrameLoop {
+  max: number;
+  from: number;
+  to: number;
+  frame = 0;
+  value: number;
+  range: number;
+  go_back: boolean;
+  ease: (t: number) => number;
+
+  constructor(
+    max: number,
+    from = 0,
+    to = max,
+    go_back = false,
+    ease = (t: number) => t
+  ) {
+    this.max = max;
+    this.from = from;
+    this.to = to;
+    this.value = from;
+    this.range = from < to ? to - from : -(from - to);
+    this.go_back = go_back;
+    this.ease = ease;
+  }
+
+  update_value() {
     if (this.go_back) {
       const half = this.max / 2;
       if (this.frame < half) {
@@ -41,17 +57,19 @@ function FrameLoop(this: any, max: number, from = 0, to = max, go_back = false, 
     } else {
       this.value = this.from + this.ease(this.frame / this.max) * this.range;
     }
-  };
-  this.inc = function () {
+  }
+
+  inc() {
     this.frame += 1;
     if (this.frame >= this.max) this.frame = 0;
     this.update_value();
-  };
-  this.set = function (val: number) {
+  }
+
+  set(val: number) {
     this.frame = val;
     if (this.frame >= this.max) this.frame = 0;
     this.update_value();
-  };
+  }
 }
 
 export type AsciiWaveRipple = {
@@ -549,8 +567,7 @@ function AsciiWaveInteractive({
     let debug_audio: number[][] = [];
     let canvas_width = gridWidth;
     let canvas_height = gridHeight;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let wave_map: any[][] = [];
+    let wave_map: FrameLoop[][] = [];
     let running = true;
     let advanceAccum = 0;
 
@@ -735,22 +752,10 @@ function AsciiWaveInteractive({
 
       wave_map = [];
       for (let y = 0; y < canvas_height; y++) {
-        const row: any[] = [];
+        const row: FrameLoop[] = [];
         for (let x = 0; x < canvas_width; x++) {
           const value = floor(map(noise[y][x], val_min, val_max, 0, FRAMES));
-          const loop = new (FrameLoop as unknown as new (
-            max: number,
-            from: number,
-            to: number,
-            goBack: boolean,
-            easeFn: (t: number) => number
-          ) => { set: (val: number) => void; value: number; inc: () => void })(
-            FRAMES,
-            from,
-            charTo,
-            goBack,
-            ease
-          );
+          const loop = new FrameLoop(FRAMES, from, charTo, goBack, ease);
           loop.set(value);
           row.push(loop);
         }
