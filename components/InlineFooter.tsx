@@ -18,7 +18,7 @@ export function InlineFooter() {
     }, [isInView, setInlineFooterInView]);
     const links = [
         { href: '/fredrik_westerdahl_cv.pdf', label: 'Download PDF CV', external: true, primary: true },
-        { href: 'mailto:fredrik@sublink.to', label: 'fredrik@sublink.to', external: true },
+        { href: 'mailto:fredrik@userland.xyz', label: 'fredrik@userland.xyz', external: true },
         { href: 'https://github.com/polisen', label: 'GitHub', external: true },
     ];
     return (
@@ -83,7 +83,7 @@ export function InlineFooter() {
                                     'relative flex items-center justify-center transition-all whitespace-nowrap min-h-[44px] shrink-0',
                                     link.primary
                                         ? 'text-base md:text-xl px-6 md:px-8 py-3.5 md:py-4 bg-[#21de73] text-black rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-105 transform'
-                                        : 'text-sm md:text-lg px-5 md:px-6 py-3 md:py-3 hover:opacity-100 opacity-70 text-black bg-white/50 rounded-lg hover:bg-white/80 hover:scale-105 transform'
+                                        : 'text-sm md:text-lg px-5 md:px-6 py-3 md:py-3 hover:opacity-100 opacity-70 text-black bg-white/50 rounded-2xl hover:bg-white/80 hover:scale-105 transform'
                                 )}
                             >
                                 {link.label}

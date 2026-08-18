@@ -355,7 +355,7 @@ export function PhysicsTerrarium({
           {PILL_CONFIGS.map((config, i) => (
             <div
               key={i}
-              className="flex shrink-0 items-center justify-center rounded-lg bg-gray-100 font-medium text-black tracking-wide whitespace-nowrap"
+              className="flex shrink-0 items-center justify-center rounded-2xl bg-gray-100 font-medium text-black tracking-wide whitespace-nowrap"
               style={{
                 width: config.width,
                 height: config.height,

@@ -50,7 +50,7 @@ export function CaseView({ caseStudy }: CaseViewProps) {
                             key={insight._id}
                             href={insight.url}
                             className={cn(
-                                "block px-2 py-1.5 text-lg hover:rounded-xl rounded-md transition-colors text-nowrap shrink-0 backdrop-blur-md w-full md:w-max",
+                                "block px-2 py-1.5 text-lg rounded-2xl transition-colors text-nowrap shrink-0 backdrop-blur-md w-full md:w-max",
                                 "bg-[color:var(--case-pill-bg)] text-[color:var(--case-muted)] hover:text-[color:var(--case-fg)]"
                             )}
                         >
@@ -98,7 +98,7 @@ export function CaseView({ caseStudy }: CaseViewProps) {
                         onClick={() => previousCase && router.push(previousCase.url)}
                         disabled={!previousCase}
                         className={cn(
-                            "h-9 px-3 rounded-md text-sm transition-colors",
+                            "h-9 px-3 rounded-2xl text-sm transition-colors",
                             "bg-[color:var(--case-pill-bg)] text-[color:var(--case-fg)]",
                             "disabled:opacity-40 disabled:cursor-not-allowed"
                         )}
@@ -111,7 +111,7 @@ export function CaseView({ caseStudy }: CaseViewProps) {
                         onClick={() => nextCase && router.push(nextCase.url)}
                         disabled={!nextCase}
                         className={cn(
-                            "h-9 px-3 rounded-md text-sm transition-colors",
+                            "h-9 px-3 rounded-2xl text-sm transition-colors",
                             "bg-[color:var(--case-pill-bg)] text-[color:var(--case-fg)]",
                             "disabled:opacity-40 disabled:cursor-not-allowed"
                         )}

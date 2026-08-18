@@ -2,15 +2,27 @@
 
 import { CardItem, CardLine } from '@/components/CardLine';
 import { CaseStudySection } from '@/components/CaseStudySection';
+import { CaseStudyTagRow } from '@/components/CaseStudyTagRow';
 import { MediaCardItem } from '@/components/MediaCardItem';
 import { getAuctionHouseCardLineColor } from '@/lib/cardLineColors';
 import { StyleCard } from '@/components/StyleCard';
 
-const LILLA_IMAGES = [ 'lilla_2.png', 'lilla_3.png', 'lilla_4.png'];
+const LILLA_IMAGES = ['lilla_2.png', 'lilla_3.png', 'lilla_4.png'];
+
+const LILLA_TAGS = [
+  'Auctions',
+  'Live & online',
+  'Payments',
+  'Seller onboarding',
+  'Lead developer',
+  'Next.js',
+  'Domain-first',
+  'Email marketing',
+];
 
 export function CaseStudy05AuctionHouseNew() {
   return (
-    <CaseStudySection title="lilla auktionsstudion" visitUrl="https://www.lillaauktionsstudion.se/">
+    <CaseStudySection title="lilla auktionsstudion" years="2024–2026" visitUrl="https://www.lillaauktionsstudion.se/">
       <CardLine backgroundColor={'#fff'} heightVariant='large'> 
         {LILLA_IMAGES.map((filename) => (
           <MediaCardItem
@@ -79,6 +91,11 @@ export function CaseStudy05AuctionHouseNew() {
           </div>
         </CardItem>
       </CardLine>
+
+      <CaseStudyTagRow
+        tags={LILLA_TAGS}
+        backgroundColor={getAuctionHouseCardLineColor(0)}
+      />
     </CaseStudySection>
   );
 }

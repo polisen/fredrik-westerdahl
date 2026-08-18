@@ -13,6 +13,47 @@ import { usePathname } from 'next/navigation';
 import { useApp } from '@/context/AppContext';
 import { useReducedMotion } from '@/lib/useReducedMotion';
 import { springConfigs } from '@/lib/springConfigs';
+import AsciiWaveInteractive, {
+  type AsciiWaveInteractionConfig,
+  type AsciiWaveInteractionState,
+} from '@/components/art4/AsciiWaveInteractive';
+
+import { artTheme } from '@/lib/artTheme';
+
+const ART4_FRAMES = 3000;
+const ART4_CHAR_SET = '●◉◎◯◦○◌◍•∙· ';
+const ART4_BLUES = {
+  deep: artTheme.secondary,
+  light: artTheme.secondarySoft,
+} as const;
+const ART4_RIPPLE_PINK = artTheme.tertiary;
+
+const ART4_INTERACTION: AsciiWaveInteractionConfig = {
+  rippleVelocity: 0.35,
+  rippleMaxRadius: 0.82,
+  rippleRingWidth: 0.095,
+  rippleIntensity: 1.28,
+  rippleWavelength: 20,
+  rippleTrail: 0.82,
+  hoverRadius: 0.12,
+  hoverIntensity: 1.05,
+  pressSwellRadius: 0,
+  pressSwellIntensity: 0,
+};
+
+function ease_quad_in_out(t: number) {
+  return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+}
+
+function buildCharColors(charSet: string, start: string, end: string) {
+  const len = charSet.length;
+  if (len <= 1) return [start];
+
+  return Array.from({ length: len }, (_, i) => {
+    const t = i / (len - 1);
+    return `color-mix(in srgb, ${start} ${Math.round((1 - t) * 100)}%, ${end})`;
+  });
+}
 
 function clamp01(v: number) {
   return Math.min(1, Math.max(0, v));
@@ -32,20 +73,27 @@ function checkIfContainerIsScrollable(container: HTMLElement): boolean {
   return false;
 }
 
+/** Home background: Art 4 version 2 (debug heatmap), no mic, pointer + scroll blur/slowdown. */
 export function VideoBackground() {
   const pathname = usePathname();
   const { scrollContainerRef } = useApp();
   const prefersReducedMotion = useReducedMotion();
-
-  // Only render on the home page.
   const isHome = pathname === '/';
 
-  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const interactionRef = useRef<AsciiWaveInteractionState>({
+    ripples: [],
+    pointer: null,
+    pressed: false,
+  });
+  const speedRef = useRef(1);
+  const animPausedRef = useRef(false);
 
-  // Window scroll (default)
+  const charColors = useMemo(
+    () => buildCharColors(ART4_CHAR_SET, ART4_BLUES.deep, ART4_BLUES.light),
+    []
+  );
+
   const windowScroll = useScroll();
-
-  // Container scroll motion value (if we detect a scroll container)
   const containerScrollY = useMotionValue(0);
   const [isContainerScrollable, setIsContainerScrollable] = useState(false);
 
@@ -85,15 +133,16 @@ export function VideoBackground() {
       ? containerScrollY
       : windowScroll.scrollY;
 
-  // Keep hooks unconditional, then choose reduced-motion behavior via derived values.
   const springedScrollY = useSpring(baseScrollY, springConfigs.subtle);
   const smoothScrollY = prefersReducedMotion ? baseScrollY : springedScrollY;
 
-  // Tunable: how much scroll (px) until we reach max blur/pause.
   const scrollRangePx = 600;
+  /** Fully pause the art loop past this scroll progress (saves CPU). */
+  const pauseAt = 0.92;
+  /** Resume with hysteresis so we don't thrash at the threshold. */
+  const resumeAt = 0.78;
 
   const progress = useTransform(smoothScrollY, (v) => clamp01(v / scrollRangePx));
-  // Raw progress (no spring) for playback rate so it responds immediately to scroll
   const progressForPlayback = useTransform(baseScrollY, (v) =>
     clamp01(v / scrollRangePx)
   );
@@ -103,51 +152,41 @@ export function VideoBackground() {
 
   const scale = useMemo(() => 1.05, []);
 
-  // Track last playback state to avoid spamming play/pause.
-  const lastWantedPausedRef = useRef<boolean | null>(null);
-
   useMotionValueEvent(progressForPlayback, 'change', (p) => {
-    const video = videoRef.current;
-    if (!video) return;
-    if (prefersReducedMotion) return;
-
-    // Slow down as we scroll. Clamp to a small non-zero value so it eases into pausing.
-    const playbackRate = Math.min(0.8, Math.max(0.08, 1 - p));
-    if (!Number.isNaN(playbackRate) && Number.isFinite(playbackRate)) {
-      video.playbackRate = playbackRate;
+    if (prefersReducedMotion) {
+      animPausedRef.current = true;
+      speedRef.current = 0;
+      return;
     }
 
-    const wantPaused = p >= 0.98;
-    if (lastWantedPausedRef.current === wantPaused) return;
-    lastWantedPausedRef.current = wantPaused;
-
-    if (wantPaused) {
-      video.pause();
-    } else {
-      const playPromise = video.play();
-      if (playPromise && typeof (playPromise as Promise<void>).catch === 'function') {
-        (playPromise as Promise<void>).catch(() => {
-          // Ignore autoplay rejections (e.g. Safari/iOS quirks).
-        });
+    if (animPausedRef.current) {
+      if (p <= resumeAt) {
+        animPausedRef.current = false;
+        speedRef.current = Math.min(1, Math.max(0.08, 1 - p));
+      } else {
+        speedRef.current = 0;
       }
+      return;
     }
+
+    if (p >= pauseAt) {
+      animPausedRef.current = true;
+      speedRef.current = 0;
+      return;
+    }
+
+    // Slow toward ~0.08 as you scroll, then hard-pause past pauseAt.
+    speedRef.current = Math.min(1, Math.max(0.08, 1 - p));
   });
 
-  // Ensure we start in a valid state when the video becomes available.
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    // Default state at top of page.
-    video.playbackRate = 0.2;
-    lastWantedPausedRef.current = false;
-
-    if (!prefersReducedMotion) {
-      const playPromise = video.play();
-      if (playPromise && typeof (playPromise as Promise<void>).catch === 'function') {
-        (playPromise as Promise<void>).catch(() => {});
-      }
+    if (prefersReducedMotion) {
+      animPausedRef.current = true;
+      speedRef.current = 0;
+      return;
     }
+    animPausedRef.current = false;
+    speedRef.current = 1;
   }, [prefersReducedMotion]);
 
   if (!isHome) return null;
@@ -155,29 +194,32 @@ export function VideoBackground() {
   return (
     <motion.div
       aria-hidden
-      className="fixed inset-0 pointer-events-none z-0"
+      className="fixed inset-0 pointer-events-none z-0 overflow-hidden"
       style={{
         transform: `scale(${scale})`,
         willChange: 'transform, filter',
+        filter: prefersReducedMotion ? 'none' : blurFilter,
+        WebkitFilter: prefersReducedMotion ? 'none' : blurFilter,
       }}
     >
-      <motion.video
-        ref={videoRef}
-        className="h-full w-full object-cover"
-        src="/loop3.webm"
-        muted
-        playsInline
-        autoPlay
-        loop
-        preload="auto"
-        // CSS filter is scroll-linked (video itself, not backdrop-filter).
-        style={{
-          filter: prefersReducedMotion ? 'none' : (blurFilter as any),
-          WebkitFilter: prefersReducedMotion ? 'none' : (blurFilter as any),
-          willChange: 'filter',
-        }}
+      <AsciiWaveInteractive
+        fill
+        FRAMES={ART4_FRAMES}
+        BLUR_STEPS={18}
+        from={0}
+        ease={ease_quad_in_out}
+        charSet={ART4_CHAR_SET}
+        charColors={charColors}
+        interactionTintColor={ART4_RIPPLE_PINK}
+        interactionTintStrength={0.88}
+        interactionRef={interactionRef}
+        interactionConfig={ART4_INTERACTION}
+        visualMode="debug"
+        debugInvertDepth
+        speedRef={speedRef}
+        pointerTarget="window"
+        className="opacity-90"
       />
     </motion.div>
   );
 }
-

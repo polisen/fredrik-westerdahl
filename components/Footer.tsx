@@ -1,14 +1,47 @@
 'use client';
 
 import Link from 'next/link';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 
-const itemClass =
-  'h-8 rounded-md bg-gray-100 backdrop-blur-md shadow-md inline-flex items-center px-2 text-lg text-gray-900 transition-opacity hover:opacity-100';
+export const footerItemClass =
+  'h-12 rounded-full bg-white/60 backdrop-blur-xl inline-flex items-center gap-1.5 px-5 text-xl text-black transition-opacity hover:opacity-100';
 
 const FLOAT_FROM_Y = 100;
+
+export function FooterLinks({
+  className,
+  id,
+}: {
+  className?: string;
+  id?: string;
+}) {
+  return (
+    <div id={id} className={className}>
+      <Link
+        href="/fredrik_westerdahl_cv.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+        className={footerItemClass}
+      >
+        Open CV as PDF
+        <ArrowUpRight className="size-5" />
+      </Link>
+      <a
+        href="https://github.com/polisen"
+        target="_blank"
+        rel="noopener noreferrer"
+        className={footerItemClass}
+      >
+        github.com/polisen
+      </a>
+      <a href="mailto:fredrik@userland.xyz" className={footerItemClass}>
+        fredrik@userland.xyz
+      </a>
+    </div>
+  );
+}
 
 export function Footer() {
   const sentinelRef = useRef<HTMLDivElement>(null);
@@ -27,36 +60,38 @@ export function Footer() {
   }, []);
 
   return (
-    <footer className="w-full" aria-hidden>
+    <footer className="w-full">
       <div ref={sentinelRef} className="h-px w-full" aria-hidden />
       <motion.div
         initial={{ y: FLOAT_FROM_Y }}
         animate={{ y: isInView ? 0 : FLOAT_FROM_Y }}
         transition={{ type: 'spring', damping: 28, stiffness: 120 }}
-        className="flex flex-wrap items-center gap-4 pt-20 pl-4 pr-8 md:pl-32 md:pr-8 max-w-4xl"
       >
-        <Link
-          href="/fredrik_westerdahl_cv.pdf"
-          download
-          className={`${itemClass} pr-0 w-fit overflow-hidden`}
-        >
-          <span className="px-2">Download PDF CV</span>
-          <span className="h-8 w-8 flex-shrink-0 flex items-center justify-center bg-gray-200 rounded-r-md">
-            <ArrowUpRight className="size-4" />
-          </span>
-        </Link>
-        <a
-          href="https://github.com/polisen"
-          target="_blank"
-          rel="noopener noreferrer"
-          className={itemClass}
-        >
-          GitHub
-        </a>
-        <a href="mailto:fredrik@sublink.to" className={itemClass}>
-          fredrik@sublink.to
-        </a>
+        <FooterLinks
+          id="recruiters"
+          className="relative flex w-full flex-wrap items-center gap-3 pt-20 pb-10 pl-4 pr-8 md:pl-10 md:pr-8 max-w-4xl"
+        />
       </motion.div>
     </footer>
+  );
+}
+
+/** Floating footer that slides up when the nav menu overlay is open. */
+export function MenuOverlayFooter({ open }: { open: boolean }) {
+  return (
+    <AnimatePresence>
+      {open ? (
+        <motion.div
+          key="menu-overlay-footer"
+          initial={{ y: 80, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 80, opacity: 0 }}
+          transition={{ type: 'spring', damping: 26, stiffness: 160 }}
+          className="fixed bottom-0 left-0 right-0 z-50 pointer-events-none pb-6 md:pb-8"
+        >
+          <FooterLinks className="pointer-events-auto flex w-full flex-wrap items-center gap-3 pl-4 pr-8 md:pl-10 md:pr-8 max-w-4xl" />
+        </motion.div>
+      ) : null}
+    </AnimatePresence>
   );
 }

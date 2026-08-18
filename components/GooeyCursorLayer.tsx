@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useCursorContext } from './CursorContext';
 import { useGooContext } from './GooContext';
 import { useId } from 'react';
+import { artTheme } from '@/lib/artTheme';
 
 export function GooeyCursorLayer() {
   const { mouseX, mouseY, hoveredRect } = useCursorContext();
@@ -32,18 +33,18 @@ export function GooeyCursorLayer() {
       if (!hasMeasured) return;
 
       if (hoveredRect) {
-        // When hovering, use fixed 120x120px size centered on mouse
+        // When hovering, use fixed size centered on mouse
         containerRef.current.style.left = `${x}px`;
         containerRef.current.style.top = `${y}px`;
-        containerRef.current.style.width = '120px';
-        containerRef.current.style.height = '120px';
+        containerRef.current.style.width = '88px';
+        containerRef.current.style.height = '88px';
         containerRef.current.style.transform = 'translate(-50%, -50%)'; // Center on mouse
       } else {
         // When not hovering, use circular shape centered on mouse
         containerRef.current.style.left = `${x}px`;
         containerRef.current.style.top = `${y}px`;
-        containerRef.current.style.width = '80px';
-        containerRef.current.style.height = '80px';
+        containerRef.current.style.width = '56px';
+        containerRef.current.style.height = '56px';
         containerRef.current.style.transform = 'translate(-50%, -50%)'; // Center on mouse
       }
 
@@ -96,13 +97,9 @@ export function GooeyCursorLayer() {
         shape: 'rounded',
         borderRadius: hoveredRect ? '8px' : 'rounded-full', // Match RegularCursorLayer when hovering
         backgroundStyle: {
-        //   backgroundColor: hoveredRect ? 'rgba(255, 255, 255, 0.15)' : 'rgba(255, 255, 255, 0.1)',
-        // backgroundColor yves klein blue 
-          backgroundColor: '#002FA7',
+          backgroundColor: artTheme.primary,
           backdropFilter: 'invert(1)',
           WebkitBackdropFilter: 'invert(1)', // Safari support
-        //   backdropFilter: backdropFilter,
-        //   WebkitBackdropFilter: backdropFilter, // Safari support
         },
         zIndex: 10, // Above regular content but below navigation and regular cursor
       });

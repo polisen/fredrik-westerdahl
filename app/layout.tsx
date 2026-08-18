@@ -17,7 +17,6 @@ import AsciiWave from '@/components/AsciiWave';
 import { PageLoadAnimation } from '@/components/PageLoadAnimation';
 import { Navigation } from '@/components/Navigation';
 import { VideoBackground } from '@/components/VideoBackground';
-import ScrollLinked from '@/components/ScrollLinked';
 
 export const metadata: Metadata = {
   title: 'fredrik-westerdahl.me',
@@ -51,7 +50,6 @@ export default function RootLayout({
                 </BackgroundLayer> */}
                 <Blur />
                 <Navigation />
-                <ScrollLinked />
                 {/* <AnimatedHeader /> */}
                 {/* <FooterNavigation /> */}
                 <GooLayer />

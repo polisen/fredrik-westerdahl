@@ -1,13 +1,27 @@
 'use client';
 
 import { CardItem, CardLine } from '@/components/CardLine';
-import { CaseStudySection } from '@/components/CaseStudySection';
 import { getSocialGraphCardLineColor } from '@/lib/cardLineColors';
 import { StyleCard } from '@/components/StyleCard';
+import {
+  PROJECT_ROW_COLLAPSED_SCALE,
+  PROJECT_ROW_EXPANDED_SCALE,
+  useProjectRows,
+} from '@/components/ProjectRowsContext';
+
+const PROJECT_ID = '03-social-graph';
 
 export function CaseStudy03SocialGraphNew() {
+  const { isSelected, select } = useProjectRows();
+  const expanded = isSelected(PROJECT_ID);
+
   return (
-    <CardLine backgroundColor={getSocialGraphCardLineColor(0)} alwaysVisibleCount={99}>
+    <CardLine
+      backgroundColor={getSocialGraphCardLineColor(0)}
+      alwaysVisibleCount={99}
+      heightScale={expanded ? PROJECT_ROW_EXPANDED_SCALE : PROJECT_ROW_COLLAPSED_SCALE}
+      onActivate={() => select(PROJECT_ID)}
+    >
         <CardItem aspectRatio="square">
           <div className="p-4 h-full">
             <StyleCard.Title font="badger">social graph</StyleCard.Title>

@@ -14,6 +14,7 @@ import { CaseStudy02ArbitragePlatformNew } from '@/components/CaseStudy02Arbitra
 import { CaseStudy03SocialGraphNew } from '@/components/CaseStudy03SocialGraphNew';
 import { CaseStudy04RenewcellToolkitNew } from '@/components/CaseStudy04RenewcellToolkitNew';
 import { CaseStudy05AuctionHouseNew } from '@/components/CaseStudy05AuctionHouseNew';
+import { ProjectRowsProvider } from '@/components/ProjectRowsContext';
 
 export default function PortfolioPage() {
   const pathname = usePathname();
@@ -173,10 +174,10 @@ export default function PortfolioPage() {
     <motion.main
       ref={ref}
       layoutScroll
-      className="w-full max-w-full py-2 md:py-0 flex flex-col bg-transparent scroll-pt-20 md:scroll-pt-0"
+      className="w-full max-w-full py-2 md:py-0 flex flex-col bg-transparent scroll-pt-[86px] md:scroll-pt-[86px]"
     >
       <FadeIn>
-        <div className="flex flex-col h-min overflow-x-visible gap-2 pt-[60vh] pb-[30vh] ">
+        <div className="flex flex-col h-min overflow-x-visible gap-2 pt-[50vh] pb-[30vh] ">
           <div id="intro">
             <IntroCardLines />
           </div>
@@ -196,12 +197,14 @@ export default function PortfolioPage() {
             <CaseStudy04RenewcellToolkitNew />
           </div>
           <div className="h-12" />
-          <div id="02-arbitrage-platform">
-            <CaseStudy02ArbitragePlatformNew />
-          </div>
-          <div id="03-social-graph">
-            <CaseStudy03SocialGraphNew />
-          </div>
+          <ProjectRowsProvider defaultSelectedId="02-arbitrage-platform">
+            <div id="02-arbitrage-platform">
+              <CaseStudy02ArbitragePlatformNew />
+            </div>
+            <div id="03-social-graph">
+              <CaseStudy03SocialGraphNew />
+            </div>
+          </ProjectRowsProvider>
           <Footer />
         </div>
       </FadeIn>

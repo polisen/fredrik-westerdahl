@@ -123,6 +123,23 @@ export default function FrontEndExperimentsPage() {
                 <li>Reusable across breakpoints; offset and ranges are props</li>
               </ul>
             </article>
+
+            {/* 6. FFT heatmap */}
+            <article className="flex flex-col gap-5">
+              <h2 className="text-xl font-semibold text-gray-900">
+                Music FFT heatmap
+              </h2>
+              <p className="text-gray-600 text-base leading-relaxed">
+                Art 4 debug mode — microphone EQ bands painted as an inverted
+                depth heatmap. Opens fullscreen; allow mic access.
+              </p>
+              <a
+                href="/creative/fft"
+                className="inline-flex w-fit items-center rounded-full bg-black px-4 py-2 text-white"
+              >
+                Open FFT art
+              </a>
+            </article>
           </div>
         </div>
       </FadeIn>

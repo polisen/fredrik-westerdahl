@@ -16,12 +16,12 @@ export function RegularCursorLayer() {
       if (stateRef.current === 'following' || stateRef.current === 'highlighting') {
         stateRef.current = 'animating';
         // Animate to fixed square size (slightly bigger), position continues following mouse
-        const baseSize = 32;
+        const baseSize = 24;
         const pressedSize = isPressed ? baseSize * 0.7 : baseSize;
         animation.start({
           width: pressedSize,
           height: pressedSize,
-          borderRadius: isPressed ? 16 : 8, // Become round when pressed
+          borderRadius: isPressed ? 12 : 6, // Become round when pressed
           transition: { type: 'spring', stiffness: 400, damping: 30 },
         });
       }
@@ -30,12 +30,12 @@ export function RegularCursorLayer() {
       if (stateRef.current === 'highlighting' || (stateRef.current === 'animating' && lastHoveredRectRef.current)) {
         stateRef.current = 'animating';
         // Animate back to small round dot, position continues following mouse
-        const baseSize = 16;
+        const baseSize = 12;
         const pressedSize = isPressed ? baseSize * 0.7 : baseSize;
         animation.start({
           width: pressedSize,
           height: pressedSize,
-          borderRadius: 16, // Always round when not hovering
+          borderRadius: 12, // Always round when not hovering
           transition: { type: 'spring', stiffness: 400, damping: 30 },
         });
       }
@@ -46,9 +46,9 @@ export function RegularCursorLayer() {
 
   // Handle press animation - quick springy effect, become round, animate size only
   useEffect(() => {
-    const baseWidth = hoveredRect ? 32 : 16;
-    const baseHeight = hoveredRect ? 32 : 16;
-    const targetBorderRadius = hoveredRect ? (isPressed ? 16 : 8) : 16;
+    const baseWidth = hoveredRect ? 24 : 12;
+    const baseHeight = hoveredRect ? 24 : 12;
+    const targetBorderRadius = hoveredRect ? (isPressed ? 12 : 6) : 12;
     
     if (isPressed) {
       // On press: size down quickly with spring, become round
@@ -72,17 +72,17 @@ export function RegularCursorLayer() {
   // Always follow mouse - position updates immediately regardless of hover state
   useEffect(() => {
     // Set initial position
-    const initialX = mouseX.get() - 8;
-    const initialY = mouseY.get() - 8;
+    const initialX = mouseX.get() - 6;
+    const initialY = mouseY.get() - 6;
     animation.set({ x: initialX, y: initialY });
 
     const unsubscribeX = mouseX.on('change', (x) => {
       // Update position immediately (no transition)
-      animation.set({ x: x - 8 });
+      animation.set({ x: x - 6 });
     });
     const unsubscribeY = mouseY.on('change', (y) => {
       // Update position immediately (no transition)
-      animation.set({ y: y - 8 });
+      animation.set({ y: y - 6 });
     });
 
     return () => {
@@ -99,8 +99,8 @@ export function RegularCursorLayer() {
         position: 'fixed',
         top: 0,
         left: 0,
-        width: 16,
-        height: 16,
+        width: 12,
+        height: 12,
         zIndex: 9999,
         originX: 0.5,
         originY: 0.5,

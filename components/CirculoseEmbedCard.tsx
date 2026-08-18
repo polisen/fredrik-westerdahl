@@ -44,16 +44,11 @@ export function CirculoseEmbedCard() {
               key={t}
               type="button"
               onClick={() => setTheme(t)}
-              className={`px-2.5 py-1 text-sm rounded border transition-colors ${
+              className={`h-8 px-3 text-sm rounded-full transition-colors ${
                 theme === t
-                  ? 'border-current opacity-90'
-                  : 'opacity-60 border-current hover:opacity-80'
+                  ? 'bg-gray-300 text-black'
+                  : 'bg-gray-100 text-black/60 hover:text-black hover:bg-gray-200'
               }`}
-              style={{
-                borderColor: 'inherit',
-                color: 'inherit',
-                ...(theme === t && { backgroundColor: 'rgba(0,0,0,0.08)' }),
-              }}
             >
               {t}
             </button>
@@ -65,16 +60,11 @@ export function CirculoseEmbedCard() {
               key={o}
               type="button"
               onClick={() => setOrientation(o)}
-              className={`px-2.5 py-1 text-sm rounded border transition-colors ${
+              className={`h-8 px-3 text-sm rounded-full transition-colors ${
                 orientation === o
-                  ? 'border-current opacity-90'
-                  : 'opacity-60 border-current hover:opacity-80'
+                  ? 'bg-gray-300 text-black'
+                  : 'bg-gray-100 text-black/60 hover:text-black hover:bg-gray-200'
               }`}
-              style={{
-                borderColor: 'inherit',
-                color: 'inherit',
-                ...(orientation === o && { backgroundColor: 'rgba(0,0,0,0.08)' }),
-              }}
             >
               {o}
             </button>

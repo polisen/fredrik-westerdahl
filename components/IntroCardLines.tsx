@@ -26,7 +26,7 @@ export function IntroCardLines() {
           aspectRatio={350 / 450}
           className="max-w-none bg-white group  relative p-0"
         >
-          <div className="absolute bg-white inset-0 flex items-center justify-center overflow-hidden rounded-lg">
+          <div className="absolute bg-white inset-0 flex items-center justify-center overflow-hidden rounded-[inherit]">
             <div
               className="h-full w-auto shrink-0 pointer-events-none block scale-[1.015] origin-center"
               style={{ aspectRatio: '350/450' }}
@@ -34,12 +34,12 @@ export function IntroCardLines() {
               <iframe
                 src="/fredrik_westerdahl_cv.pdf#toolbar=0&navpanes=0&scrollbar=0"
                 title="Fredrik Westerdahl CV"
-                className="block h-full w-full rounded-lg bg-white border-0 p-0 m-0 align-top pointer-events-none select-none"
+                className="block h-full w-full rounded-[inherit] bg-white border-0 p-0 m-0 align-top pointer-events-none select-none"
               />
             </div>
           </div>
           <div
-            className="absolute bottom-0 left-0 right-0 h-24 rounded-b-lg pointer-events-none"
+            className="absolute bottom-0 left-0 right-0 h-24 rounded-b-[inherit] pointer-events-none bg-white/90"
             style={{
               mask: 'linear-gradient(to top, black 50%, transparent)',
               WebkitMask: 'linear-gradient(to top, black 50%, transparent)',
@@ -57,10 +57,10 @@ export function IntroCardLines() {
             <span className="sr-only">Open CV</span>
           </a>
           <div
-            className="absolute right-4 bottom-4 z-20 pointer-events-none flex size-10 items-center justify-center rounded-full bg-gray-200/80 backdrop-blur-sm transition-all duration-200 group-hover:scale-110 group-hover:bg-white group-hover:shadow-[0_0_20px_rgba(255,255,255,0.6)] group-hover:[&>svg]:brightness-125"
+            className="absolute right-4 bottom-4 z-20 pointer-events-none flex h-8 w-14 items-center justify-center rounded-full bg-black transition-transform duration-200 group-hover:scale-110"
             aria-hidden
           >
-            <ArrowUpRight className="size-5 text-gray-700 transition-all duration-200" />
+            <ArrowUpRight className="size-4 text-white" />
           </div>
         </CardItem>
       </CardLine>

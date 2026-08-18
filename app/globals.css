@@ -20,6 +20,12 @@
   --safe-area-inset-right: env(safe-area-inset-right, 0px);
   --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
   --safe-area-inset-left: env(safe-area-inset-left, 0px);
+
+  /* Art theme: texture12 primary + ASCII wave */
+  --art-primary: #c4ff06;
+  --art-secondary: #0046e0;
+  --art-tertiary: #ff6eb4;
+  --art-secondary-soft: #f4f8ff;
   
   /* Warm, flat palette (inspired by the screenshot) */
   --app-card: #c8c6b9;

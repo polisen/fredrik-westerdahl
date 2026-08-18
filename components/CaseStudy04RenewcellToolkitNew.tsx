@@ -3,14 +3,27 @@
 import Script from 'next/script';
 import { CardItem, CardLine } from '@/components/CardLine';
 import { CaseStudySection } from '@/components/CaseStudySection';
+import { CaseStudyTagRow } from '@/components/CaseStudyTagRow';
 import { CirculoseEmbedCard } from '@/components/CirculoseEmbedCard';
 import { MediaCardItem } from '@/components/MediaCardItem';
 import { getRenewcellCardLineColor } from '@/lib/cardLineColors';
 import { StyleCard } from '@/components/StyleCard';
 
+const CIRCULOSE_TAGS = [
+  'Embeddable',
+  'Textile',
+  'Point of purchase',
+  'Global scale',
+  'Lead engineer',
+  'CDN',
+  'Beacon API',
+  'Privacy-preserving',
+  'Google Cloud',
+];
+
 export function CaseStudy04RenewcellToolkitNew() {
   return (
-    <CaseStudySection title="circulose" visitUrl="https://www.circulose.com/">
+    <CaseStudySection title="circulose" years="2023–2024" visitUrl="https://www.circulose.com/">
       <Script
         src="/renewcell/circulose-bundle.js"
         strategy="lazyOnload"
@@ -91,6 +104,11 @@ export function CaseStudy04RenewcellToolkitNew() {
           </div>
         </CardItem>
       </CardLine>
+
+      <CaseStudyTagRow
+        tags={CIRCULOSE_TAGS}
+        backgroundColor={getRenewcellCardLineColor(1)}
+      />
     </CaseStudySection>
   );
 }

@@ -40,7 +40,7 @@ export function CaseStudy04RenewcellToolkit() {
               <Link
                 href={insight.url}
                 className={cn(
-                  'block px-2 py-1.5 text-lg hover:rounded-xl rounded-md transition-colors text-nowrap shrink-0 backdrop-blur-md w-full md:w-max',
+                  'block px-2 py-1.5 text-lg rounded-2xl transition-colors text-nowrap shrink-0 backdrop-blur-md w-full md:w-max',
                   'bg-[color:var(--case-pill-bg)] text-[color:var(--case-muted)] hover:text-[color:var(--case-fg)]'
                 )}
               >

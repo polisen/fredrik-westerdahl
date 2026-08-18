@@ -57,7 +57,7 @@ export function CaseStudyItem({
           {/* Column 1: Header card */}
           <GooContainer
             color={color}
-            className={`md:sticky md:top-32 z-10 rounded-lg p-12 py-6 md:p-12 flex flex-col justify-between ${
+            className={`md:sticky md:top-32 z-10 rounded-2xl p-12 py-6 md:p-12 flex flex-col justify-between ${
               'max-h-[20vh] md:max-h-[50vh] md:aspect-video'
             }`}
             // backgroundImage='url("/sublink_image.jpeg")'
