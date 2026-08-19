@@ -236,7 +236,8 @@ function measureGridSize(
   parent: HTMLElement,
   fallbackWidth: number,
   fallbackHeight: number,
-  charSet: string
+  charSet: string,
+  cellScale = 1
 ) {
   const rect = parent.getBoundingClientRect();
   const layoutW = parent.offsetWidth;
@@ -274,8 +275,9 @@ function measureGridSize(
   const fontSizePx = lineHeight + FILL_LINE_EXTRA_PX;
   const charWidth =
     measureMaxCharWidth(parent, style.font, fontSizePx, charSet) / scaleX;
-  const width = Math.max(1, Math.floor(layoutW / charWidth));
-  const height = Math.max(1, Math.floor(layoutH / fontSizePx));
+  const scale = Math.max(0.25, cellScale);
+  const width = Math.max(1, Math.floor(layoutW / (charWidth * scale)));
+  const height = Math.max(1, Math.floor(layoutH / (fontSizePx * scale)));
 
   return { width, height, fontSizePx, charWidth };
 }
@@ -311,6 +313,36 @@ function clientToGridNorm(
 
 function clampIndex(value: number, max: number) {
   return Math.max(0, Math.min(max, value));
+}
+
+let colorProbeCtx: CanvasRenderingContext2D | null = null;
+
+function cssColorToRgb(color: string): [number, number, number] {
+  if (!colorProbeCtx) {
+    const probe = document.createElement('canvas');
+    probe.width = 1;
+    probe.height = 1;
+    colorProbeCtx = probe.getContext('2d', { willReadFrequently: true });
+  }
+  if (!colorProbeCtx) return [0, 42, 138];
+  colorProbeCtx.fillStyle = '#000';
+  colorProbeCtx.fillStyle = color;
+  colorProbeCtx.fillRect(0, 0, 1, 1);
+  const d = colorProbeCtx.getImageData(0, 0, 1, 1).data;
+  return [d[0], d[1], d[2]];
+}
+
+function mixRgb(
+  a: [number, number, number],
+  b: [number, number, number],
+  t: number
+): [number, number, number] {
+  const u = Math.max(0, Math.min(1, t));
+  return [
+    a[0] + (b[0] - a[0]) * u,
+    a[1] + (b[1] - a[1]) * u,
+    a[2] + (b[2] - a[2]) * u,
+  ];
 }
 
 function blendInteractionTint(
@@ -473,6 +505,11 @@ export type AsciiWaveInteractiveProps = {
    * for hit-testing (useful as a page background).
    */
   pointerTarget?: 'element' | 'window';
+  /**
+   * Scale fill-mode cell size. `< 1` = denser grid, `> 1` = coarser.
+   * `0.5` ≈ 4× the cells.
+   */
+  cellScale?: number;
   className?: string;
   style?: CSSProperties;
 };
@@ -500,6 +537,7 @@ function AsciiWaveInteractive({
   interactionTintStrength = 0.72,
   speedRef,
   pointerTarget = 'element',
+  cellScale = 1,
   className = '',
   style,
 }: AsciiWaveInteractiveProps) {
@@ -544,7 +582,7 @@ function AsciiWaveInteractive({
     const canvasParent: HTMLDivElement = parent;
 
     const { width: gridWidth, height: gridHeight, fontSizePx, charWidth } = fill
-      ? measureGridSize(canvasParent, width, height, charSet)
+      ? measureGridSize(canvasParent, width, height, charSet, cellScale)
       : { width, height, fontSizePx: null, charWidth: null };
 
     if (fontSizePx != null) {
@@ -570,6 +608,29 @@ function AsciiWaveInteractive({
     let wave_map: FrameLoop[][] = [];
     let running = true;
     let advanceAccum = 0;
+    let debugCanvas: HTMLCanvasElement | null = null;
+    let debugCtx: CanvasRenderingContext2D | null = null;
+    const debugPalette: Array<[number, number, number]> = [];
+    const debugTintRgb: [number, number, number] = interactionTintColor
+      ? cssColorToRgb(interactionTintColor)
+      : [255, 220, 120];
+    const debugAudioRgb: [number, number, number] = [120, 200, 255];
+
+    if (visualMode === 'debug') {
+      const depthSteps = charSet.length;
+      for (let i = 0; i < depthSteps; i++) {
+        if (charColors?.length) {
+          debugPalette.push(
+            cssColorToRgb(
+              charColors[i] ?? charColors[charColors.length - 1] ?? '#002a8a'
+            )
+          );
+        } else {
+          const lightness = 12 + (depthSteps > 1 ? i / (depthSteps - 1) : 0) * 58;
+          debugPalette.push(cssColorToRgb(`hsl(220 85% ${lightness}%)`));
+        }
+      }
+    }
 
     function render_frame() {
       if (visualMode === 'debug') {
@@ -580,19 +641,34 @@ function AsciiWaveInteractive({
     }
 
     function render_debug() {
-      const cw = gridMetricsRef.current.charWidth;
-      const lh = gridMetricsRef.current.lineHeight;
-      const depthSteps = charSet.length;
-
-      canvasParent.replaceChildren();
       canvasParent.style.fontSize = '';
       canvasParent.style.lineHeight = '';
 
-      const wrap = document.createElement('div');
-      wrap.style.position = 'relative';
-      wrap.style.width = '100%';
-      wrap.style.height = '100%';
-      wrap.style.background = '#050505';
+      if (!debugCanvas) {
+        canvasParent.replaceChildren();
+        debugCanvas = document.createElement('canvas');
+        debugCanvas.style.display = 'block';
+        debugCanvas.style.width = '100%';
+        debugCanvas.style.height = '100%';
+        canvasParent.appendChild(debugCanvas);
+        debugCtx = debugCanvas.getContext('2d', { alpha: false });
+      }
+      if (!debugCtx) return;
+
+      const dpr = window.devicePixelRatio || 1;
+      const cssW = canvasParent.clientWidth || 1;
+      const cssH = canvasParent.clientHeight || 1;
+      const pixelW = Math.max(1, Math.round(cssW * dpr));
+      const pixelH = Math.max(1, Math.round(cssH * dpr));
+      if (debugCanvas.width !== pixelW || debugCanvas.height !== pixelH) {
+        debugCanvas.width = pixelW;
+        debugCanvas.height = pixelH;
+      }
+
+      // 1 device-pixel rings — stays hairline on retina instead of 1 CSS-px thick.
+      const line = 1;
+      debugCtx.fillStyle = '#050505';
+      debugCtx.fillRect(0, 0, pixelW, pixelH);
 
       for (let y = 0; y < canvas_height; y++) {
         for (let x = 0; x < canvas_width; x++) {
@@ -601,46 +677,46 @@ function AsciiWaveInteractive({
             charSet.length - 1
           );
           const colorIdx = debugInvertDepth ? charSet.length - 1 - idx : idx;
-          const t =
-            depthSteps > 1 ? colorIdx / (depthSteps - 1) : 0;
+          const rgb =
+            debugPalette[colorIdx] ??
+            debugPalette[debugPalette.length - 1] ??
+            [0, 42, 138];
+
+          const x0 = Math.round((x / canvas_width) * pixelW);
+          const x1 = Math.round(((x + 1) / canvas_width) * pixelW);
+          const y0 = Math.round((y / canvas_height) * pixelH);
+          const y1 = Math.round(((y + 1) / canvas_height) * pixelH);
+          const w = Math.max(1, x1 - x0);
+          const h = Math.max(1, y1 - y0);
+
+          // Depth fill only — interaction never tints the cell body.
+          debugCtx.fillStyle = `rgb(${rgb[0] | 0},${rgb[1] | 0},${rgb[2] | 0})`;
+          debugCtx.fillRect(x0, y0, w, h);
+
           const interactionAmt = debug_interaction[y]?.[x] ?? 0;
-          const audioAmt = debug_audio[y]?.[x] ?? 0;
-
-          const cell = document.createElement('div');
-          cell.style.position = 'absolute';
-          cell.style.left = `${x * cw}px`;
-          cell.style.top = `${y * lh}px`;
-          cell.style.width = `${cw}px`;
-          cell.style.height = `${lh}px`;
-          cell.style.boxSizing = 'border-box';
-
-          if (charColors?.length) {
-            cell.style.backgroundColor =
-              charColors[colorIdx] ??
-              charColors[charColors.length - 1] ??
-              '#002a8a';
-          } else {
-            const lightness = 12 + t * 58;
-            cell.style.backgroundColor = `hsl(220 85% ${lightness}%)`;
-          }
-
           if (interactionAmt > 0.02) {
+            // Same idea as the old inset box-shadow: 1px pink ring on the cell.
             const ringAlpha = Math.min(1, Math.abs(interactionAmt) * 0.85);
-            if (interactionTintColor) {
-              cell.style.boxShadow = `inset 0 0 0 1px color-mix(in srgb, transparent ${Math.round((1 - ringAlpha) * 100)}%, ${interactionTintColor})`;
-            } else {
-              cell.style.boxShadow = `inset 0 0 0 1px rgba(255, 220, 120, ${ringAlpha})`;
-            }
-          }
-          if (Math.abs(audioAmt) > 0.02) {
-            cell.style.outline = `1px solid rgba(120, 200, 255, ${Math.min(1, Math.abs(audioAmt) * 0.9)})`;
+            const [tr, tg, tb] = debugTintRgb;
+            debugCtx.fillStyle = `rgba(${tr | 0},${tg | 0},${tb | 0},${ringAlpha})`;
+            debugCtx.fillRect(x0, y0, w, line);
+            debugCtx.fillRect(x0, y1 - line, w, line);
+            debugCtx.fillRect(x0, y0, line, h);
+            debugCtx.fillRect(x1 - line, y0, line, h);
           }
 
-          wrap.appendChild(cell);
+          const audioAmt = debug_audio[y]?.[x] ?? 0;
+          if (Math.abs(audioAmt) > 0.02) {
+            const audioAlpha = Math.min(1, Math.abs(audioAmt) * 0.9);
+            const [ar, ag, ab] = debugAudioRgb;
+            debugCtx.fillStyle = `rgba(${ar | 0},${ag | 0},${ab | 0},${audioAlpha})`;
+            debugCtx.fillRect(x0, y0, w, line);
+            debugCtx.fillRect(x0, y1 - line, w, line);
+            debugCtx.fillRect(x0, y0, line, h);
+            debugCtx.fillRect(x1 - line, y0, line, h);
+          }
         }
       }
-
-      canvasParent.appendChild(wrap);
     }
 
     function render_ascii() {
@@ -806,7 +882,9 @@ function AsciiWaveInteractive({
           display_idx[y][x] = idx;
           debug_interaction[y][x] = interactionOffset;
           debug_audio[y][x] = audioOffset;
-          ascii[y][x] = charSet[idx] ?? ' ';
+          if (visualMode !== 'debug') {
+            ascii[y][x] = charSet[idx] ?? ' ';
+          }
           for (let step = 0; step < advanceSteps; step++) {
             wave_map[y][x].inc();
           }
@@ -867,6 +945,7 @@ function AsciiWaveInteractive({
     height,
     containerWidth,
     containerHeight,
+    cellScale,
     charSet,
     noiseMax,
     FRAMES,
@@ -921,9 +1000,9 @@ function AsciiWaveInteractive({
 
       if (!interactionRef.current.pressed || event.buttons === 0) return;
       const now = performance.now();
-      if (now - lastRippleAtRef.current < 120) return;
+      if (now - lastRippleAtRef.current < 55) return;
       lastRippleAtRef.current = now;
-      addRipple(norm.nx, norm.ny, 0.85);
+      addRipple(norm.nx, norm.ny, 1.05);
     };
 
     const handlePointerDown = (event: PointerEvent) => {
@@ -976,9 +1055,9 @@ function AsciiWaveInteractive({
 
     if (!interactionRef.current.pressed || event.buttons === 0) return;
     const now = performance.now();
-    if (now - lastRippleAtRef.current < 120) return;
+    if (now - lastRippleAtRef.current < 55) return;
     lastRippleAtRef.current = now;
-    addRipple(nx, ny, 0.85);
+    addRipple(nx, ny, 1.05);
   };
 
   const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {

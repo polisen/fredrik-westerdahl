@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   motion,
   useMotionValue,
@@ -29,14 +29,14 @@ const ART4_BLUES = {
 const ART4_RIPPLE_PINK = artTheme.tertiary;
 
 const ART4_INTERACTION: AsciiWaveInteractionConfig = {
-  rippleVelocity: 0.35,
-  rippleMaxRadius: 0.82,
-  rippleRingWidth: 0.095,
-  rippleIntensity: 1.28,
-  rippleWavelength: 20,
-  rippleTrail: 0.82,
-  hoverRadius: 0.12,
-  hoverIntensity: 1.05,
+  rippleVelocity: 0.42,
+  rippleMaxRadius: 1.05,
+  rippleRingWidth: 0.13,
+  rippleIntensity: 1.75,
+  rippleWavelength: 14,
+  rippleTrail: 1.15,
+  hoverRadius: 0.2,
+  hoverIntensity: 1.45,
   pressSwellRadius: 0,
   pressSwellIntensity: 0,
 };
@@ -152,42 +152,53 @@ export function VideoBackground() {
 
   const scale = useMemo(() => 1.05, []);
 
-  useMotionValueEvent(progressForPlayback, 'change', (p) => {
-    if (prefersReducedMotion) {
-      animPausedRef.current = true;
-      speedRef.current = 0;
-      return;
-    }
-
-    if (animPausedRef.current) {
-      if (p <= resumeAt) {
-        animPausedRef.current = false;
-        speedRef.current = Math.min(1, Math.max(0.08, 1 - p));
-      } else {
+  const applyPlayback = useCallback(
+    (p: number, hidden = typeof document !== 'undefined' && document.hidden) => {
+      if (prefersReducedMotion) {
+        animPausedRef.current = true;
         speedRef.current = 0;
+        return;
       }
-      return;
-    }
 
-    if (p >= pauseAt) {
-      animPausedRef.current = true;
-      speedRef.current = 0;
-      return;
-    }
+      // Tab hidden: freeze the current frame. Do not flip pause hysteresis so
+      // resume continues from the same scroll speed with no visual jump.
+      if (hidden) {
+        speedRef.current = 0;
+        return;
+      }
 
-    // Slow toward ~0.08 as you scroll, then hard-pause past pauseAt.
-    speedRef.current = Math.min(1, Math.max(0.08, 1 - p));
+      if (animPausedRef.current) {
+        if (p <= resumeAt) {
+          animPausedRef.current = false;
+          speedRef.current = Math.min(1, Math.max(0.08, 1 - p));
+        } else {
+          speedRef.current = 0;
+        }
+        return;
+      }
+
+      if (p >= pauseAt) {
+        animPausedRef.current = true;
+        speedRef.current = 0;
+        return;
+      }
+
+      // Slow toward ~0.08 as you scroll, then hard-pause past pauseAt.
+      speedRef.current = Math.min(1, Math.max(0.08, 1 - p));
+    },
+    [prefersReducedMotion, pauseAt, resumeAt]
+  );
+
+  useMotionValueEvent(progressForPlayback, 'change', (p) => {
+    applyPlayback(p);
   });
 
   useEffect(() => {
-    if (prefersReducedMotion) {
-      animPausedRef.current = true;
-      speedRef.current = 0;
-      return;
-    }
-    animPausedRef.current = false;
-    speedRef.current = 1;
-  }, [prefersReducedMotion]);
+    const sync = () => applyPlayback(progressForPlayback.get());
+    sync();
+    document.addEventListener('visibilitychange', sync);
+    return () => document.removeEventListener('visibilitychange', sync);
+  }, [applyPlayback, progressForPlayback]);
 
   if (!isHome) return null;
 
@@ -218,6 +229,7 @@ export function VideoBackground() {
         debugInvertDepth
         speedRef={speedRef}
         pointerTarget="window"
+        cellScale={0.55}
         className="opacity-90"
       />
     </motion.div>
