@@ -491,6 +491,8 @@ export type AsciiWaveInteractiveProps = {
   visualMode?: AsciiWaveVisualMode;
   /** Debug heatmap: high depth → dark (useful when voice pushes charset forward). */
   debugInvertDepth?: boolean;
+  /** Debug canvas clear color. Default near-black; pass white for a paper field. */
+  debugClearColor?: string;
   /** When set, interaction ripples/swells tint cells toward this color (e.g. pink rings on blue paint). */
   interactionTintColor?: string;
   /** How strongly interaction offset blends into `interactionTintColor` (default 0.72). */
@@ -533,6 +535,7 @@ function AsciiWaveInteractive({
   audioConfig,
   visualMode = 'ascii',
   debugInvertDepth = false,
+  debugClearColor = '#050505',
   interactionTintColor,
   interactionTintStrength = 0.72,
   speedRef,
@@ -667,7 +670,7 @@ function AsciiWaveInteractive({
 
       // 1 device-pixel rings — stays hairline on retina instead of 1 CSS-px thick.
       const line = 1;
-      debugCtx.fillStyle = '#050505';
+      debugCtx.fillStyle = debugClearColor;
       debugCtx.fillRect(0, 0, pixelW, pixelH);
 
       for (let y = 0; y < canvas_height; y++) {
@@ -957,6 +960,7 @@ function AsciiWaveInteractive({
     charColors,
     visualMode,
     debugInvertDepth,
+    debugClearColor,
     interactionTintColor,
     interactionTintStrength,
     resolvedInteractionConfig,

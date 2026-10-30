@@ -11,6 +11,63 @@
   src: url('/badger.woff2') format('woff2');
 }
 
+@font-face {
+  font-family: 'Slussen';
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 75% 125%;
+  font-display: swap;
+  src: url('/fonts/SlussenVariable.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'ABC Areal';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/ABCAreal-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'ABC Areal';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/ABCAreal-RegularItalic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'ABC Areal';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/ABCAreal-Medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'ABC Areal';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/ABCAreal-MediumItalic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'ABC Areal';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/ABCAreal-Bold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'ABC Areal';
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/ABCAreal-BoldItalic.woff2') format('woff2');
+}
+
 :root {
   --font-size: 16px;
   
@@ -21,20 +78,19 @@
   --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
   --safe-area-inset-left: env(safe-area-inset-left, 0px);
 
-  /* Art theme: texture12 primary + ASCII wave */
-  --art-primary: #c4ff06;
-  --art-secondary: #0046e0;
-  --art-tertiary: #ff6eb4;
-  --art-secondary-soft: #f4f8ff;
-  
-  /* Warm, flat palette (inspired by the screenshot) */
-  --app-card: #c8c6b9;
-  --app-bg: #bdbbae;
-  --app-well: #d5d3c6;
-  --app-section: #8f8e89;
-  --app-pillar: #e2e0d2;
-  --app-ink: #0f0f0f;
-  --app-ink-muted: rgba(15, 15, 15, 0.55);
+  /* Art theme: bleached field */
+  --art-primary: #f5f5f5;
+  --art-secondary: #f2f2f2;
+  --art-tertiary: #f0f0f0;
+  --art-secondary-soft: #ffffff;
+
+  --app-card: #ffffff;
+  --app-bg: #ffffff;
+  --app-well: #ffffff;
+  --app-section: #f5f5f5;
+  --app-pillar: #ffffff;
+  --app-ink: #000000;
+  --app-ink-muted: rgba(0, 0, 0, 0.55);
 
   /* Map app palette onto the existing semantic tokens */
   --background: var(--app-bg);
@@ -77,14 +133,13 @@
 }
 
 .dark {
-  /* Keep dark mode aligned to the same flat palette for now */
-  --app-bg: #c0beaf;
-  --app-card: #b6b4a7;
-  --app-well: #d0cec1;
-  --app-section: #868580;
-  --app-pillar: #dedccf;
-  --app-ink: #0f0f0f;
-  --app-ink-muted: rgba(15, 15, 15, 0.55);
+  --app-bg: #ffffff;
+  --app-card: #ffffff;
+  --app-well: #ffffff;
+  --app-section: #f5f5f5;
+  --app-pillar: #ffffff;
+  --app-ink: #000000;
+  --app-ink-muted: rgba(0, 0, 0, 0.55);
 }
 
 @theme inline {
@@ -186,85 +241,17 @@
 html {
   font-size: var(--font-size);
   background-color: white;
-  cursor: none !important;
 }
 
 body {
   background-color: white;
   color: black;
-  cursor: none !important;
-  /* Account for safe areas in body positioning when needed */
-  /* Safe area variables are available via CSS custom properties for use in components */
 }
 
-/* Force all elements to hide native cursor - overrides inline styles and Tailwind utilities */
-*,
-*::before,
-*::after {
-  cursor: none !important;
-}
-
-/* Override any cursor: pointer styles - must come after the general rule */
-[style*="cursor: pointer"],
-[style*="cursor:pointer"],
-[style*='cursor: pointer'],
-[style*='cursor:pointer'] {
-  cursor: inherit !important;
-}
-
-/* Override Tailwind cursor-pointer class and any other cursor pointer classes */
-.cursor-pointer,
-[class*="cursor-pointer"],
-[class*="cursor:pointer"],
-[class*='cursor-pointer'],
-[class*='cursor:pointer'] {
-  cursor: inherit !important;
-}
-
-/* Override cursor pointer on common interactive elements */
-button,
-a,
-[role="button"],
-[role="link"],
-[tabindex]:not([tabindex="-1"]),
-input[type="button"],
-input[type="submit"],
-input[type="reset"] {
-  cursor: inherit !important;
-}
-
-/* Override any CSS modules or inline styles that set cursor: pointer */
-button[style*="cursor"],
-a[style*="cursor"],
-[style*="cursor: pointer"],
-[style*="cursor:pointer"] {
-  cursor: inherit !important;
-}
-
-/* Restore default cursor on mobile devices */
-@media (max-width: 767px) {
-  html,
-  body {
-    cursor: auto !important;
-  }
-  *,
-  *::before,
-  *::after {
-    cursor: inherit !important;
-  }
-}
-
-/* Also restore cursor for touch devices regardless of screen size */
-@media (hover: none) and (pointer: coarse) {
-  html,
-  body {
-    cursor: auto !important;
-  }
-  *,
-  *::before,
-  *::after {
-    cursor: inherit !important;
-  }
+html.playhead-lock,
+html.playhead-lock body {
+  overflow: hidden;
+  height: 100%;
 }
 
 /* Hide scrollbars while maintaining scroll functionality */

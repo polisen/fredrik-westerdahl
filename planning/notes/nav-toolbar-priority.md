@@ -1,7 +1,7 @@
 ---
 kind: intent
-maturity: shaped
-status: active
+maturity: retired
+status: superseded
 parent:
 legacy_path:
 ---

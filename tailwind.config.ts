@@ -10,11 +10,11 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
+        sans: ["ABC Areal", "Arial", "Helvetica Neue", "Helvetica", "sans-serif"],
+        slussen: ["Slussen", "ABC Areal", "Arial", "sans-serif"],
         serif: ["Times New Roman", "Times", "serif"],
         badger: ["Badger", "sans-serif"],
         mono: [
-          "var(--font-geist-mono)",
           "ui-monospace",
           "SFMono-Regular",
           "Menlo",

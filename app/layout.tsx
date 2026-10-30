@@ -1,26 +1,14 @@
-import type { Metadata } from 'next';
+import type { Metadata } from 'next'
 
-import './globals.css';
-import { FooterNavigation } from '@/components/FooterNavigation';
-import { Blur } from '@/components/Blur';
-import { AppProvider } from '@/context/AppContext';
-import { AnimatedHeader } from '@/components/AnimatedHeader';
-import { GeistSans } from 'geist/font/sans';
-import { GeistMono } from 'geist/font/mono';
-import { LayoutGroup } from 'motion/react';
-import { GooProvider } from '@/components/GooContext';
-import { GooLayer } from '@/components/GooLayer';
-import { CursorProvider } from '@/components/CursorContext';
-import { CursorLayers } from '@/components/CursorLayers';
-import { BackgroundLayer } from '@/components/BackgroundLayer';
-import AsciiWave from '@/components/AsciiWave';
-import { PageLoadAnimation } from '@/components/PageLoadAnimation';
-import { Navigation } from '@/components/Navigation';
-import { VideoBackground } from '@/components/VideoBackground';
+import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'fredrik-westerdahl.me',
-  description: 'hello',
+  title: {
+    default: 'Entropy Management',
+    template: '%s — Entropy Management',
+  },
+  description:
+    'Notes on building under noise — AI, product systems, and creative practice. By Fredrik Westerdahl.',
   icons: {
     icon: '/favicon.png',
   },
@@ -29,37 +17,18 @@ export const metadata: Metadata = {
     initialScale: 1,
     viewportFit: 'cover',
   },
-};
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="h-full antialiased hide-scrollbar">
-      <body className={`${GeistSans.variable} ${GeistMono.variable} font-sans relative text-black bg-gray-900 hide-scrollbar`}>
-        <CursorProvider>
-          <GooProvider>
-            <AppProvider>
-              <LayoutGroup>
-                <PageLoadAnimation />
-                <VideoBackground />
-                {/* <BackgroundLayer>
-                  <AsciiWave width={200} height={80} />
-                </BackgroundLayer> */}
-                <Blur />
-                <Navigation />
-                {/* <AnimatedHeader /> */}
-                {/* <FooterNavigation /> */}
-                <GooLayer />
-                <CursorLayers />
-                {children}
-              </LayoutGroup>
-            </AppProvider>
-          </GooProvider>
-        </CursorProvider>
+    <html lang="en" className="h-full antialiased">
+      <body className="font-sans relative bg-white text-black">
+        {children}
       </body>
     </html>
-  );
+  )
 }

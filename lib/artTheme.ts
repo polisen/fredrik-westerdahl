@@ -1,14 +1,14 @@
-/** Site art theme — primary/secondary/tertiary used by cursor + ASCII wave. */
+/** Site art theme — primary/secondary/tertiary used by the ASCII field. */
 
 export const artTheme = {
-  /** Dominant hue from /texture12 (site primary) */
-  primary: '#c4ff06',
-  /** ASCII wave deep blue */
-  secondary: '#0046e0',
-  /** Interaction ripple / boundary tint */
-  tertiary: '#ff6eb4',
-  /** Soft end of the secondary blue ramp */
-  secondarySoft: '#f4f8ff',
-} as const;
+  /** Unused on the CV surface; kept so existing art code still resolves. */
+  primary: '#f5f5f5',
+  /** ASCII field, almost white */
+  secondary: '#e8e8e8',
+  /** Interaction ripple / grid tint, almost white */
+  tertiary: '#e6e6e6',
+  /** Soft end of the field ramp */
+  secondarySoft: '#ffffff',
+} as const
 
-export type ArtTheme = typeof artTheme;
+export type ArtTheme = typeof artTheme
